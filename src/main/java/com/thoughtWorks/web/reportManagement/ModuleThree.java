@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ModuleThree {
     @RequestMapping
     public String index() {
-        return "/moduleThree/moduleThree/moduleThree";
+        return "/moduleThree/subject/subject";
     }
 }

@@ -2,5 +2,9 @@
 .idea/
 target/
 out/
+*.war
+#jdbc.properties
+*.sql
 rebel.xml
-rebel-remote.xml
+rebble-remote.xml
+images/subject/

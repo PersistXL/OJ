@@ -2,7 +2,7 @@
 <%@ include file="../public/tag.jsp" %>
 <html lang="en">
 <head>
-    <title>高职学生信息管理系统</title>
+    <title>OJ系统</title>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
