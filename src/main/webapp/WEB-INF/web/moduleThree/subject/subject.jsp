@@ -181,14 +181,14 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">备注：</label>
                 <div class="layui-input-inline" style="width: 50%">
-                    <textarea placeholder="备注信息：可以为空" class="layui-textarea" name="subject"></textarea>
+                    <textarea placeholder="备注信息：可以为空" class="layui-textarea" name="type"></textarea>
                 </div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline ">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="addsingleEntryInfo()">立即提交
+                    <button class="layui-btn" onclick="addsingleEntryInfo()">立即提交
                     </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
@@ -211,10 +211,11 @@
                 });
                 form.render('checkbox');
             });
+
             $.post("${baseurl}/subject/selectQuestions", function (data) {
                 var _html = "";
-                for (var i = 0; i < data.data.length; i++) {
-                    _html = "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                for (var i = 0; i <data.data.length; i++) {
+                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                 }
                 $("#questions_id").html(_html);
                 form.render();
@@ -245,6 +246,32 @@
     }
 
     function addsingleEntryInfo() {
+       var subject = $("textarea[name='subject']").val();
+       var option_a = $("input[name='option_a']").val();
+       var option_b = $("input[name='option_b']").val();
+       var option_c = $("input[name='option_c']").val();
+       var option_d = $("input[name='option_d']").val();
+       var correct = $("select[name='correct']").val();
+        var imagesToUpdate = $("input[name='file']").val();
+        var questions_id = $("select[name='questions_id']").val();
+        var chapter = $("input[name='chapter']").val();
+       var facility = $("select[name='facility']").val();
+       var type = $("textarea[name='type']").val();
+       $.post("${baseurl}/subject/addSubject",{
+          subject: subject,
+          optionA : option_a,
+          optionB: option_b,
+          optionC: option_c,
+          optionD: option_d,
+          correct: correct,
+          subjectImg: imagesToUpdate,
+          questionsId: questions_id,
+          chapter: chapter,
+          facility: facility,
+          type: type
+       },function (data) {
+           layer.msg(data.msg);
+       });
 
     }
 

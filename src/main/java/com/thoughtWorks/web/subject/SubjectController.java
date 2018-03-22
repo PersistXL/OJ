@@ -43,12 +43,13 @@ public class SubjectController {
     @ResponseBody
     public Result addSubject(Subject subject) {
         try {
-
+            subjectDao.addSubject(subject);
+            return Result.success(null, Constant.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return Result.failure(null, Constant.UPDATE_FAILURE);
+        return Result.failure(null, Constant.ADD_FAILURE);
     }
     @RequestMapping("/selectQuestions")
     @ResponseBody

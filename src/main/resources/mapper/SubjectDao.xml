@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thoughtWorks.dao.SubjectDao">
-    <!--<insert id="addRolePermissions">-->
-    <!--INSERT INTO t_role_permission (sys_role_id, sys_permission_id) VALUES-->
-    <!--<foreach collection="shouldInsert" item="perId" separator="," close=";">-->
-    <!--(#{roleId},#{perId})-->
-    <!--</foreach>-->
-    <!--</insert>-->
+    <insert id="addSubject" parameterType="Subject">
+    INSERT INTO o_subject (subject,subject_img,option_a,option_b,
+    option_c,option_d,correct,questions_id,chapter,facility,type,)
+    VALUES (subject,subjectImg,optionA,optionB,optionC,optionD,
+    correct,questionsId,chapter,facility,type,)
+    </insert>
 
     <select id="selectQuestions" resultType="Questions">
         SELECT *
