@@ -60,7 +60,14 @@
             }
         });
     }
-
+    //为keyListener方法注册按键事件,设置回车事件
+    document.onkeydown=keyListener;
+    function keyListener(e){
+        // 当按下回车键，执行我们的代码
+        if(e.keyCode == 13){
+            login();
+        }
+    }
 </script>
 </body>
 </html>
