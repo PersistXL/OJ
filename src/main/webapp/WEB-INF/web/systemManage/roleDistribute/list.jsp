@@ -143,13 +143,10 @@
                         }
                     }
                 });
-
             },
         }
         $(function () {
             role.list();
-
-
             form.on('select(role_select)', function (data) {
                 let userName = $(data.elem).prop("name");
                 let roleId = data.value
@@ -160,7 +157,6 @@
 
         });
     });
-
 
 </script>
 

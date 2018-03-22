@@ -164,10 +164,9 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">题库：</label>
                 <div class="layui-input-inline">
-                    <select name="questions_id" lay-verify="required" lay-search="">
-                        <option value="0">2017-2018年度考试试题</option>
-                        <option value="1">2016-2017年度考试试题</option>
-                        <option value="1">2015-2014年度考试试题</option>
+                    <select name="questions_id" lay-verify="required" lay-search="" id="questions_id">
+                        <option value="0">试题</option>
+
                     </select>
                 </div>
                 <label class="layui-form-label">章节：</label>
@@ -196,7 +195,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline ">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="addsingleEntryInfo()">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -241,6 +240,9 @@
             content: $('#updatainfo')
         });
     }
+    function addsingleEntryInfo(){
+
+    }
 
     //图片上传
     layui.use('upload', function () {
@@ -252,6 +254,15 @@
                     imgName = res.data;
                 }
             }
+        });
+    });
+    $(function(){
+        $.post("${baseurl}/subject/selectQuestions",function(data){
+            var _html ="";
+            for(var i=0;i<data.data.length;i++){
+                _html= "<option value='"+data.data[i].id+"'>"+data.data[i].name+"</option>";
+            }
+            $("#questions_id").html(_html);
         });
     });
 </script>
