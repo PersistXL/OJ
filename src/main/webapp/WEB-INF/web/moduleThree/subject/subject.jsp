@@ -188,7 +188,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline ">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="addsingleEntryInfo()">立即提交</button>
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="addsingleEntryInfo()">立即提交
+                    </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -198,20 +199,29 @@
 </div>
 </body>
 <script>
-    layui.use('form', function () {
-        var $ = layui.jquery, form = layui.form();
+    $(function () {
+        layui.use('form', function () {
+            var $ = layui.jquery, form = layui.form();
 
-        //全选
-        form.on('checkbox(allChoose)', function (data) {
-            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-            child.each(function (index, item) {
-                item.checked = data.elem.checked;
+            //全选
+            form.on('checkbox(allChoose)', function (data) {
+                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                child.each(function (index, item) {
+                    item.checked = data.elem.checked;
+                });
+                form.render('checkbox');
             });
-            form.render('checkbox');
+            $.post("${baseurl}/subject/selectQuestions", function (data) {
+                var _html = "";
+                for (var i = 0; i < data.data.length; i++) {
+                    _html = "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                }
+                $("#questions_id").html(_html);
+                form.render();
+            });
         });
 
     });
-
     //分页
     layui.use(['laypage', 'layer'], function () {
         var laypage = layui.laypage
@@ -233,7 +243,8 @@
             content: $('#updatainfo')
         });
     }
-    function addsingleEntryInfo(){
+
+    function addsingleEntryInfo() {
 
     }
 
@@ -249,15 +260,8 @@
             }
         });
     });
-    $(function(){
-        $.post("${baseurl}/subject/selectQuestions",function(data){
-            var _html ="";
-            for(var i=0;i<data.data.length;i++){
-                _html= "<option value='"+data.data[i].id+"'>"+data.data[i].name+"</option>";
-            }
-            $("#questions_id").html(_html);
-        });
-    });
+
+
 </script>
 
 </html>

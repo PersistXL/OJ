@@ -6,5 +6,5 @@ out/
 #jdbc.properties
 *.sql
 rebel.xml
-rebble-remote.xml
+rebel-remote.xml
 images/subject/
