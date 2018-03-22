@@ -5,9 +5,9 @@
 <mapper namespace="com.thoughtWorks.dao.SubjectDao">
     <insert id="addSubject" parameterType="Subject">
     INSERT INTO o_subject (subject,subject_img,option_a,option_b,
-    option_c,option_d,correct,questions_id,chapter,facility,type,)
-    VALUES (subject,subjectImg,optionA,optionB,optionC,optionD,
-    correct,questionsId,chapter,facility,type,)
+    option_c,option_d,correct,questions_id,chapter,facility,type)
+    VALUES (#{subject},#{subjectImg},#{optionA},#{optionB},#{optionC},#{optionD},
+    #{correct},#{questionsId},#{chapter},#{facility},#{type})
     </insert>
 
     <select id="selectQuestions" resultType="Questions">

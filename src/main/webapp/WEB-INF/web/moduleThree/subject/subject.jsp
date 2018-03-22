@@ -131,15 +131,7 @@
                     <input name="option_d" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
                            class="layui-input">
                 </div>
-                <label class="layui-form-label">正确选项：</label>
-                <div class="layui-input-inline">
-                    <select name="correct" lay-verify="required" lay-search="">
-                        <option value="A">选项A</option>
-                        <option value="B">选项B</option>
-                        <option value="C">选项C</option>
-                        <option value="D">选项D</option>
-                    </select>
-                </div>
+
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">题目图片：</label>
@@ -151,10 +143,20 @@
                     <div>
                         <input type="file" name="file" class="layui-upload-file" style="width: auto"
                                lay-title="题目图片">
+                        <input type="text" name="file_img" hidden>
                     </div>
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">正确选项：</label>
+                <div class="layui-input-inline">
+                    <select name="correct" lay-verify="required" lay-search="">
+                        <option value="A">选项A</option>
+                        <option value="B">选项B</option>
+                        <option value="C">选项C</option>
+                        <option value="D">选项D</option>
+                    </select>
+                </div>
                 <label class="layui-form-label">题库：</label>
                 <div class="layui-input-inline">
                     <select name="questions_id" lay-verify="required" lay-search="" id="questions_id">
@@ -252,11 +254,12 @@
        var option_c = $("input[name='option_c']").val();
        var option_d = $("input[name='option_d']").val();
        var correct = $("select[name='correct']").val();
-        var imagesToUpdate = $("input[name='file']").val();
+        var imagesToUpdate = $("input[name='file_img']").val();
         var questions_id = $("select[name='questions_id']").val();
         var chapter = $("input[name='chapter']").val();
        var facility = $("select[name='facility']").val();
        var type = $("textarea[name='type']").val();
+       alert(imagesToUpdate)
        $.post("${baseurl}/subject/addSubject",{
           subject: subject,
           optionA : option_a,
@@ -282,7 +285,8 @@
             , success: function (res) { //上传成功后的回调
                 if (res.result) {
                     $("#imagesToUpdate").text("").attr("src", HEAD_IMAGE_PREFIX + res.data);
-                    imgName = res.data;
+
+                    $("input[name='file_img']").val(HEAD_IMAGE_PREFIX + res.data);
                 }
             }
         });
