@@ -1,6 +1,6 @@
 package com.thoughtWorks.entity;
 
-public class ModuleOne {
+public class Testpaper {
     private String subject_id;
     private int classes_id;
     private int teacher_id;

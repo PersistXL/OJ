@@ -1,17 +1,21 @@
 package com.thoughtWorks.service.impl;
 
 import com.thoughtWorks.dao.ModuleOneDao;
-import com.thoughtWorks.entity.Questions;
+import com.thoughtWorks.entity.Testpaper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Persist
  */
+@Service
 public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneService {
+    @Autowired
     ModuleOneDao moduleOneDao;
     @Override
-    public List<Questions> findQuestions() throws Exception {
+    public List<Testpaper> findQuestions() throws Exception {
         return moduleOneDao.findQuestions();
     }
 }

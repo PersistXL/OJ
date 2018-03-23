@@ -3,14 +3,15 @@
 <html>
 <head>
     <title>ModuleOne</title>
-    <script type="text/javascript" src="${baseurl}/public/common/js/jquery-3.2.0.min.js"></script>
-    <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
+
     <link rel="stylesheet" href="${baseurl}/public/common/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/bootstrap/css/bootstrap.min.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/css/global.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/css/personal.css" media="all">
+    <script type="text/javascript" src="${baseurl}/public/common/js/jquery-3.2.0.min.js"></script>
+    <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -85,8 +86,8 @@
                 });
                 form.render('checkbox');
             });
-            $.post("${baseurl}/moduleOne/findQuestions", function (data) {
-                // console.log(data);
+            $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
+                console.log(data);
                 var _html = "";
                 for (var i = 0; i < data.data.length; i++) {
                     _html = "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";

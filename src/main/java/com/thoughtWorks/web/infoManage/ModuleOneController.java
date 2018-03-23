@@ -3,8 +3,10 @@ package com.thoughtWorks.web.infoManage;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Component
 @RequestMapping("/moduleOne")
 public class ModuleOneController {
-
+    @Autowired
     ModuleOneService moduleOneService;
 
     @RequestMapping()
@@ -21,8 +23,9 @@ public class ModuleOneController {
         return "moduleOne/moduleOne/moduleOne";
     }
 
-    @RequestMapping("/findQuestions")
-    public Result findQuestions(){
+    @RequestMapping("/findTestpaper")
+    @ResponseBody
+    public Result findTestpaper(){
         try{
         return Result.success(moduleOneService.findQuestions(), Constant.SEARCH_SUCCESS);
         }catch (Exception e){

@@ -1,6 +1,7 @@
 package com.thoughtWorks.service;
 
 import com.thoughtWorks.entity.Questions;
+import com.thoughtWorks.entity.Testpaper;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public interface ModuleOneService {
      * @throws Exception
      */
 
-    List<Questions> findQuestions() throws Exception;
+    List<Testpaper> findQuestions() throws Exception;
 }
