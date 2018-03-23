@@ -3,14 +3,15 @@
 <html>
 <head>
     <title>ModuleOne</title>
-    <script type="text/javascript" src="${baseurl}/public/common/js/jquery-3.2.0.min.js"></script>
-    <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
+
     <link rel="stylesheet" href="${baseurl}/public/common/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/bootstrap/css/bootstrap.min.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/css/global.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/css/common.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/css/personal.css" media="all">
+    <script type="text/javascript" src="${baseurl}/public/common/js/jquery-3.2.0.min.js"></script>
+    <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -19,8 +20,8 @@
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
                 <div class="layui-collapse" lay-filter="test" style="margin-top:20px;">
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">班课A<span class="badge glyphicon glyphicon-bullhorn" style="color: #ff1631;margin-left: 50px;">4</span></h2>
+                <div class="layui-colla-item" id="class_id_test">
+                    <h2 class="layui-colla-title">班课A<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">4</p></span></h2>
                     <div class="layui-colla-content">
                         <div class="layui-form">
                             <table class="layui-table">
@@ -41,6 +42,7 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
+
                                 <tbody>
                                 <tr>
                                     <td>第一章测试题</td>
@@ -64,12 +66,36 @@
         </div>
     </div>
 </section>
-
 <script src="${baseurl}/public/js/layui/layui.js" charset="utf-8"></script>
 <script>
+    //折叠面板
     layui.use(['element', 'layer'], function(){
         var element = layui.element();
         var layer = layui.layer;
+    });
+    //动态拼接测试题信息
+    $(function () {
+        layui.use('form', function () {
+            var $ = layui.jquery, form = layui.form();
+
+            //全选
+            form.on('checkbox(allChoose)', function (data) {
+                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                child.each(function (index, item) {
+                    item.checked = data.elem.checked;
+                });
+                form.render('checkbox');
+            });
+            $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
+                console.log(data);
+                var _html = "";
+                for (var i = 0; i < data.data.length; i++) {
+                    _html = "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                }
+                $("#questions_id").html(_html);
+                form.render();
+            });
+        });
     });
 </script>
 </body>
