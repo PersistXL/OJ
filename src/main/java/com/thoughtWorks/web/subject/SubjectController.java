@@ -96,4 +96,16 @@ public class SubjectController {
 
         return Result.failure(null, Constant.DELETE_FAILURE);
     }
+    @RequestMapping("/updateSubjectById")
+    @ResponseBody
+    public Result updateSubjectById(Subject subject) {
+        try {
+            subjectDao.updateSubjectById(subject);
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.DELETE_FAILURE);
+    }
 }
