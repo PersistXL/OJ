@@ -20,6 +20,11 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+    fieldset{
+        margin: 10px 50px;
+    }
+    .box{width:300px; text-align:center; font-szie:18px;}
+    .box img {width:100%;}
 </style>
 <body>
 <section class="larry-grid">
@@ -174,6 +179,42 @@
         </form>
     </div>
 </div>
+<div id="previewSubjectInfo" style="display: none;">
+    <fieldset class="layui-elem-field">
+        <legend>试题：</legend>
+
+        <div class="layui-field-box">
+            <b>题目：</b>
+            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
+        </div>
+        <div class="layui-field-box box">
+            <img src="${baseurl}public/images/user.jpg"/><br>
+            <b>题目图片</b>
+        </div>
+        <div class="layui-field-box">
+            <b>选项A：</b>
+            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
+        </div>
+        <div class="layui-field-box">
+            <b>选项B：</b>
+            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
+        </div>
+        <div class="layui-field-box">
+            <b>选项C：</b>
+            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
+        </div>
+        <div class="layui-field-box">
+            <b>选项D：</b>
+            <p>在Java中，负责对字节代码</p>
+        </div>
+        <div class="layui-field-box">
+            <b>正确选项：</b>
+            <p>A</p>
+        </div>
+    </fieldset>
+
+
+</div>
 </body>
 <script>
     $(function () {
@@ -217,7 +258,7 @@
 
                                 <div class="layui-btn-group">
                                     <shiro:hasPermission name="moduleThree:update">
-                                        <a class="layui-btn layui-btn-mini">
+                                        <a class="layui-btn layui-btn-mini" >
                                             <i class="layui-icon">&#xe642;</i>
                                             编辑
                                         </a>
@@ -228,7 +269,7 @@
                                             删除
                                         </a>
                                     </shiro:hasPermission>
-                                    <a class="layui-btn layui-btn-mini">
+                                    <a class="layui-btn layui-btn-mini" onclick="previewSubjectInfo(`+data.data[i].id+`)">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
@@ -261,6 +302,15 @@
             area: ['100%', '100%'],
             skin: 'yourclass',
             content: $('#updatainfo')
+        });
+    }
+    function previewSubjectInfo(id) {
+        layer.open({
+            type: 1,
+            title: '试题预览',
+            area: ['100%', '100%'],
+            skin: 'yourclass',
+            content: $('#previewSubjectInfo')
         });
     }
 

@@ -3,17 +3,21 @@
 <html lang="en">
 <head>
     <title>OJ系统</title>
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
+
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/css/global.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/css/font_bmgv5kod1961tt9.css">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/css/backstage.css" media="all">
+    <style>
+        .impaa{
+            height: 800px !important;"
+        }
+    </style>
 </head>
-<body>
-<div class="layui-layout layui-layout-admin" id="layui_layout">
+<body class="impaa">
+<div class="layui-layout layui-layout-admin impaa" id="layui_layout">
     <!-- 顶部区域 -->
     <div class="layui-header header-menu">
         <div class="logo posb" id="log"><img src="${baseurl}/public/common/images/logo.png"></div>
