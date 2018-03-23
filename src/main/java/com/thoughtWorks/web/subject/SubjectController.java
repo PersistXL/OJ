@@ -43,18 +43,30 @@ public class SubjectController {
     @ResponseBody
     public Result addSubject(Subject subject) {
         try {
-
+            subjectDao.addSubject(subject);
+            return Result.success(null, Constant.ADD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return Result.failure(null, Constant.UPDATE_FAILURE);
+        return Result.failure(null, Constant.ADD_FAILURE);
     }
     @RequestMapping("/selectQuestions")
     @ResponseBody
     public Result selectQuestions() {
         try {
             return Result.success(subjectDao.selectQuestions(), Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+    @RequestMapping("/selectSubject")
+    @ResponseBody
+    public Result selectSubject() {
+        try {
+            return Result.success(subjectDao.selectSubject(), Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }

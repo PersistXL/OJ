@@ -3,21 +3,34 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thoughtWorks.dao.SubjectDao">
-    <!--<insert id="addRolePermissions">-->
-    <!--INSERT INTO t_role_permission (sys_role_id, sys_permission_id) VALUES-->
-    <!--<foreach collection="shouldInsert" item="perId" separator="," close=";">-->
-    <!--(#{roleId},#{perId})-->
-    <!--</foreach>-->
-    <!--</insert>-->
+    <insert id="addSubject" parameterType="Subject">
+    INSERT INTO o_subject (subject,subject_img,option_a,option_b,
+    option_c,option_d,correct,questions_id,chapter,facility,type)
+    VALUES (#{subject},#{subjectImg},#{optionA},#{optionB},#{optionC},#{optionD},
+    #{correct},#{questionsId},#{chapter},#{facility},#{type})
+    </insert>
 
     <select id="selectQuestions" resultType="Questions">
         SELECT *
         FROM o_questions
     </select>
-    <!--<update id="update" parameterType="Role">-->
-    <!--UPDATE t_role-->
-    <!--SET t_role.name = #{name}, t_role.available = #{available}-->
-    <!--WHERE t_role.id = #{id}-->
-    <!--</update>-->
+    <select id="selectSubject" resultType="map">
+        SELECT o_subject.*,o_questions.name questionsName
+        FROM o_subject,o_questions where questions_id = o_questions.id
+    </select>
+    <select id="selectSubjectById" resultType="map" parameterType="int">
+        SELECT *
+        FROM o_subject where id = #{id}
+    </select>
+    <delete id="deleteSubjectById" parameterType="int">
+        delete FROM o_subject where id = #{id}
+    </delete>
+    <update id="updateSubjectById" parameterType="Subject">
+        UPDATE o_subject
+        SET subject=#{subject},subject_img=#{subjectImg},option_a=#{optionA},option_b=#{optionB},
+        option_c=#{optionC},option_d=#{optionD},correct=#{correct},questions_id=#{questionsId},
+        chapter=#{chapter},facility=#{facility},type=#{type}
+        WHERE id = #{id}
+    </update>
 
 </mapper>
