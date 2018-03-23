@@ -73,4 +73,15 @@ public class SubjectController {
 
         return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+    @RequestMapping("/selectSubjectById")
+    @ResponseBody
+    public Result selectSubjectById(int id) {
+        try {
+            return Result.success(subjectDao.selectSubjectById(id), Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
 }
