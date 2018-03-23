@@ -222,14 +222,14 @@
                             <td>
 
                                 <div class="layui-btn-group">
-                                    <shiro:hasPermission name="moduleThree:update">
-                                        <a class="layui-btn layui-btn-mini" >
+                                    <shiro:hasPermission name="moduleThree:update" >
+                                        <a class="layui-btn layui-btn-mini" onclick="previewSubjectInfo(`+data.data[i].id+`)" >
                                             <i class="layui-icon">&#xe642;</i>
                                             编辑
                                         </a>
                                     </shiro:hasPermission>
                                     <shiro:hasPermission name="moduleThree:delete">
-                                        <a class="layui-btn layui-btn-mini">
+                                        <a class="layui-btn layui-btn-mini" onclick="deleteSubjectInfo(`+data.data[i].id+`)">
                                             <i class="layui-icon">&#xe640;</i>
                                             删除
                                         </a>
@@ -267,6 +267,16 @@
             area: ['100%', '100%'],
             skin: 'yourclass',
             content: $('#updatainfo')
+        });
+    }
+    function deleteSubjectInfo(id) {
+
+        layer.confirm('是否删除信息？', function(index){
+            $.post("${baseurl}/subject/deleteSubjectById",{id:id},function (data) {
+                layer.msg(data.msg);
+                location.reload();
+            });
+            layer.close(index);
         });
     }
     function previewSubjectInfo(id) {
