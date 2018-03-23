@@ -14,10 +14,23 @@
         SELECT *
         FROM o_questions
     </select>
-    <!--<update id="update" parameterType="Role">-->
-    <!--UPDATE t_role-->
-    <!--SET t_role.name = #{name}, t_role.available = #{available}-->
-    <!--WHERE t_role.id = #{id}-->
-    <!--</update>-->
+    <select id="selectSubject" resultType="map">
+        SELECT o_subject.*,o_questions.name questionsName
+        FROM o_subject,o_questions where questions_id = o_questions.id
+    </select>
+    <select id="selectSubjectById" resultType="map" parameterType="int">
+        SELECT *
+        FROM o_subject where id = #{id}
+    </select>
+    <delete id="deleteSubjectById" parameterType="int">
+        delete FROM o_subject where id = #{id}
+    </delete>
+    <update id="updateSubjectById" parameterType="Subject">
+        UPDATE o_subject
+        SET subject=#{subject},subject_img=#{subjectImg},option_a=#{optionA},option_b=#{optionB},
+        option_c=#{optionC},option_d=#{optionD},correct=#{correct},questions_id=#{questionsId},
+        chapter=#{chapter},facility=#{facility},type=#{type}
+        WHERE id = #{id}
+    </update>
 
 </mapper>

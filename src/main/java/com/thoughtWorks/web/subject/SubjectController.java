@@ -62,4 +62,15 @@ public class SubjectController {
 
         return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+    @RequestMapping("/selectSubject")
+    @ResponseBody
+    public Result selectSubject() {
+        try {
+            return Result.success(subjectDao.selectSubject(), Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
 }

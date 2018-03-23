@@ -20,4 +20,28 @@ public interface SubjectDao {
      * @param subject
      */
     void addSubject(Subject subject);
+
+    /**
+     * 查询所有试题信息
+     * @return
+     */
+    List<Map<String,Object>> selectSubject();
+
+    /**
+     * 通过ID查询试题信息
+     * @return
+     */
+    Map<String,Object> selectSubjectById(int id);
+
+    /**
+     * 通过id删除试题
+     * @param id
+     */
+    void deleteSubjectById(int id);
+
+    /**
+     * 通过id修改题目信息
+     * @param subject
+     */
+    void updateSubjectById(Subject subject);
 }

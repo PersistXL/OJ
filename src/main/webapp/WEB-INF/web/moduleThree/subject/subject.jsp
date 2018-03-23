@@ -13,8 +13,15 @@
     <script type="text/javascript" src="${baseurl}/public/common/js/jquery-3.2.0.min.js"></script>
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
+<style>
+    .hide_title{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+</style>
 <body>
-
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -28,19 +35,19 @@
                     <table class="layui-table">
                         <colgroup>
                             <col width="70">
-                            <col width="300">
+                            <col width="250">
                             <col width="100">
                             <col width="100">
                             <col width="100">
                             <col width="100">
                             <col width="100">
                             <col width="">
-                            <col width="">
                             <col width="100">
-                            <col width="300">
+                            <col width="100">
+                            <col width="270">
                         </colgroup>
 
-                        <thead>
+                        <thead >
                         <tr>
                             <th>编号</th>
                             <th>题目</th>
@@ -55,40 +62,8 @@
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>在Java中，负责对字节代码解释执行的是</td>
-                            <td>应用服务器</td>
-                            <td>垃圾回收器</td>
-                            <td>编译器</td>
-                            <td>虚拟机</td>
-                            <td>B</td>
-                            <td>2017-2018年度考试试题</td>
-                            <td>第一章</td>
-                            <td>简单</td>
-                            <td>
+                        <tbody id="subject_info">
 
-                                <div class="layui-btn-group">
-                                    <shiro:hasPermission name="moduleThree:update">
-                                        <a class="layui-btn layui-btn-small">
-                                            <i class="layui-icon">&#xe642;</i>
-                                            编辑
-                                        </a>
-                                    </shiro:hasPermission>
-                                    <shiro:hasPermission name="moduleThree:delete">
-                                        <a class="layui-btn layui-btn-small">
-                                            <i class="layui-icon">&#xe640;</i>
-                                            删除
-                                        </a>
-                                    </shiro:hasPermission>
-                                    <a class="layui-btn layui-btn-small">
-                                        <i class="layui-icon">&#xe602;</i>
-                                        预览
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -220,6 +195,48 @@
                     _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                 }
                 $("#questions_id").html(_html);
+                form.render();
+            });
+
+            $.post("${baseurl}/subject/selectSubject", function (data) {
+                console.log(data)
+                var _html = "";
+                for (var i = 0; i <data.data.length; i++) {
+                    _html += `<tr>
+                            <td>`+(i+1)+`</td>
+                            <td ><span class = "hide_title">`+data.data[i].subject+`</span></td>
+                            <td><span class = "hide_title">`+data.data[i].option_a+`</span></td>
+                            <td><span class = "hide_title">`+data.data[i].option_b+`</span></td>
+                            <td><span class = "hide_title">`+data.data[i].option_c+`</span></td>
+                            <td><span class = "hide_title">`+data.data[i].option_d+`</span></td>
+                            <td>`+data.data[i].correct+`</td>
+                            <td><span class = "hide_title">`+data.data[i].questionsName+`</span></td>
+                            <td>`+data.data[i].chapter+`</td>
+                            <td>`+data.data[i].facility+`</td>
+                            <td>
+
+                                <div class="layui-btn-group">
+                                    <shiro:hasPermission name="moduleThree:update">
+                                        <a class="layui-btn layui-btn-mini">
+                                            <i class="layui-icon">&#xe642;</i>
+                                            编辑
+                                        </a>
+                                    </shiro:hasPermission>
+                                    <shiro:hasPermission name="moduleThree:delete">
+                                        <a class="layui-btn layui-btn-mini">
+                                            <i class="layui-icon">&#xe640;</i>
+                                            删除
+                                        </a>
+                                    </shiro:hasPermission>
+                                    <a class="layui-btn layui-btn-mini">
+                                        <i class="layui-icon">&#xe602;</i>
+                                        预览
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>`;
+                }
+                $("#subject_info").html(_html);
                 form.render();
             });
         });
