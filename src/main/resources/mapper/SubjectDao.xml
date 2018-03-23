@@ -19,8 +19,8 @@
         FROM o_subject,o_questions where questions_id = o_questions.id
     </select>
     <select id="selectSubjectById" resultType="map" parameterType="int">
-        SELECT *
-        FROM o_subject where id = #{id}
+        SELECT o_subject.*,o_questions.name questionsName
+        FROM o_subject,o_questions where questions_id = o_questions.id and o_subject.id = #{id}
     </select>
     <delete id="deleteSubjectById" parameterType="int">
         delete FROM o_subject where id = #{id}

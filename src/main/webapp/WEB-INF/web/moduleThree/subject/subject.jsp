@@ -23,8 +23,8 @@
     fieldset{
         margin: 10px 50px;
     }
-    .box{width:300px; text-align:center; font-szie:18px;}
-    .box img {width:100%;}
+    .box{
+        width:300px; text-align:center; font-szie:18px;}
 </style>
 <body>
 <section class="larry-grid">
@@ -179,41 +179,7 @@
         </form>
     </div>
 </div>
-<div id="previewSubjectInfo" style="display: none;">
-    <fieldset class="layui-elem-field">
-        <legend>试题：</legend>
-
-        <div class="layui-field-box">
-            <b>题目：</b>
-            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
-        </div>
-        <div class="layui-field-box box">
-            <img src="${baseurl}public/images/user.jpg"/><br>
-            <b>题目图片</b>
-        </div>
-        <div class="layui-field-box">
-            <b>选项A：</b>
-            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
-        </div>
-        <div class="layui-field-box">
-            <b>选项B：</b>
-            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
-        </div>
-        <div class="layui-field-box">
-            <b>选项C：</b>
-            <p>在Java中，负责对字节代码解释执行的是在Java中，负责对字节代码</p>
-        </div>
-        <div class="layui-field-box">
-            <b>选项D：</b>
-            <p>在Java中，负责对字节代码</p>
-        </div>
-        <div class="layui-field-box">
-            <b>正确选项：</b>
-            <p>A</p>
-        </div>
-    </fieldset>
-
-
+<div id="previewSubjectInfo" style="display: none;" >
 </div>
 </body>
 <script>
@@ -240,7 +206,6 @@
             });
 
             $.post("${baseurl}/subject/selectSubject", function (data) {
-                console.log(data)
                 var _html = "";
                 for (var i = 0; i <data.data.length; i++) {
                     _html += `<tr>
@@ -312,6 +277,68 @@
             skin: 'yourclass',
             content: $('#previewSubjectInfo')
         });
+
+        $.post("${baseurl}/subject/selectSubjectById",{id:id},function (data) {
+            var _html = "";
+            _html += `<fieldset class="layui-elem-field">
+        <legend>试题：</legend>
+        <div class="layui-field-box">
+            <b>题目：</b>
+            <p>`+data.data.subject+`</p>
+        </div>`;
+            if(data.data.subject_img !== ''){
+        _html+=`<div class="layui-field-box box">
+            <img width="300px" height="300px" src="`+data.data.subject_img+`"/><br>
+            <b>题目图片</b>
+        </div>`;
+            }
+        _html += `<div class="layui-field-box">
+            <p> <b>选项A：</b>`+data.data.option_a +`</p>
+        </div>
+        <div class="layui-field-box">
+
+            <p><b>选项B：</b>`+data.data.option_b +`</p>
+        </div>
+        <div class="layui-field-box">
+
+            <p><b>选项C：</b>`+data.data.option_c +`</p>
+        </div>
+        <div class="layui-field-box">
+
+            <p><b>选项D：</b>`+data.data.option_d +`</p>
+        </div>
+        <div class="layui-field-box">
+            <b>正确选项：</b>
+            <p>`+data.data.correct +`</p>
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field " style="margin-top: 20px;">
+        <legend>题目相关信息：</legend>
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>题库</th>
+                <th>章节</th>
+                <th>难易度</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>`+data.data.questionsName+`</td>
+                <td>`+data.data.chapter+`</td>
+                <td>`+data.data.facility+`</td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>`;
+            $("#previewSubjectInfo").html(_html);
+        });
     }
 
     function addsingleEntryInfo() {
@@ -326,7 +353,6 @@
         var chapter = $("input[name='chapter']").val();
        var facility = $("select[name='facility']").val();
        var type = $("textarea[name='type']").val();
-       alert(imagesToUpdate)
        $.post("${baseurl}/subject/addSubject",{
           subject: subject,
           optionA : option_a,
