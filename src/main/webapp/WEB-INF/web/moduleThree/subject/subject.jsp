@@ -14,17 +14,22 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <style>
-    .hide_title{
+    .hide_title {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
-    fieldset{
+
+    fieldset {
         margin: 10px 50px;
     }
-    .box{
-        width:300px; text-align:center; font-szie:18px;}
+
+    .box {
+        width: 300px;
+        text-align: center;
+        font-szie: 18px;
+    }
 </style>
 <body>
 <section class="larry-grid">
@@ -33,7 +38,7 @@
             <div class="larry-separate"></div>
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
                 <shiro:hasPermission name="moduleThree:update">
-                    <a class="layui-btn" onclick="addsingleEntry()"><i class="layui-icon">&#xe621;</i>单个录入</a>
+                    <a class="layui-btn" onclick="_subject.addsingleEntry()"><i class="layui-icon">&#xe621;</i>单个录入</a>
                     <a class="layui-btn"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
                 </shiro:hasPermission>
                 <div class="layui-form">
@@ -52,7 +57,7 @@
                             <col width="270">
                         </colgroup>
 
-                        <thead >
+                        <thead>
                         <tr>
                             <th>编号</th>
                             <th>题目</th>
@@ -82,7 +87,7 @@
     <div>
         <form class="layui-form" action="">
             <div class="layui-form-item layui-form-text">
-                <input name = "id" hidden>
+                <input name="id" hidden>
                 <label class="layui-form-label">题目：</label>
                 <div class="layui-input-inline" style="width: 50%">
                     <textarea placeholder="请输入题目" class="layui-textarea" name="subject"></textarea>
@@ -171,12 +176,12 @@
             <div class="layui-form-item">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline " id="add">
-                    <button class="layui-btn" onclick="addsingleEntryInfo()">立即提交
+                    <button class="layui-btn" onclick="_subject.addsingleEntryInfo()">立即提交
                     </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
                 <div class="layui-input-inline " id="update">
-                    <button class="layui-btn" onclick="updateInfo_new()">更新提交
+                    <button class="layui-btn" onclick="_subject.updateInfo_new()">更新提交
                     </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
@@ -185,214 +190,204 @@
         </form>
     </div>
 </div>
-
-<div id="previewSubjectInfo" style="display: none;" >
+<div id="previewSubjectInfo" style="display: none;">
 </div>
 </body>
-<script>
-    $(function () {
-        layui.use('form', function () {
-            var $ = layui.jquery, form = layui.form();
-
-            //全选
-            form.on('checkbox(allChoose)', function (data) {
-                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-                child.each(function (index, item) {
-                    item.checked = data.elem.checked;
+<script type="text/javascript">
+    let _subject;
+    layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree'], function () {
+        window.jQuery = window.$ = layui.jquery;
+        window.layer = layui.layer;
+        let element = layui.element(),
+            form = layui.form(),
+            laytpl = layui.laytpl;
+        _subject = {
+            page: function () {
+                $.post("${baseurl}/subject/selectQuestions", function (data) {
+                    let _html = "";
+                    for (let i = 0; i < data.data.length; i++) {
+                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                    }
+                    $("#questions_id").html(_html);
+                    form.render();
                 });
-                form.render('checkbox');
-            });
 
-            $.post("${baseurl}/subject/selectQuestions", function (data) {
-                var _html = "";
-                for (var i = 0; i <data.data.length; i++) {
-                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                }
-                $("#questions_id").html(_html);
-                form.render();
-            });
-
-            $.post("${baseurl}/subject/selectSubject", function (data) {
-                var _html = "";
-                for (var i = 0; i <data.data.length; i++) {
-                    _html += `<tr>
-                            <td>`+(i+1)+`</td>
-                            <td ><span class = "hide_title">`+data.data[i].subject+`</span></td>
-                            <td><span class = "hide_title">`+data.data[i].option_a+`</span></td>
-                            <td><span class = "hide_title">`+data.data[i].option_b+`</span></td>
-                            <td><span class = "hide_title">`+data.data[i].option_c+`</span></td>
-                            <td><span class = "hide_title">`+data.data[i].option_d+`</span></td>
-                            <td>`+data.data[i].correct+`</td>
-                            <td><span class = "hide_title">`+data.data[i].questionsName+`</span></td>
-                            <td>`+data.data[i].chapter+`</td>
-                            <td>`+data.data[i].facility+`</td>
+                $.post("${baseurl}/subject/selectSubject", function (data) {
+                    _subject.paging();
+                    let _html = "";
+                    for (let i = 0; i < data.data.length; i++) {
+                        _html += `<tr>
+                            <td>` + (i + 1) + `</td>
+                            <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].option_a + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].option_b + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].option_c + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].option_d + `</span></td>
+                            <td>` + data.data[i].correct + `</td>
+                            <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
+                            <td>` + data.data[i].chapter + `</td>
+                            <td>` + data.data[i].facility + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
                                     <shiro:hasPermission name="moduleThree:update" >
-                                        <a class="layui-btn layui-btn-mini" onclick="updataInfo(`+data.data[i].id+`)" >
+                                        <a class="layui-btn layui-btn-mini" onclick="_subject.updataInfo(` + data.data[i].id + `)" >
                                             <i class="layui-icon">&#xe642;</i>
                                             编辑
                                         </a>
                                     </shiro:hasPermission>
                                     <shiro:hasPermission name="moduleThree:delete">
-                                        <a class="layui-btn layui-btn-mini" onclick="deleteSubjectInfo(`+data.data[i].id+`)">
+                                        <a class="layui-btn layui-btn-mini" onclick="_subject.deleteSubjectInfo(` + data.data[i].id + `)">
                                             <i class="layui-icon">&#xe640;</i>
                                             删除
                                         </a>
                                     </shiro:hasPermission>
-                                    <a class="layui-btn layui-btn-mini" onclick="previewSubjectInfo(`+data.data[i].id+`)">
+                                    <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
                                 </div>
                             </td>
                         </tr>`;
-                }
-                $("#subject_info").html(_html);
-                form.render();
-            });
-        });
+                    }
+                    $("#subject_info").html(_html);
+                    form.render();
+                });
+            },
+            paging: function () {
+                layui.laypage({
+                    cont: 'demo1'
+                    , pages: 100 //分页的总页数
+                    , groups: 5 //连续显示分页数
+                    , jump: function (obj, first) {
+                        //得到了当前页，用于向服务端请求对应数据
+                        let curr = obj.curr;
+                        alert(curr)
+                    }
+                });
+            },
+            addsingleEntry: function () {
+                $("#update").hide();
+                $("#add").show();
+                layer.open({
+                    type: 1,
+                    title: '录入题目',
+                    area: ['100%', '100%'],
+                    skin: 'yourclass',
+                    content: $('#addInfo')
+                });
+            },
+            deleteSubjectInfo: function (id) {
+                layer.confirm('是否删除信息？', function (index) {
+                    $.post("${baseurl}/subject/deleteSubjectById", {id: id}, function (data) {
+                        layer.msg(data.msg);
+                        location.reload();
+                    });
+                    layer.close(index);
+                });
+            },
+            updataInfo: function (id) {
 
-    });
-    //分页
-    layui.use(['laypage', 'layer'], function () {
-        var laypage = layui.laypage
-            , layer = layui.layer;
+                layui.use('form', function () {
+                    let $ = layui.jquery, form = layui.form();
+                    $.post("${baseurl}/subject/selectSubjectById", {id: id}, function (data) {
+                        $("#add").hide();
+                        $("#update").show();
 
-        laypage({
-            cont: 'demo1'
-            , pages: 100 //总页数
-            , groups: 5 //连续显示分页数
-        });
-    });
+                        $("textarea[name='subject']").val(data.data.subject);
+                        $("input[name='option_a']").val(data.data.option_a);
+                        $("input[name='option_b']").val(data.data.option_b);
+                        $("input[name='option_c']").val(data.data.option_c);
+                        $("input[name='option_d']").val(data.data.option_d);
+                        $("select[name='correct']").val(data.data.correct);
+                        // let _html_correct ="";
+                        // for(){
+                        //
+                        // }
 
-    function addsingleEntry() {
-        $("#update").hide();
-        $("#add").show();
-        layer.open({
-            type: 1,
-            title: '录入题目',
-            area: ['100%', '100%'],
-            skin: 'yourclass',
-            content: $('#addInfo')
-        });
-    }
-    function deleteSubjectInfo(id) {
+                        // $("#correct").html();
+                        $("input[name='file_img']").val(data.data.subject_img);
+                        $("select[name='questions_id']").val(data.data.questions_id);
+                        $("input[name='chapter']").val(data.data.chapter);
+                        $("select[name='facility']").val(data.data.facility);
+                        $("textarea[name='type']").val(data.data.type);
+                        $("input[name='id']").val(data.data.id);
+                        $("#imagesToUpdate").text("").attr("src", data.data.subject_img);
+                        layer.open({
+                            type: 1,
+                            title: '试题预览',
+                            area: ['100%', '100%'],
+                            skin: 'yourclass',
+                            content: $('#addInfo')
+                        });
+                    });
+                    form.render();
 
-        layer.confirm('是否删除信息？', function(index){
-            $.post("${baseurl}/subject/deleteSubjectById",{id:id},function (data) {
-                layer.msg(data.msg);
-                location.reload();
-            });
-            layer.close(index);
-        });
-    }
-    function updataInfo(id) {
-        layui.use('form', function () {
-            var $ = layui.jquery, form = layui.form();
-        $.post("${baseurl}/subject/selectSubjectById",{id:id},function (data) {
-            $("#add").hide();
-            $("#update").show();
-
-            $("textarea[name='subject']").val(data.data.subject);
-            $("input[name='option_a']").val(data.data.option_a);
-            $("input[name='option_b']").val(data.data.option_b);
-            $("input[name='option_c']").val(data.data.option_c);
-            $("input[name='option_d']").val(data.data.option_d);
-            $("select[name='correct']").val(data.data.correct);
-            // var _html_correct ="";
-            // for(){
-            //
-            // }
-
-            // $("#correct").html();
-            $("input[name='file_img']").val(data.data.file_img);
-            $("select[name='questions_id']").val(data.data.questions_id);
-            $("input[name='chapter']").val(data.data.chapter);
-            $("select[name='facility']").val(data.data.facility);
-            $("textarea[name='type']").val(data.data.type);
-            $("input[name='id']").val(data.data.id);
-            $("#imagesToUpdate").text("").attr("src",data.data.subject_img);
-
-            layer.open({
-                type: 1,
-                title: '试题预览',
-                area: ['100%', '100%'],
-                skin: 'yourclass',
-                content: $('#addInfo')
-            });
-        });
-            form.render();
-
-        });
-    }
-    function updateInfo_new() {
-        var id = $("input[name='id']").val();
-        var subject = $("textarea[name='subject']").val();
-        var option_a = $("input[name='option_a']").val();
-        var option_b = $("input[name='option_b']").val();
-        var option_c = $("input[name='option_c']").val();
-        var option_d = $("input[name='option_d']").val();
-        var correct = $("select[name='correct']").val();
-        var imagesToUpdate = $("input[name='file_img']").val();
-        var questions_id = $("select[name='questions_id']").val();
-        var chapter = $("input[name='chapter']").val();
-        var facility = $("select[name='facility']").val();
-        var type = $("textarea[name='type']").val();
-        $.post("${baseurl}/subject/updateSubjectById",{
-            id:id,
-            subject: subject,
-            optionA : option_a,
-            optionB: option_b,
-            optionC: option_c,
-            optionD: option_d,
-            correct: correct,
-            subjectImg: imagesToUpdate,
-            questionsId: questions_id,
-            chapter: chapter,
-            facility: facility,
-            type: type
-        },function (data) {
-            layer.msg(data.msg);
-        });
-    }
-    
-    function previewSubjectInfo(id) {
-
-
-        $.post("${baseurl}/subject/selectSubjectById",{id:id},function (data) {
-            var _html = "";
-            _html += `<fieldset class="layui-elem-field">
+                });
+            },
+            updateInfo_new: function () {
+                let id = $("input[name='id']").val();
+                let subject = $("textarea[name='subject']").val();
+                let option_a = $("input[name='option_a']").val();
+                let option_b = $("input[name='option_b']").val();
+                let option_c = $("input[name='option_c']").val();
+                let option_d = $("input[name='option_d']").val();
+                let correct = $("select[name='correct']").val();
+                let imagesToUpdate = $("input[name='file_img']").val();
+                let questions_id = $("select[name='questions_id']").val();
+                let chapter = $("input[name='chapter']").val();
+                let facility = $("select[name='facility']").val();
+                let type = $("textarea[name='type']").val();
+                $.post("${baseurl}/subject/updateSubjectById", {
+                    id: id,
+                    subject: subject,
+                    optionA: option_a,
+                    optionB: option_b,
+                    optionC: option_c,
+                    optionD: option_d,
+                    correct: correct,
+                    subjectImg: imagesToUpdate,
+                    questionsId: questions_id,
+                    chapter: chapter,
+                    facility: facility,
+                    type: type
+                }, function (data) {
+                    layer.msg(data.msg);
+                });
+            },
+            previewSubjectInfo: function (id) {
+                $.post("${baseurl}/subject/selectSubjectById", {id: id}, function (data) {
+                    let _html = "";
+                    _html += `<fieldset class="layui-elem-field">
         <legend>试题：</legend>
         <div class="layui-field-box">
             <b>题目：</b>
-            <p>`+data.data.subject+`</p>
+            <p>` + data.data.subject + `</p>
         </div>`;
-            if(data.data.subject_img !== ''){
-        _html+=`<div class="layui-field-box box">
-            <img width="300px" height="300px" src="`+data.data.subject_img+`"/><br>
+                    if (data.data.subject_img !== '') {
+                        _html += `<div class="layui-field-box box">
+            <img width="300px" height="300px" src="` + data.data.subject_img + `"/><br>
             <b>题目图片</b>
         </div>`;
-            }
-        _html += `<div class="layui-field-box">
-            <p> <b>选项A：</b>`+data.data.option_a +`</p>
+                    }
+                    _html += `<div class="layui-field-box">
+            <p> <b>选项A：</b>` + data.data.option_a + `</p>
         </div>
         <div class="layui-field-box">
 
-            <p><b>选项B：</b>`+data.data.option_b +`</p>
+            <p><b>选项B：</b>` + data.data.option_b + `</p>
         </div>
         <div class="layui-field-box">
 
-            <p><b>选项C：</b>`+data.data.option_c +`</p>
+            <p><b>选项C：</b>` + data.data.option_c + `</p>
         </div>
         <div class="layui-field-box">
 
-            <p><b>选项D：</b>`+data.data.option_d +`</p>
+            <p><b>选项D：</b>` + data.data.option_d + `</p>
         </div>
         <div class="layui-field-box">
             <b>正确选项：</b>
-            <p>`+data.data.correct +`</p>
+            <p>` + data.data.correct + `</p>
         </div>
     </fieldset>
     <fieldset class="layui-elem-field " style="margin-top: 20px;">
@@ -409,69 +404,74 @@
                 <th>题库</th>
                 <th>章节</th>
                 <th>难易度</th>
+                <th>备注</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>`+data.data.questionsName+`</td>
-                <td>`+data.data.chapter+`</td>
-                <td>`+data.data.facility+`</td>
+                <td>` + data.data.questionsName + `</td>
+                <td>` + data.data.chapter + `</td>
+                <td>` + data.data.facility + `</td>
+                <td>` + data.data.type + `</td>
             </tr>
             </tbody>
         </table>
     </fieldset>`;
-            $("#previewSubjectInfo").html(_html);
-            layer.open({
-                type: 1,
-                title: '试题预览',
-                area: ['100%', '100%'],
-                skin: 'yourclass',
-                content: $('#previewSubjectInfo')
-            });
-        });
-    }
+                    $("#previewSubjectInfo").html(_html);
+                    layer.open({
+                        type: 1,
+                        title: '试题预览',
+                        area: ['100%', '100%'],
+                        skin: 'yourclass',
+                        content: $('#previewSubjectInfo')
+                    });
+                });
+            },
+            addsingleEntryInfo: function () {
+                let subject = $("textarea[name='subject']").val();
+                let option_a = $("input[name='option_a']").val();
+                let option_b = $("input[name='option_b']").val();
+                let option_c = $("input[name='option_c']").val();
+                let option_d = $("input[name='option_d']").val();
+                let correct = $("select[name='correct']").val();
+                let imagesToUpdate = $("input[name='file_img']").val();
+                let questions_id = $("select[name='questions_id']").val();
+                let chapter = $("input[name='chapter']").val();
+                let facility = $("select[name='facility']").val();
+                let type = $("textarea[name='type']").val();
+                $.post("${baseurl}/subject/addSubject", {
+                    subject: subject,
+                    optionA: option_a,
+                    optionB: option_b,
+                    optionC: option_c,
+                    optionD: option_d,
+                    correct: correct,
+                    subjectImg: imagesToUpdate,
+                    questionsId: questions_id,
+                    chapter: chapter,
+                    facility: facility,
+                    type: type
+                }, function (data) {
+                    layer.msg(data.msg);
+                });
 
-    function addsingleEntryInfo() {
-       var subject = $("textarea[name='subject']").val();
-       var option_a = $("input[name='option_a']").val();
-       var option_b = $("input[name='option_b']").val();
-       var option_c = $("input[name='option_c']").val();
-       var option_d = $("input[name='option_d']").val();
-       var correct = $("select[name='correct']").val();
-        var imagesToUpdate = $("input[name='file_img']").val();
-        var questions_id = $("select[name='questions_id']").val();
-        var chapter = $("input[name='chapter']").val();
-       var facility = $("select[name='facility']").val();
-       var type = $("textarea[name='type']").val();
-       $.post("${baseurl}/subject/addSubject",{
-          subject: subject,
-          optionA : option_a,
-          optionB: option_b,
-          optionC: option_c,
-          optionD: option_d,
-          correct: correct,
-          subjectImg: imagesToUpdate,
-          questionsId: questions_id,
-          chapter: chapter,
-          facility: facility,
-          type: type
-       },function (data) {
-           layer.msg(data.msg);
-       });
-
-    }
-
-    //图片上传
-    layui.use('upload', function () {
-        layui.upload({
-            url: '${baseurl}/subject/updateImage' //上传接口
-            , success: function (res) { //上传成功后的回调
-                if (res.result) {
-                    $("#imagesToUpdate").text("").attr("src", HEAD_IMAGE_PREFIX + res.data);
-
-                    $("input[name='file_img']").val(HEAD_IMAGE_PREFIX + res.data);
-                }
             }
+        }
+        $(function () {
+            _subject.page();
+            //图片上传
+            layui.use('upload', function () {
+                layui.upload({
+                    url: '${baseurl}/subject/updateImage' //上传接口
+                    , success: function (res) { //上传成功后的回调
+                        if (res.result) {
+                            $("#imagesToUpdate").text("").attr("src", HEAD_IMAGE_PREFIX + res.data);
+
+                            $("input[name='file_img']").val(HEAD_IMAGE_PREFIX + res.data);
+                        }
+                    }
+                });
+            });
         });
     });
 
