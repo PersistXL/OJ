@@ -78,10 +78,11 @@
         </div>
     </div>
 </section>
-<div id="updatainfo" style="display: none;width: auto; margin-top: 20px;">
+<div id="addInfo" style="display: none;width: auto; margin-top: 20px;">
     <div>
         <form class="layui-form" action="">
             <div class="layui-form-item layui-form-text">
+                <input name = "id" hidden>
                 <label class="layui-form-label">题目：</label>
                 <div class="layui-input-inline" style="width: 50%">
                     <textarea placeholder="请输入题目" class="layui-textarea" name="subject"></textarea>
@@ -130,7 +131,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">正确选项：</label>
                 <div class="layui-input-inline">
-                    <select name="correct" lay-verify="required" lay-search="">
+                    <select name="correct" lay-verify="required" lay-search="" id="correct">
                         <option value="A">选项A</option>
                         <option value="B">选项B</option>
                         <option value="C">选项C</option>
@@ -169,8 +170,13 @@
 
             <div class="layui-form-item">
                 <label class="layui-form-label"></label>
-                <div class="layui-input-inline ">
+                <div class="layui-input-inline " id="add">
                     <button class="layui-btn" onclick="addsingleEntryInfo()">立即提交
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+                <div class="layui-input-inline " id="update">
+                    <button class="layui-btn" onclick="updateInfo_new()">更新提交
                     </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
@@ -179,6 +185,7 @@
         </form>
     </div>
 </div>
+
 <div id="previewSubjectInfo" style="display: none;" >
 </div>
 </body>
@@ -222,14 +229,14 @@
                             <td>
 
                                 <div class="layui-btn-group">
-                                    <shiro:hasPermission name="moduleThree:update">
-                                        <a class="layui-btn layui-btn-mini" >
+                                    <shiro:hasPermission name="moduleThree:update" >
+                                        <a class="layui-btn layui-btn-mini" onclick="updataInfo(`+data.data[i].id+`)" >
                                             <i class="layui-icon">&#xe642;</i>
                                             编辑
                                         </a>
                                     </shiro:hasPermission>
                                     <shiro:hasPermission name="moduleThree:delete">
-                                        <a class="layui-btn layui-btn-mini">
+                                        <a class="layui-btn layui-btn-mini" onclick="deleteSubjectInfo(`+data.data[i].id+`)">
                                             <i class="layui-icon">&#xe640;</i>
                                             删除
                                         </a>
@@ -261,22 +268,98 @@
     });
 
     function addsingleEntry() {
+        $("#update").hide();
+        $("#add").show();
         layer.open({
             type: 1,
             title: '录入题目',
             area: ['100%', '100%'],
             skin: 'yourclass',
-            content: $('#updatainfo')
+            content: $('#addInfo')
         });
     }
-    function previewSubjectInfo(id) {
-        layer.open({
-            type: 1,
-            title: '试题预览',
-            area: ['100%', '100%'],
-            skin: 'yourclass',
-            content: $('#previewSubjectInfo')
+    function deleteSubjectInfo(id) {
+
+        layer.confirm('是否删除信息？', function(index){
+            $.post("${baseurl}/subject/deleteSubjectById",{id:id},function (data) {
+                layer.msg(data.msg);
+                location.reload();
+            });
+            layer.close(index);
         });
+    }
+    function updataInfo(id) {
+        layui.use('form', function () {
+            var $ = layui.jquery, form = layui.form();
+        $.post("${baseurl}/subject/selectSubjectById",{id:id},function (data) {
+            $("#add").hide();
+            $("#update").show();
+
+            $("textarea[name='subject']").val(data.data.subject);
+            $("input[name='option_a']").val(data.data.option_a);
+            $("input[name='option_b']").val(data.data.option_b);
+            $("input[name='option_c']").val(data.data.option_c);
+            $("input[name='option_d']").val(data.data.option_d);
+            $("select[name='correct']").val(data.data.correct);
+            // var _html_correct ="";
+            // for(){
+            //
+            // }
+
+            // $("#correct").html();
+            $("input[name='file_img']").val(data.data.file_img);
+            $("select[name='questions_id']").val(data.data.questions_id);
+            $("input[name='chapter']").val(data.data.chapter);
+            $("select[name='facility']").val(data.data.facility);
+            $("textarea[name='type']").val(data.data.type);
+            $("input[name='id']").val(data.data.id);
+            $("#imagesToUpdate").text("").attr("src",data.data.subject_img);
+
+            layer.open({
+                type: 1,
+                title: '试题预览',
+                area: ['100%', '100%'],
+                skin: 'yourclass',
+                content: $('#addInfo')
+            });
+        });
+            form.render();
+
+        });
+    }
+    function updateInfo_new() {
+        var id = $("input[name='id']").val();
+        var subject = $("textarea[name='subject']").val();
+        var option_a = $("input[name='option_a']").val();
+        var option_b = $("input[name='option_b']").val();
+        var option_c = $("input[name='option_c']").val();
+        var option_d = $("input[name='option_d']").val();
+        var correct = $("select[name='correct']").val();
+        var imagesToUpdate = $("input[name='file_img']").val();
+        var questions_id = $("select[name='questions_id']").val();
+        var chapter = $("input[name='chapter']").val();
+        var facility = $("select[name='facility']").val();
+        var type = $("textarea[name='type']").val();
+        $.post("${baseurl}/subject/updateSubjectById",{
+            id:id,
+            subject: subject,
+            optionA : option_a,
+            optionB: option_b,
+            optionC: option_c,
+            optionD: option_d,
+            correct: correct,
+            subjectImg: imagesToUpdate,
+            questionsId: questions_id,
+            chapter: chapter,
+            facility: facility,
+            type: type
+        },function (data) {
+            layer.msg(data.msg);
+        });
+    }
+    
+    function previewSubjectInfo(id) {
+
 
         $.post("${baseurl}/subject/selectSubjectById",{id:id},function (data) {
             var _html = "";
@@ -338,6 +421,13 @@
         </table>
     </fieldset>`;
             $("#previewSubjectInfo").html(_html);
+            layer.open({
+                type: 1,
+                title: '试题预览',
+                area: ['100%', '100%'],
+                skin: 'yourclass',
+                content: $('#previewSubjectInfo')
+            });
         });
     }
 
