@@ -43,7 +43,7 @@
                                 </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody id="test_questions">
                                 <tr>
                                     <td>第一章测试题</td>
                                     <td>10</td>
@@ -86,13 +86,13 @@
                 });
                 form.render('checkbox');
             });
-            $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                console.log(data);
+                $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
+                // console.log(data.data[0]);
                 var _html = "";
                 for (var i = 0; i < data.data.length; i++) {
-                    _html = "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                    _html += '<tr><td>'+data.data[i].subjectId+'</td></tr>';
                 }
-                $("#questions_id").html(_html);
+                $("#test_questions").html(_html);
                 form.render();
             });
         });

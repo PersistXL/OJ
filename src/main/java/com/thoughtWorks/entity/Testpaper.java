@@ -1,35 +1,35 @@
 package com.thoughtWorks.entity;
 
 public class Testpaper {
-    private String subject_id;
-    private int classes_id;
-    private int teacher_id;
+    private String subjectId;
+    private int classesId;
+    private int teacherId;
     private String time;
     private String name;
     private double score;
 
-    public String getSubject_id() {
-        return subject_id;
+    public String getSubjectId() {
+        return subjectId;
     }
 
-    public void setSubject_id(String subject_id) {
-        this.subject_id = subject_id;
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
     }
 
-    public int getClasses_id() {
-        return classes_id;
+    public int getClassesId() {
+        return classesId;
     }
 
-    public void setClasses_id(int classes_id) {
-        this.classes_id = classes_id;
+    public void setClassesId(int classesId) {
+        this.classesId = classesId;
     }
 
-    public int getTeacher_id() {
-        return teacher_id;
+    public int getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacher_id(int teacher_id) {
-        this.teacher_id = teacher_id;
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getTime() {

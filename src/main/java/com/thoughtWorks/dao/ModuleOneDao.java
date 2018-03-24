@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface ModuleOneDao {
 
-    List<Testpaper> findQuestions();
+    List<Testpaper> findTestpaper();
 }

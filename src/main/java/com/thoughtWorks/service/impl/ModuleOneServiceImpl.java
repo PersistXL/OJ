@@ -15,7 +15,8 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
     @Autowired
     ModuleOneDao moduleOneDao;
     @Override
-    public List<Testpaper> findQuestions() throws Exception {
-        return moduleOneDao.findQuestions();
+    public List<Testpaper> findTestpaper() throws Exception {
+        List<Testpaper> list = moduleOneDao.findTestpaper();
+        return list;
     }
 }
