@@ -262,7 +262,6 @@
                     , jump: function (obj, first) {
                         //得到了当前页，用于向服务端请求对应数据
                         let curr = obj.curr;
-                        alert(curr)
                     }
                 });
             },
