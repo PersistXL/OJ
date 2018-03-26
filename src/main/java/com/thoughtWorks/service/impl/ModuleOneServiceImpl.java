@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Persist
@@ -15,8 +16,8 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
     @Autowired
     ModuleOneDao moduleOneDao;
     @Override
-    public List<Testpaper> findTestpaper() throws Exception {
-        List<Testpaper> list = moduleOneDao.findTestpaper();
+    public List<Map<String,Object>> findTestpaper() throws Exception {
+        List<Map<String,Object>> list = moduleOneDao.findTestpaper();
         return list;
     }
 }

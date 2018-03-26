@@ -3,6 +3,7 @@ package com.thoughtWorks.service;
 import com.thoughtWorks.entity.Testpaper;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ModuleOneService {
     /**
@@ -11,5 +12,5 @@ public interface ModuleOneService {
      * @throws Exception
      */
 
-    List<Testpaper> findTestpaper() throws Exception;
+    List<Map<String,Object>> findTestpaper() throws Exception;
 }

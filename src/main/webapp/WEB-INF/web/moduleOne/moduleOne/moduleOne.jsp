@@ -19,10 +19,41 @@
     <div class="larry-personal">
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-                <div class="layui-collapse" lay-filter="test" style="margin-top:20px;">
-                <div class="layui-colla-item" id="class_id_test">
-                    <h2 class="layui-colla-title">班课A<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">4</p></span></h2>
-                    <div class="layui-colla-content">
+                <div class="layui-collapse" lay-filter="test" style="margin-top:20px;" id="notice">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="${baseurl}/public/js/layui/layui.js" charset="utf-8"></script>
+<script>
+    //动态拼接测试题信息
+    $(function () {
+        layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree', 'layedit'], function () {
+            window.jQuery = window.$ = layui.jquery;
+            window.layer = layui.layer;
+
+            var element = layui.element(),
+                form = layui.form(),
+                layedit = layui.layedit,
+                laytpl = layui.laytpl;
+
+            //全选
+            form.on('checkbox(allChoose)', function (data) {
+                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                child.each(function (index, item) {
+                    item.checked = data.elem.checked;
+                });
+                form.render('checkbox');
+            });
+                $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
+                    console.log(data);
+                    var _html ="";
+                    for(var i = 0;i<data.data.length;i++){
+                        _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h2 class="layui-colla-title">班课：`+data.data[i].name+`<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">4</p></span></h2>
+                                            <div class="layui-colla-content">
                         <div class="layui-form">
                             <table class="layui-table">
                                 <colgroup>
@@ -45,7 +76,7 @@
 
                                 <tbody id="test_questions">
                                 <tr>
-                                    <td>第一章测试题</td>
+                                    <td>12312312312132</td>
                                     <td>10</td>
                                     <td>未评分</td>
                                     <td>开放</td>
@@ -59,41 +90,10 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<script src="${baseurl}/public/js/layui/layui.js" charset="utf-8"></script>
-<script>
-    //折叠面板
-    layui.use(['element', 'layer'], function(){
-        var element = layui.element();
-        var layer = layui.layer;
-    });
-    //动态拼接测试题信息
-    $(function () {
-        layui.use('form', function () {
-            var $ = layui.jquery, form = layui.form();
-
-            //全选
-            form.on('checkbox(allChoose)', function (data) {
-                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-                child.each(function (index, item) {
-                    item.checked = data.elem.checked;
-                });
-                form.render('checkbox');
-            });
-                $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                // console.log(data.data[0]);
-                var _html = "";
-                for (var i = 0; i < data.data.length; i++) {
-                    _html += '<tr><td>'+data.data[i].subjectId+'</td></tr>';
-                }
-                $("#test_questions").html(_html);
-                form.render();
+                    </div></div>`);
+                    }
+                    $("#notice").html(_html)
+                    element.init();
             });
         });
     });
