@@ -11,7 +11,7 @@
     <!--</insert>-->
 
     <select id="findTestpaper" resultType="map">
-        SELECT o_testpaper.classes_id,o_classes.name
+        SELECT o_testpaper.*,o_classes.name ClassName
         FROM o_testpaper,o_classes WHERE classes_id=o_classes.id;
     </select>
     <!--<update id="update" parameterType="Role">-->

@@ -52,7 +52,9 @@
                     console.log(data);
                     var _html ="";
                     for(var i = 0;i<data.data.length;i++){
-                        _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h2 class="layui-colla-title">班课：`+data.data[i].name+`<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">4</p></span></h2>
+                        var s = data.data[i].subject_id;
+                        console.log(s)
+                        _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h2 class="layui-colla-title">班课：`+data.data[i].ClassName+`<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">4</p></span></h2>
                                             <div class="layui-colla-content">
                         <div class="layui-form">
                             <table class="layui-table">
@@ -76,8 +78,8 @@
 
                                 <tbody id="test_questions">
                                 <tr>
-                                    <td>12312312312132</td>
-                                    <td>10</td>
+                                    <td>`+data.data[i].name+`</td>
+                                    <td>`+s.split("-").length+`</td>
                                     <td>未评分</td>
                                     <td>开放</td>
                                     <td>
