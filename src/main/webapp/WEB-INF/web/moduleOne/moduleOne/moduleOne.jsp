@@ -54,45 +54,66 @@
                     for(var i = 0;i<data.data.length;i++){
                         var s = data.data[i].subject_id;
                         console.log(s)
-                        _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h2 class="layui-colla-title">班课：`+data.data[i].ClassName+`<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">4</p></span></h2>
-                                            <div class="layui-colla-content">
-                        <div class="layui-form">
-                            <table class="layui-table">
-                                <colgroup>
-                                    <col width="200">
-                                    <col width="200">
-                                    <col width="200">
-                                    <col width="200">
-                                    <col width="200">
-                                </colgroup>
+                        var score=data.data[i].testpaper_student_score;
+                        console.log(score)
+                        if(score!=null)
+                        {
+                            score=score;
+                            var q="";
+                        }else{
+                            score="未答题";
+                            q="!";
+                        }
+                        var d2=new Date();
+                        var d1=data.data[i].close_time;
+                        if(d1>=d2){
+                            var status = "开放";
+                        }else{
+                            status="已截至";
+                        }
+                        _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h2 class="layui-colla-title">班课：`
+                            +data.data[i].ClassName+`<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">`
+                              +q
+                                +`</p></span></h2>
+                                <div class="layui-colla-content">
+                                    <div class="layui-form">
+                                        <table class="layui-table">
+                                            <colgroup>
+                                                <col width="200">
+                                                <col width="200">
+                                                <col width="200">
+                                                <col width="200">
+                                                <col width="200">
+                                            </colgroup>
 
-                                <thead>
-                                <tr>
-                                    <th>测试名称</th>
-                                    <th>题目数量</th>
-                                    <th>成绩</th>
-                                    <th>状态</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
+                                            <thead>
+                                            <tr>
+                                                <th>测试名称</th>
+                                                <th>题目数量</th>
+                                                <th>成绩</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
 
-                                <tbody id="test_questions">
-                                <tr>
-                                    <td>`+data.data[i].name+`</td>
-                                    <td>`+s.split("-").length+`</td>
-                                    <td>未评分</td>
-                                    <td>开放</td>
-                                    <td>
-                                        <a class="layui-btn  layui-btn-small layui-btn-normal">
-                                            <i class="layui-icon">&#xe642;</i> 答题</a>
-                                        <a class="layui-btn  layui-btn-small">
-                                            <i class="layui-icon">&#xe60a;</i>预览</a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div></div>`);
+                                            <tbody id="test_questions">
+                                            <tr>
+                                                <td>`+data.data[i].name+`</td>
+                                                <td>`+s.split("-").length+`</td>
+                                                <td>`+score+`</td>
+                                                <td>`+status+`</td>
+                                                <td>
+                                                    <a class="layui-btn  layui-btn-small layui-btn-normal">
+                                                        <i class="layui-icon">&#xe642;</i> 答题</a>
+                                                    <a class="layui-btn  layui-btn-small">
+                                                        <i class="layui-icon">&#xe60a;</i>预览</a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>`);
                     }
                     $("#notice").html(_html)
                     element.init();
