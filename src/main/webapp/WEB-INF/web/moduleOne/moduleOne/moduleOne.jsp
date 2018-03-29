@@ -14,7 +14,9 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
+<div id="view" style="display: none">
 
+</div>
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -69,7 +71,7 @@
                         if(d1>=d2){
                             var status = "开放";
                         }else{
-                            status="已截至";
+                            status="已截止";
                         }
                         _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h2 class="layui-colla-title">班课：`
                             +data.data[i].ClassName+`<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">`
@@ -99,12 +101,12 @@
                                             <tbody id="test_questions">
                                             <tr>
                                                 <td>`+data.data[i].name+`</td>
-                                                <td>`+s.split("-").length+`</td>
+                                                <td>`+s.split("_").length+`</td>
                                                 <td>`+score+`</td>
                                                 <td>`+status+`</td>
                                                 <td>
-                                                    <a class="layui-btn  layui-btn-small layui-btn-normal">
-                                                        <i class="layui-icon">&#xe642;</i> 答题</a>
+                                                    <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(`+data.data[i].id +`)">
+                                                        <i class="layui-icon">&#xe642;</i>答题</a>
                                                     <a class="layui-btn  layui-btn-small">
                                                         <i class="layui-icon">&#xe60a;</i>预览</a>
                                                 </td>
@@ -115,11 +117,27 @@
                                 </div>
                             </div>`);
                     }
-                    $("#notice").html(_html)
+                    $("#notice").html(_html);
+
+
                     element.init();
-            });
+                 });
         });
     });
+    function work(id){
+
+        $.post("${baseurl}/moduleOne/selectTestpaperById",{id : id}, function (data){
+            console.log(data)
+
+
+        });
+        layer.open({
+            type: 1,
+            title:"在线答题",
+            area:["100%","100%"],
+            content: $('#view')
+        });
+    }
 </script>
 </body>
 </html>

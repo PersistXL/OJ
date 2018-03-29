@@ -13,4 +13,6 @@ public interface ModuleOneService {
      */
 
     List<Map<String,Object>> findTestpaper() throws Exception;
+
+    List<Map<String,Object>> selectTestpaperById(int id);
 }
