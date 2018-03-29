@@ -10,9 +10,9 @@
     <!--</foreach>-->
     <!--</insert>-->
 
-    <select id="findQuestions" resultType="Testpaper">
-        SELECT *
-        FROM o_testpaper
+    <select id="findTestpaper" resultType="map">
+        SELECT o_testpaper.classes_id,o_classes.name
+        FROM o_testpaper,o_classes WHERE classes_id=o_classes.id;
     </select>
     <!--<update id="update" parameterType="Role">-->
     <!--UPDATE t_role-->

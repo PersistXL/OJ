@@ -27,7 +27,7 @@ public class ModuleOneController {
     @ResponseBody
     public Result findTestpaper(){
         try{
-        return Result.success(moduleOneService.findQuestions(), Constant.SEARCH_SUCCESS);
+        return Result.success(moduleOneService.findTestpaper(), Constant.SEARCH_SUCCESS);
         }catch (Exception e){
            e.printStackTrace();
         }
