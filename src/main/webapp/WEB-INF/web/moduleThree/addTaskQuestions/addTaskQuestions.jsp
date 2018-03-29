@@ -35,12 +35,11 @@
 <section class="larry-grid" style="width: 49% ;float: left">
     <div class="larry-personal">
         <div class="layui-tab">
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>我选择的试题</legend>
-            </fieldset>
             <div class="larry-separate"></div>
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>我选择的试题</legend>
+                </fieldset>
                 <div class="layui-form">
                     <table class="layui-table">
                         <colgroup>
@@ -77,15 +76,14 @@
         </div>
     </div>
 </section>
-<section class="larry-grid" style="width: 49% ;float: right
-">
+<section class="larry-grid" style="width: 49% ;float: right">
     <div class="larry-personal">
         <div class="layui-tab">
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                <legend>题库</legend>
-            </fieldset>
             <div class="larry-separate"></div>
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>题库</legend>
+                </fieldset>
                 <blockquote class="layui-elem-quote mylog-info-tit" style="height: 120px;">
                     <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
                             <div class="layui-input-inline">
@@ -166,9 +164,7 @@
 
         </div>
     </div>
-</section  style="width: 49%
-;
-    float: left">
+</section  style="width: 49%;float: left">
 <div id="previewSubjectInfo" style="display: none;">
 </div>
 </body>
