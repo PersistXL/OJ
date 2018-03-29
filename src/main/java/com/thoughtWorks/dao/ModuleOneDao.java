@@ -11,4 +11,8 @@ import java.util.Map;
 public interface ModuleOneDao {
 
     List<Map<String,Object>> findTestpaper();
+
+    Testpaper selectTestpaperById(int id);
+
+    List<Map<String,Object>> selectSubjectfromid(List list);
 }

@@ -11,8 +11,20 @@
     <!--</insert>-->
 
     <select id="findTestpaper" resultType="map">
-        SELECT o_testpaper.classes_id,o_classes.name
-        FROM o_testpaper,o_classes WHERE classes_id=o_classes.id;
+        SELECT o_testpaper.*,o_classes.name ClassName,o_student_testpaper.*
+        FROM o_testpaper,o_classes,o_student_testpaper WHERE classes_id=o_classes.id AND o_testpaper.id=o_student_testpaper.testpaper_id;
+    </select>
+    <select id="selectTestpaperById" resultType="Testpaper" parameterType="int">
+        SELECT *
+        FROM o_testpaper WHERE id=#{id};
+    </select>
+
+    <select id="selectSubjectfromid" resultType="map">
+        SELECT * from oj.o_subject where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
     <!--<update id="update" parameterType="Role">-->
     <!--UPDATE t_role-->
