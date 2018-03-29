@@ -21,7 +21,7 @@
             and questions_id = #{questionsId}
         </if>
         <if test=" chapter !=''and chapter !=null">
-            and chapter = #{chapter}
+            and chapter like "%"#{chapter}"%"
         </if>
         <if test=" facility !=''and facility !=null">
             and facility = #{facility}
