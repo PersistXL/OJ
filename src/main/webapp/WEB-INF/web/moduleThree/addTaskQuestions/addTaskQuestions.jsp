@@ -164,7 +164,7 @@
 
         </div>
     </div>
-</section  style="width: 49%;float: left">
+</section>
 <div id="previewSubjectInfo" style="display: none;">
 </div>
 </body>
