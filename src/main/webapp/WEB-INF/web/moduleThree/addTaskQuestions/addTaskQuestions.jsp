@@ -35,12 +35,12 @@
 <section class="larry-grid" style="width: 49% ;float: left">
     <div class="larry-personal">
         <div class="layui-tab">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>我选择的试题</legend>
+            </fieldset>
             <div class="larry-separate"></div>
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-                <shiro:hasPermission name="moduleThree:update">
-                    <a class="layui-btn" onclick="_subject.addsingleEntry()"><i class="layui-icon">&#xe621;</i>单个录入</a>
-                    <a class="layui-btn"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
-                </shiro:hasPermission>
+
                 <div class="layui-form">
                     <table class="layui-table">
                         <colgroup>
@@ -61,63 +61,95 @@
                         <tr>
                             <th>编号</th>
                             <th>题目</th>
-                            <th>选项A</th>
-                            <th>选项B</th>
-                            <th>选项C</th>
-                            <th>选项D</th>
-                            <th>正确选项</th>
                             <th>题库</th>
                             <th>章节</th>
                             <th>难易度</th>
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody id="subject_info">
+                        <tbody id="">
 
                         </tbody>
                     </table>
                 </div>
-                <div id="demo1"></div>
             </div>
 
         </div>
     </div>
 </section>
-<section class="larry-grid"  style="width: 49% ;float: right
+<section class="larry-grid" style="width: 49% ;float: right
 ">
     <div class="larry-personal">
         <div class="layui-tab">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>题库</legend>
+            </fieldset>
             <div class="larry-separate"></div>
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-                <shiro:hasPermission name="moduleThree:update">
-                    <a class="layui-btn" onclick="_subject.addsingleEntry()"><i class="layui-icon">&#xe621;</i>单个录入</a>
-                    <a class="layui-btn"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
-                </shiro:hasPermission>
+                <blockquote class="layui-elem-quote mylog-info-tit" style="height: 120px;">
+                    <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <select name="select_questions" id="select_questions" lay-filter="modules_1"
+                                                lay-verify="required" lay-search=""
+                                        >
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <select name="select_facility" lay-filter="modules_1" lay-verify="required"
+                                                lay-search="">
+                                            <option value="">请选择</option>
+                                            <option value="">请选择</option>
+                                            <option value="简单">简单</option>
+                                            <option value="较易">较易</option>
+                                            <option value="一般">一般</option>
+                                            <option value="较难">较难</option>
+                                            <option value="困难">困难</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="select_chapter"
+                                               autocomplete="off"
+                                               placeholder="请输入知识点" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-input-inline">
+                                <div class="layui-inline">
+                                    <a class="layui-btn" onclick="currentIndex = 1;_subject.page()"><i
+                                            class="layui-icon">&#xe615;</i>搜索</a>
+                                </div>
+                            </div>
+                    </form>
+                </blockquote>
                 <div class="layui-form">
                     <table class="layui-table">
                         <colgroup>
                             <col width="70">
-                            <col width="250">
+                            <col width="150">
                             <col width="100">
                             <col width="100">
                             <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="">
-                            <col width="100">
-                            <col width="100">
-                            <col width="270">
+                            <col width="150">
                         </colgroup>
 
                         <thead>
                         <tr>
                             <th>编号</th>
                             <th>题目</th>
-                            <th>选项A</th>
-                            <th>选项B</th>
-                            <th>选项C</th>
-                            <th>选项D</th>
-                            <th>正确选项</th>
                             <th>题库</th>
                             <th>章节</th>
                             <th>难易度</th>
@@ -134,7 +166,9 @@
 
         </div>
     </div>
-</section  style="width: 49% ;float: left">
+</section  style="width: 49%
+;
+    float: left">
 <div id="previewSubjectInfo" style="display: none;">
 </div>
 </body>
@@ -148,50 +182,46 @@
             laytpl = layui.laytpl;
         _subject = {
             page: function () {
-                $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "";
+                var select_questions = $("select[name='select_questions']").val();
+                var select_facility = $("select[name='select_facility']").val();
+                var select_chapter = $("input[name='select_chapter']").val();
+
+                $.post("${baseurl}/subject/selectQuestions", {
+                    questionsId: select_questions,
+                    chapter: select_chapter,
+                    facility: select_facility
+                }, function (data) {
+                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
                     $("#questions_id").html(_html);
+                    $("#select_questions").html(_html);
                     form.render();
                 });
 
-                $.post("${baseurl}/subject/selectSubject", function (data) {
+                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility}, function (data) {
                     _subject.paging();
                     let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += `<tr>
                             <td>` + (i + 1) + `</td>
                             <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_a + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_b + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_c + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_d + `</span></td>
-                            <td>` + data.data[i].correct + `</td>
                             <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
                             <td>` + data.data[i].chapter + `</td>
                             <td>` + data.data[i].facility + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
-                                    <shiro:hasPermission name="moduleThree:update" >
-                                        <a class="layui-btn layui-btn-mini" onclick="_subject.updataInfo(` + data.data[i].id + `)" >
-                                            <i class="layui-icon">&#xe642;</i>
-                                            编辑
-                                        </a>
-                                    </shiro:hasPermission>
-                                    <shiro:hasPermission name="moduleThree:delete">
-                                        <a class="layui-btn layui-btn-mini" onclick="_subject.deleteSubjectInfo(` + data.data[i].id + `)">
-                                            <i class="layui-icon">&#xe640;</i>
-                                            删除
-                                        </a>
-                                    </shiro:hasPermission>
-                                    <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
+                                    <a class="layui-btn layui-btn-mini" onclick="">
+                                        <i class="layui-icon">&#xe602;</i>
+                                        选择
+                                    </a>
+                                </div>
+                                <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
-                                </div>
                             </td>
                         </tr>`;
                     }
