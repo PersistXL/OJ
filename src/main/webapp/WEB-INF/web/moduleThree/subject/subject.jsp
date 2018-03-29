@@ -35,12 +35,62 @@
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
-            <div class="larry-separate"></div>
+            <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
+                <blockquote class="layui-elem-quote mylog-info-tit" style="height: 70px;">
+
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <select name="select_questions" id = "select_questions" lay-filter="modules_1" lay-verify="required" lay-search=""
+                                       >
+                                        <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <select name="select_facility" lay-filter="modules_1" lay-verify="required" lay-search="">
+                                    <option value="">请选择</option>
+                                    <option value="">请选择</option>
+                                    <option value="简单">简单</option>
+                                    <option value="较易">较易</option>
+                                    <option value="一般">一般</option>
+                                    <option value="较难">较难</option>
+                                    <option value="困难">困难</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                    <input type="text" name="select_chapter"
+                                           autocomplete="off"
+                                           placeholder="请输入知识点" class="layui-input" >
+                                </div>
+                            </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <div class="layui-inline">
+                            <a class="layui-btn" onclick="currentIndex = 1;_subject.page()"><i
+                                    class="layui-icon">&#xe615;</i>搜索</a>
+                            <shiro:hasPermission name="moduleThree:update">
+                                <a class="layui-btn" onclick="_subject.addsingleEntry()"><i class="layui-icon">&#xe621;</i>单个录入</a>
+                                <a class="layui-btn"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
+                            </shiro:hasPermission>
+                        </div>
+                    </div>
+
+                </blockquote>
+            </form>
+
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-                <shiro:hasPermission name="moduleThree:update">
-                    <a class="layui-btn" onclick="_subject.addsingleEntry()"><i class="layui-icon">&#xe621;</i>单个录入</a>
-                    <a class="layui-btn"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
-                </shiro:hasPermission>
+
                 <div class="layui-form">
                     <table class="layui-table">
                         <colgroup>
@@ -67,7 +117,7 @@
                             <th>选项D</th>
                             <th>正确选项</th>
                             <th>题库</th>
-                            <th>章节</th>
+                            <th>知识点</th>
                             <th>难易度</th>
                             <th>操作</th>
                         </tr>
@@ -150,9 +200,9 @@
 
                     </select>
                 </div>
-                <label class="layui-form-label">章节：</label>
+                <label class="layui-form-label">知识点：</label>
                 <div class="layui-input-inline">
-                    <input name="chapter" required lay-verify="required" placeholder="章节" autocomplete="off"
+                    <input name="chapter" required lay-verify="required" placeholder="请输入知识点关键字" autocomplete="off"
                            class="layui-input">
                 </div>
                 <label class="layui-form-label">难易度：</label>
@@ -203,16 +253,20 @@
             laytpl = layui.laytpl;
         _subject = {
             page: function () {
+               var select_questions = $("select[name='select_questions']").val();
+               var select_facility = $("select[name='select_facility']").val();
+               var select_chapter = $("input[name='select_chapter']").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "";
+                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
                     $("#questions_id").html(_html);
+                    $("#select_questions").html(_html);
                     form.render();
                 });
 
-                $.post("${baseurl}/subject/selectSubject", function (data) {
+                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility}, function (data) {
                     _subject.paging();
                     let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
@@ -401,7 +455,7 @@
             <thead>
             <tr>
                 <th>题库</th>
-                <th>章节</th>
+                <th>知识点</th>
                 <th>难易度</th>
                 <th>备注</th>
             </tr>

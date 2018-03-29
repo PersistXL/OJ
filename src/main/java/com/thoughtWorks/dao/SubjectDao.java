@@ -25,7 +25,7 @@ public interface SubjectDao {
      * 查询所有试题信息
      * @return
      */
-    List<Map<String,Object>> selectSubject();
+    List<Map<String,Object>> selectSubject(Subject subject);
 
     /**
      * 通过ID查询试题信息

@@ -14,9 +14,18 @@
         SELECT *
         FROM o_questions
     </select>
-    <select id="selectSubject" resultType="map">
+    <select id="selectSubject" resultType="map" parameterType="Subject">
         SELECT o_subject.*,o_questions.name questionsName
         FROM o_subject,o_questions where questions_id = o_questions.id
+        <if test=" questionsId !=''and questionsId != null">
+            and questions_id = #{questionsId}
+        </if>
+        <if test=" chapter !=''and chapter !=null">
+            and chapter = #{chapter}
+        </if>
+        <if test=" facility !=''and facility !=null">
+            and facility = #{facility}
+        </if>
     </select>
     <select id="selectSubjectById" resultType="map" parameterType="int">
         SELECT o_subject.*,o_questions.name questionsName

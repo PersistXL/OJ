@@ -64,9 +64,9 @@ public class SubjectController {
     }
     @RequestMapping("/selectSubject")
     @ResponseBody
-    public Result selectSubject() {
+    public Result selectSubject(Subject subject) {
         try {
-            return Result.success(subjectDao.selectSubject(), Constant.SEARCH_SUCCESS);
+            return Result.success(subjectDao.selectSubject(subject), Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
