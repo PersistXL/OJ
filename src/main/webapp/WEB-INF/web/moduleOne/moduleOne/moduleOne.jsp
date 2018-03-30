@@ -14,9 +14,10 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
-<div id="view" style="display: none">
+<div id="view" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px" >
 
 </div>
+
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -128,13 +129,46 @@
 
         $.post("${baseurl}/moduleOne/selectTestpaperById",{id : id}, function (data){
             console.log(data)
+            var _html = "";
+            for(var i=0;i<data.data.length;i++) {
+                var subject = data.data[i].subject
+                console.log(subject)
+                _html += (`<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+                                <legend>试题`+(i+1)+`：</legend>
+                                <div class="layui-field-box">
+                                    <b>题目：</b>
+                                    <p>` + data.data[i].subject + `</p>
+                                </div>`);
+                                            if (data.data[i].subject_img !== '') {
+                                                _html += (`<b style="margin-left: 17px">题目图片</b>
+                                                    <div class="layui-field-box box">
+                                    <img width="300px" height="300px" src="` + data.data[i].subject_img +`"/><br>
+                                </div>`)
+                                            }
+                                            _html +=( `<div class="layui-field-box">
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"> <b>选项A：</b>` + data.data[i].option_a + `</label>
+                                </div>
+                                <div class="layui-field-box">
 
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"> <b>选项B：</b>` + data.data[i].option_b + `</label>
+                                </div>
+                                <div class="layui-field-box">
 
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"><b>选项C：</b>` + data.data[i].option_c + `</label>
+                                </div>
+                                <div class="layui-field-box">
+
+                                    <label><b><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`">选项D：</b>` + data.data[i].option_d + `</label>
+                                </div>
+                    </fieldset>`);
+                $("#view").html(_html);;
+            }
         });
         layer.open({
             type: 1,
             title:"在线答题",
             area:["100%","100%"],
+            skin: 'yourclass',
             content: $('#view')
         });
     }
