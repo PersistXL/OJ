@@ -30,6 +30,7 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
         String subject[] = sub.split("_");
 //        System.out.println(Arrays.toString(subject));
         List list = new ArrayList();
+        
         for(String item:subject){
             list.add(item);
         }

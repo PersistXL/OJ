@@ -10,9 +10,23 @@ import java.util.Map;
  */
 public interface ModuleOneDao {
 
+    /**
+     * 查询试卷表
+     * @return
+     */
     List<Map<String,Object>> findTestpaper();
 
+    /**
+     * 通过id查询subject_id
+     * @param id
+     * @return
+     */
     Testpaper selectTestpaperById(int id);
 
+    /**
+     * 通过subject_id查询subject值
+     * @param list
+     * @return
+     */
     List<Map<String,Object>> selectSubjectfromid(List list);
 }
