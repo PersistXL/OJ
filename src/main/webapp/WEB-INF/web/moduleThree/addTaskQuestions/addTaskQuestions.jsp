@@ -40,36 +40,80 @@
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                     <legend>我选择的试题</legend>
                 </fieldset>
+                <form  lay-filter="role-add" class="layui-form layui-form-pane" method="post">
+                <div class="layui-input-inline">
+                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷名称</label>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" name=""
+                                   autocomplete="off"
+                                   placeholder="请输入试卷名称" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷类型</label>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" name=""
+                                   autocomplete="off"
+                                   placeholder="请输入试卷类型" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷时长</label>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" name=""
+                                   autocomplete="off"
+                                   placeholder="请输入时长（单位/分钟）" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" name=""
+                                   autocomplete="off"
+                                   placeholder="请输入分数" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                </form>
                 <div class="layui-form">
                     <table class="layui-table">
-                        <colgroup>
-                            <col width="70">
-                            <col width="250">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="">
-                            <col width="100">
-                            <col width="100">
-                            <col width="270">
-                        </colgroup>
-
                         <thead>
                         <tr>
                             <th>编号</th>
                             <th>题目</th>
                             <th>题库</th>
-                            <th>章节</th>
+                            <th>知识点</th>
                             <th>难易度</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="">
-
+                        <th>1</th>
+                        <th>骨学试题</th>
+                        <th>第一章骨学</th>
+                        <th>骨学、肌肉</th>
+                        <th>简单</th>
+                        <th>
+                            <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
+                                <i class="layui-icon">&#xe602;</i>
+                                移除
+                            </a>
+                        </th>
                         </tbody>
                     </table>
+                </div>
+                <div class="layui-input-inline">
+                    <div class="layui-inline">
+                        <a class="layui-btn" onclick=""><i
+                                class="layui-icon">&#xe602;</i>完成创建</a>
+                    </div>
                 </div>
             </div>
 
@@ -149,7 +193,7 @@
                             <th>编号</th>
                             <th>题目</th>
                             <th>题库</th>
-                            <th>章节</th>
+                            <th>知识点</th>
                             <th>难易度</th>
                             <th>操作</th>
                         </tr>
