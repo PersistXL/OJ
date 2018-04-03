@@ -126,13 +126,11 @@
         });
     });
     function work(id){
-
         $.post("${baseurl}/moduleOne/selectTestpaperById",{id : id}, function (data){
             console.log(data)
             var _html = "";
             for(var i=0;i<data.data.length;i++) {
                 var subject = data.data[i].subject
-                console.log(subject)
                 _html += (`<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
                                 <legend>试题`+(i+1)+`：</legend>
                                 <div class="layui-field-box">
@@ -146,23 +144,24 @@
                                 </div>`)
                                             }
                                             _html +=( `<div class="layui-field-box">
-                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"> <b>选项A：</b>` + data.data[i].option_a + `</label>
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="a"> <b>选项A：</b></label>` + data.data[i].option_a + `
                                 </div>
                                 <div class="layui-field-box">
 
-                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"> <b>选项B：</b>` + data.data[i].option_b + `</label>
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="b"> <b>选项B：</b></label>` + data.data[i].option_b + `
                                 </div>
                                 <div class="layui-field-box">
 
-                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"><b>选项C：</b>` + data.data[i].option_c + `</label>
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="c"><b>选项C：</b></label>` + data.data[i].option_c + `
                                 </div>
                                 <div class="layui-field-box">
 
-                                    <label><b><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`">选项D：</b>` + data.data[i].option_d + `</label>
+                                    <label><b><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="d">选项D：</b></label>` + data.data[i].option_d + `
                                 </div>
                     </fieldset>`);
-                $("#view").html(_html);;
             }
+            _html += `<input type="button" style="margin-left: 50%" value="交卷" class="layui-btn layui-btn-radius" onclick="examination_paper()">`
+            $("#view").html(_html);
         });
         layer.open({
             type: 1,
@@ -172,6 +171,9 @@
             content: $('#view')
         });
     }
+   function examination_paper(){
+       alert(document.getElementsByName("id"))
+    };
 </script>
 </body>
 </html>
