@@ -20,6 +20,12 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+    .hide_title1 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
 
     fieldset {
         margin: 10px 50px;
@@ -39,7 +45,7 @@
                 <blockquote class="layui-elem-quote mylog-info-tit" style="height: 70px;">
 
                     <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
                                 <select name="select_questions" id = "select_questions" lay-filter="modules_1" lay-verify="required" lay-search=""
@@ -94,17 +100,17 @@
                 <div class="layui-form">
                     <table class="layui-table">
                         <colgroup>
-                            <col width="70">
+                            <col width="60">
                             <col width="250">
                             <col width="100">
                             <col width="100">
                             <col width="100">
                             <col width="100">
                             <col width="100">
-                            <col width="">
                             <col width="100">
                             <col width="100">
-                            <col width="270">
+                            <col width="100">
+                            <col width="230">
                         </colgroup>
 
                         <thead>
@@ -245,6 +251,9 @@
 </body>
 <script type="text/javascript">
     let _subject;
+    let totalSize = 5;
+    let currentIndex = 1;
+    let pageSize = 10;
     layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree'], function () {
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
@@ -266,7 +275,10 @@
                     form.render();
                 });
 
-                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility}, function (data) {
+                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility,currentIndex: currentIndex, pageSize: pageSize}, function (data) {
+                    _subject.paging();
+                    currentIndex = data.page.currentIndex;
+                    totalSize = data.page.totalSize;
                     _subject.paging();
                     let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
@@ -278,8 +290,8 @@
                             <td><span class = "hide_title">` + data.data[i].option_c + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].option_d + `</span></td>
                             <td>` + data.data[i].correct + `</td>
-                            <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
-                            <td>` + data.data[i].chapter + `</td>
+                            <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
+                            <td >` + data.data[i].chapter + `</td>
                             <td>` + data.data[i].facility + `</td>
                             <td>
 
@@ -310,12 +322,17 @@
             },
             paging: function () {
                 layui.laypage({
-                    cont: 'demo1'
-                    , pages: 100 //分页的总页数
-                    , groups: 5 //连续显示分页数
-                    , jump: function (obj, first) {
-                        //得到了当前页，用于向服务端请求对应数据
-                        let curr = obj.curr;
+                    cont: 'demo1',
+                    pages: totalSize, //总页数
+                    last: totalSize,
+                    curr: currentIndex,
+                    groups: 5,//连续显示分页数
+                    skin: '#1E9FFF',
+                    jump: function (obj, first) {
+                        currentIndex = obj.curr;
+                        if (!first) {
+                            _subject.page();
+                        }
                     }
                 });
             },

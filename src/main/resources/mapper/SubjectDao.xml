@@ -14,9 +14,10 @@
         SELECT *
         FROM o_questions
     </select>
-    <select id="selectSubject" resultType="map" parameterType="Subject">
-        SELECT o_subject.*,o_questions.name questionsName
-        FROM o_subject,o_questions where questions_id = o_questions.id
+    <select id="querySubjectTotalCount" resultType="long" parameterType="subject">
+        SELECT count(1)
+        FROM o_subject
+        <where>
         <if test=" questionsId !=''and questionsId != null">
             and questions_id = #{questionsId}
         </if>
@@ -26,18 +27,34 @@
         <if test=" facility !=''and facility !=null">
             and facility = #{facility}
         </if>
+        </where>
+    </select>
+    <select id="selectSubject" resultType="map" parameterType="map">
+        SELECT o_subject.*,o_questions.name questionsName
+        FROM o_subject,o_questions where questions_id = o_questions.id
+        <if test=" subject.questionsId !=''and subject.questionsId != null">
+            and questions_id = #{subject.questionsId}
+        </if>
+        <if test=" subject.chapter !=''and subject.chapter !=null">
+            and chapter like "%"#{subject.chapter}"%"
+        </if>
+        <if test=" subject.facility !=''and subject.facility !=null">
+            and facility = #{subject.facility}
+        </if>
+        limit #{start},#{end}
     </select>
     <select id="selectSubjectById" resultType="map" parameterType="int">
         SELECT o_subject.*,o_questions.name questionsName
         FROM o_subject,o_questions where questions_id = o_questions.id and o_subject.id = #{id}
     </select>
+
     <delete id="deleteSubjectById" parameterType="int">
         delete FROM o_subject where id = #{id}
     </delete>
     <update id="updateSubjectById" parameterType="Subject">
         UPDATE o_subject
         SET subject=#{subject},subject_img=#{subjectImg},option_a=#{optionA},option_b=#{optionB},
-        option_c=#{optionC},option_d=#{optionD},correct=#{correct},questions_id=#{questionsId},
+        option_c=#{optionC},option_d=#{optionD},correct=#{correct},questions_id=#{subject.questionsId},
         chapter=#{chapter},facility=#{facility},type=#{type}
         WHERE id = #{id}
     </update>

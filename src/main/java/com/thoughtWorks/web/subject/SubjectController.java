@@ -64,14 +64,24 @@ public class SubjectController {
     }
     @RequestMapping("/selectSubject")
     @ResponseBody
-    public Result selectSubject(Subject subject) {
+    public Map<String, Object>  selectSubject(PageUtil page, Subject subject) {
+        Map<String, Object> data = new HashMap<>();
         try {
-            return Result.success(subjectDao.selectSubject(subject), Constant.SEARCH_SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            Map<String, Object> map = new HashMap<>();
+            map.put("start", (page.getCurrentIndex() - 1) * page.getPageSize());
+            map.put("end", page.getPageSize());
+            map.put("subject",subject);
+            data.put("page", page);
+            page.setTotalSize(subjectDao.querySubjectTotalCount(subject));
+            data.put("data",subjectDao.selectSubject(map));
+            data.put("msg",Constant.SEARCH_SUCCESS);
 
-        return Result.failure(null, Constant.SEARCH_FAILURE);
+        } catch (Exception e) {
+            data.put("msg",Constant.SEARCH_FAILURE);
+            e.printStackTrace();
+       }
+
+        return data;
     }
     @RequestMapping("/selectSubjectById")
     @ResponseBody

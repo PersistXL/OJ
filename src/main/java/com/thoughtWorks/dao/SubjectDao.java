@@ -2,6 +2,7 @@ package com.thoughtWorks.dao;
 
 import com.thoughtWorks.entity.Questions;
 import com.thoughtWorks.entity.Subject;
+import com.thoughtWorks.util.PageUtil;
 
 import java.util.*;
 
@@ -25,7 +26,9 @@ public interface SubjectDao {
      * 查询所有试题信息
      * @return
      */
-    List<Map<String,Object>> selectSubject(Subject subject);
+    List<Map<String,Object>> selectSubject(Map<String, Object> map);
+
+    Long querySubjectTotalCount(Subject subject);
 
     /**
      * 通过ID查询试题信息

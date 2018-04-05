@@ -20,6 +20,12 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+    .hide_title1 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
 
     fieldset {
         margin: 10px 50px;
@@ -185,7 +191,7 @@
                             <col width="100">
                             <col width="100">
                             <col width="100">
-                            <col width="150">
+                            <col width="180">
                         </colgroup>
 
                         <thead>
@@ -214,6 +220,9 @@
 </body>
 <script type="text/javascript">
     let _subject;
+    let totalSize = 5;
+    let currentIndex = 1;
+    let pageSize = 10;
     layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree'], function () {
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
@@ -225,12 +234,7 @@
                 var select_questions = $("select[name='select_questions']").val();
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
-
-                $.post("${baseurl}/subject/selectQuestions", {
-                    questionsId: select_questions,
-                    chapter: select_chapter,
-                    facility: select_facility
-                }, function (data) {
+                $.post("${baseurl}/subject/selectQuestions", function (data) {
                     let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
@@ -240,28 +244,31 @@
                     form.render();
                 });
 
-                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility}, function (data) {
+                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility,currentIndex: currentIndex, pageSize: pageSize}, function (data) {
+                    _subject.paging();
+                    currentIndex = data.page.currentIndex;
+                    totalSize = data.page.totalSize;
                     _subject.paging();
                     let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += `<tr>
                             <td>` + (i + 1) + `</td>
                             <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
-                            <td>` + data.data[i].chapter + `</td>
+                            <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
+                            <td ><span class = "hide_title1">` + data.data[i].chapter + `</span></td>
                             <td>` + data.data[i].facility + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
-                                    <a class="layui-btn layui-btn-mini" onclick="">
-                                        <i class="layui-icon">&#xe602;</i>
-                                        选择
-                                    </a>
-                                </div>
-                                <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
+                                        <a class="layui-btn layui-btn-mini" onclick="" >
+                                            <i class="layui-icon">&#xe642;</i>
+                                            选择
+                                        </a>
+                                    <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
+                                </div>
                             </td>
                         </tr>`;
                     }
@@ -271,13 +278,107 @@
             },
             paging: function () {
                 layui.laypage({
-                    cont: 'demo1'
-                    , pages: 100 //分页的总页数
-                    , groups: 5 //连续显示分页数
-                    , jump: function (obj, first) {
-                        //得到了当前页，用于向服务端请求对应数据
-                        let curr = obj.curr;
+                    cont: 'demo1',
+                    pages: totalSize, //总页数
+                    last: totalSize,
+                    curr: currentIndex,
+                    groups: 5,//连续显示分页数
+                    skin: '#1E9FFF',
+                    jump: function (obj, first) {
+                        currentIndex = obj.curr;
+                        if (!first) {
+                            _subject.page();
+                        }
                     }
+                });
+            },
+            addsingleEntry: function () {
+                $("#update").hide();
+                $("#add").show();
+                layer.open({
+                    type: 1,
+                    title: '录入题目',
+                    area: ['100%', '100%'],
+                    skin: 'yourclass',
+                    content: $('#addInfo')
+                });
+            },
+            deleteSubjectInfo: function (id) {
+                layer.confirm('是否删除信息？', function (index) {
+                    $.post("${baseurl}/subject/deleteSubjectById", {id: id}, function (data) {
+                        layer.msg(data.msg);
+                        location.reload();
+                    });
+                    layer.close(index);
+                });
+            },
+            updataInfo: function (id) {
+
+                layui.use('form', function () {
+                    let $ = layui.jquery, form = layui.form();
+                    $.post("${baseurl}/subject/selectSubjectById", {id: id}, function (data) {
+                        $("#add").hide();
+                        $("#update").show();
+
+                        $("textarea[name='subject']").val(data.data.subject);
+                        $("input[name='option_a']").val(data.data.option_a);
+                        $("input[name='option_b']").val(data.data.option_b);
+                        $("input[name='option_c']").val(data.data.option_c);
+                        $("input[name='option_d']").val(data.data.option_d);
+                        $("select[name='correct']").val(data.data.correct);
+                        // let _html_correct ="";
+                        // for(){
+                        //
+                        // }
+
+                        // $("#correct").html();
+                        $("input[name='file_img']").val(data.data.subject_img);
+                        $("select[name='questions_id']").val(data.data.questions_id);
+                        $("input[name='chapter']").val(data.data.chapter);
+                        $("select[name='facility']").val(data.data.facility);
+                        $("textarea[name='type']").val(data.data.type);
+                        $("input[name='id']").val(data.data.id);
+                        $("#imagesToUpdate").text("").attr("src", data.data.subject_img);
+                        layer.open({
+                            type: 1,
+                            title: '试题预览',
+                            area: ['100%', '100%'],
+                            skin: 'yourclass',
+                            content: $('#addInfo')
+                        });
+                    });
+                    form.render();
+
+                });
+            },
+            updateInfo_new: function () {
+                let id = $("input[name='id']").val();
+                let subject = $("textarea[name='subject']").val();
+                let option_a = $("input[name='option_a']").val();
+                let option_b = $("input[name='option_b']").val();
+                let option_c = $("input[name='option_c']").val();
+                let option_d = $("input[name='option_d']").val();
+                let correct = $("select[name='correct']").val();
+                let imagesToUpdate = $("input[name='file_img']").val();
+                let questions_id = $("select[name='questions_id']").val();
+                let chapter = $("input[name='chapter']").val();
+                let facility = $("select[name='facility']").val();
+                let type = $("textarea[name='type']").val();
+                $.post("${baseurl}/subject/updateSubjectById", {
+                    id: id,
+                    subject: subject,
+                    optionA: option_a,
+                    optionB: option_b,
+                    optionC: option_c,
+                    optionD: option_d,
+                    correct: correct,
+                    subjectImg: imagesToUpdate,
+                    questionsId: questions_id,
+                    chapter: chapter,
+                    facility: facility,
+                    type: type
+                }, function (data) {
+                    layer.msg(data.msg);
                 });
             },
             previewSubjectInfo: function (id) {
@@ -327,7 +428,7 @@
             <thead>
             <tr>
                 <th>题库</th>
-                <th>章节</th>
+                <th>知识点</th>
                 <th>难易度</th>
                 <th>备注</th>
             </tr>
@@ -352,11 +453,55 @@
                     });
                 });
             },
+            addsingleEntryInfo: function () {
+                let subject = $("textarea[name='subject']").val();
+                let option_a = $("input[name='option_a']").val();
+                let option_b = $("input[name='option_b']").val();
+                let option_c = $("input[name='option_c']").val();
+                let option_d = $("input[name='option_d']").val();
+                let correct = $("select[name='correct']").val();
+                let imagesToUpdate = $("input[name='file_img']").val();
+                let questions_id = $("select[name='questions_id']").val();
+                let chapter = $("input[name='chapter']").val();
+                let facility = $("select[name='facility']").val();
+                let type = $("textarea[name='type']").val();
+                $.post("${baseurl}/subject/addSubject", {
+                    subject: subject,
+                    optionA: option_a,
+                    optionB: option_b,
+                    optionC: option_c,
+                    optionD: option_d,
+                    correct: correct,
+                    subjectImg: imagesToUpdate,
+                    questionsId: questions_id,
+                    chapter: chapter,
+                    facility: facility,
+                    type: type
+                }, function (data) {
+                    layer.msg(data.msg);
+                });
+
+            }
         }
         $(function () {
             _subject.page();
+            //图片上传
+            layui.use('upload', function () {
+                layui.upload({
+                    url: '${baseurl}/subject/updateImage' //上传接口
+                    , success: function (res) { //上传成功后的回调
+                        if (res.result) {
+                            $("#imagesToUpdate").text("").attr("src", HEAD_IMAGE_PREFIX + res.data);
+
+                            $("input[name='file_img']").val(HEAD_IMAGE_PREFIX + res.data);
+                        }
+                    }
+                });
+            });
         });
     });
+
+
 </script>
 
 </html>
