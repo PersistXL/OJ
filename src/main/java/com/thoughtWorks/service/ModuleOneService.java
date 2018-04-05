@@ -16,8 +16,8 @@ public interface ModuleOneService {
 
     /**
      * 通过id查询
-     * @param id
+     * @param subject
      * @return
      */
-    List<Map<String,Object>> selectTestpaperById(int id);
+    List<Map<String,Object>> selectTestpaperById(String [] subject);
 }

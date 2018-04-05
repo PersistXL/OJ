@@ -34,6 +34,8 @@
 <script>
     //动态拼接测试题信息
     $(function () {
+        var totalScore=0;
+
         layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree', 'layedit'], function () {
             window.jQuery = window.$ = layui.jquery;
             window.layer = layui.layer;
@@ -42,6 +44,8 @@
                 form = layui.form(),
                 layedit = layui.layedit,
                 laytpl = layui.laytpl;
+
+            let testQuestions;
 
             //全选
             form.on('checkbox(allChoose)', function (data) {
@@ -52,7 +56,7 @@
                 form.render('checkbox');
             });
                 $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                    console.log(data);
+                   // console.log(data);
                     var _html ="";
                     for(var i = 0;i<data.data.length;i++){
                         var s = data.data[i].subject_id;
@@ -73,11 +77,12 @@
                             var status = "开放";
                         }else{
                             status="已截止";
+                            var q="";
                         }
-                        _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h2 class="layui-colla-title">班课：`
-                            +data.data[i].ClassName+`<span class="badge glyphicon glyphicon-bullhorn" style="margin-left: 50px; margin-top: -10px"><p style="color: #ff1631">`
+                        _html+=(`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
+                            +data.data[i].ClassName+`<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">`
                               +q
-                                +`</p></span></h2>
+                                +`</p></span></h3>
                                 <div class="layui-colla-content">
                                     <div class="layui-form">
                                         <table class="layui-table">
@@ -127,40 +132,42 @@
     });
     function work(id){
         $.post("${baseurl}/moduleOne/selectTestpaperById",{id : id}, function (data){
-            console.log(data)
+            testQuestions = data;
+            totalScore = data.testpaper.score;
             var _html = "";
             for(var i=0;i<data.data.length;i++) {
                 var subject = data.data[i].subject
-                _html += (`<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+                _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
                                 <legend>试题`+(i+1)+`：</legend>
                                 <div class="layui-field-box">
                                     <b>题目：</b>
                                     <p>` + data.data[i].subject + `</p>
                                 </div>`);
                                             if (data.data[i].subject_img !== '') {
-                                                _html += (`<b style="margin-left: 17px">题目图片</b>
+                                                _html += (`<b style="margin-left: 12px">题目图片</b>
                                                     <div class="layui-field-box box">
                                     <img width="300px" height="300px" src="` + data.data[i].subject_img +`"/><br>
                                 </div>`)
                                             }
                                             _html +=( `<div class="layui-field-box">
-                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="a"> <b>选项A：</b></label>` + data.data[i].option_a + `
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" value="A" class="checkboxA"> <b>选项A：</b></label>` + data.data[i].option_a + `
                                 </div>
                                 <div class="layui-field-box">
 
-                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="b"> <b>选项B：</b></label>` + data.data[i].option_b + `
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"  value="B" class="checkboxB"> <b>选项B：</b></label>` + data.data[i].option_b + `
                                 </div>
                                 <div class="layui-field-box">
 
-                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="c"><b>选项C：</b></label>` + data.data[i].option_c + `
+                                    <label><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"  value="C" class="checkboxC"><b>选项C：</b></label>` + data.data[i].option_c + `
                                 </div>
                                 <div class="layui-field-box">
 
-                                    <label><b><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`" id="d">选项D：</b></label>` + data.data[i].option_d + `
+                                    <label><b><input type="radio" style="width: 10px;height: 10px;" name="`+data.data[i].id+`"  value="D" class="checkboxD">选项D：</b></label>` + data.data[i].option_d + `
                                 </div>
+
                     </fieldset>`);
             }
-            _html += `<input type="button" style="margin-left: 50%" value="交卷" class="layui-btn layui-btn-radius" onclick="examination_paper()">`
+            _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" onclick="examination_paper()">`
             $("#view").html(_html);
         });
         layer.open({
@@ -172,8 +179,23 @@
         });
     }
    function examination_paper(){
-       alert(document.getElementsByName("id"))
-    };
+       let score=0;
+       let checkBoxs = [];
+       let falseid = [];
+       for(var i=0;i<testQuestions.data.length;i++) {
+           checkBoxs.push($("input[name='"+testQuestions.data[i].id+"']:checked").val());
+           if(testQuestions.data[i].correct==checkBoxs[i]){
+               score =score + (totalScore / testQuestions.data.length);
+           }else {
+               falseid = testQuestions.data[i].id;
+           }
+       }
+       // alert(score)
+       //存储成绩以及错题的id
+       $.post("${baseurl}/moduleOne/insertScore",{score : score}, function (data){
+
+       });
+   };
 </script>
 </body>
 </html>
