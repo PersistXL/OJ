@@ -1,5 +1,6 @@
 package com.thoughtWorks.dao;
 
+import com.thoughtWorks.entity.StudentTestpaper;
 import com.thoughtWorks.entity.Testpaper;
 
 import java.util.List;
@@ -29,4 +30,11 @@ public interface ModuleOneDao {
      * @return
      */
     List<Map<String,Object>> selectSubjectfromid(List list);
+
+    /**
+     * 存储学生成绩
+     * @param studentTestpaper
+     * @return
+     */
+    void updateScore(StudentTestpaper studentTestpaper);
 }
