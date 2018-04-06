@@ -181,15 +181,19 @@
     }
 
     function examination_paper() {
-        let score = 0;
-        let checkBoxs = [];
-        let falseid = [];
+        let score = 0;  //未答题前成绩为0
+        let checkBoxs = []; //自定义选项的数组
+        var userName = dataListObject.data.user.userName;
         for (var i = 0; i < testQuestions.data.length; i++) {
             checkBoxs.push($("input[name='" + testQuestions.data[i].id + "']:checked").val());
             if (testQuestions.data[i].correct == checkBoxs[i]) {
                 score = score + (totalScore / testQuestions.data.length);
             } else {
-                falseid = testQuestions.data[i].id;
+                var falseid = testQuestions.data[i].id;
+                //存储错题的id
+                $.post("${baseurl}/wrongTitle/wrongTitleId",{subjectId : falseid,studentId : userName},function (data) {
+
+                });
             }
         }
         //存储成绩
