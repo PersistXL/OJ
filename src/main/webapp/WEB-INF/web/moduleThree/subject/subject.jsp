@@ -261,10 +261,12 @@
 </div>
 <div id="addＥxcel" style="display: none;width: auto; margin-top: 20px;">
     <div class="layui-form-item layui-form-text">
-        <form action="${baseurl}/subject/uploadFile" method="POST" enctype="multipart/form-data">
+        <form id='formSumbit' action="${baseurl}/subject/uploadFile" method="POST" enctype="multipart/form-data">
             <input type="file" name="file" lay-type="file" ><br/>
             <input type="submit" value="上传" class="layui-btn"/>
         </form>
+        <br>
+        <h3 style="color:green" id="msg"></h3>
     </div>
 </div>
 <div id="previewSubjectInfo" style="display: none;">
@@ -366,7 +368,6 @@
                 });
             },
             addＥxcel: function () {
-
                 layer.open({
                     type: 1,
                     title: 'Ｅxcel录入题目',
@@ -589,6 +590,57 @@
                         }
                     }
                 });
+            });
+
+            $('#formSumbit').submit(function (event) {
+                //首先验证文件格式
+                var fileName = $(this).find("input[name=file]").val();
+                var fileType = (fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length)).toLowerCase();
+                event.preventDefault();
+                var form = $(this);
+                if (fileName === '') {
+                    layer.msg('请选择文件');
+                }else
+                if (fileType !== 'xls' && fileType !== 'xlsx') {
+                    layer.msg('文件格式不正确，excel文件！');
+                }else
+                if (form.hasClass('upload')) {
+                    //普通表单
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: form.serialize(),
+                        dataType: "JSON"
+                    }).success(function (data) {
+                       layer.msg(data.msg)
+                        //成功提交
+                    });
+                }
+                else {
+                    // mulitipart form,如文件上传类
+                    var formData = new FormData(this);
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: formData,
+                        dataType: "JSON",
+                        mimeType: "multipart/form-data",
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        error : function(XHR, textStatus, errorThrown) {
+                            layer.msg("网络错误！XHR=" + XHR + "\ntextStatus=" + textStatus
+                                + "\nerrorThrown=" + errorThrown);
+                        },
+                        success : function(data) {
+                            layer.confirm(data.msg, function(index){
+                                //do something
+                                $("#msg").html(data.msg)
+                                layer.close(index);
+                            });
+                        }
+                    });
+                }
             });
         });
     });
