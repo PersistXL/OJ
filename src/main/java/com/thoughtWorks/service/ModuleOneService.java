@@ -1,6 +1,6 @@
 package com.thoughtWorks.service;
 
-import com.thoughtWorks.entity.Testpaper;
+import com.thoughtWorks.entity.StudentTestpaper;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +20,11 @@ public interface ModuleOneService {
      * @return
      */
     List<Map<String,Object>> selectTestpaperById(String [] subject);
+
+    /**
+     * 插入学生的成绩
+     * @param studentTestpaper
+     * @return
+     */
+    StudentTestpaper updateScore(StudentTestpaper studentTestpaper);
 }

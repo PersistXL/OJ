@@ -11,8 +11,8 @@
     <!--</insert>-->
 
     <select id="findTestpaper" resultType="map">
-        SELECT o_testpaper.*,o_classes.name ClassName,o_student_testpaper.*
-        FROM o_testpaper,o_classes,o_student_testpaper WHERE classes_id=o_classes.id AND o_testpaper.id=o_student_testpaper.testpaper_id;
+        SELECT o_testpaper.*,o_classes.name ClassName,o_student_testpaper.*,o_student.*
+        FROM o_testpaper,o_classes,o_student_testpaper,oj.o_student WHERE o_testpaper.classes_id=o_classes.id AND o_testpaper.id=o_student_testpaper.testpaper_id AND o_student_testpaper.student_id=o_student.id;
     </select>
     <select id="selectTestpaperById" resultType="Testpaper" parameterType="int">
         SELECT *
@@ -26,10 +26,10 @@
             #{item}
         </foreach>
     </select>
-    <!--<update id="update" parameterType="Role">-->
-    <!--UPDATE t_role-->
-    <!--SET t_role.name = #{name}, t_role.available = #{available}-->
-    <!--WHERE t_role.id = #{id}-->
-    <!--</update>-->
 
+    <update id="updateScore" parameterType="com.thoughtWorks.entity.StudentTestpaper">
+        UPDATE o_student_testpaper
+        SET testpaper_student_score = #{testpaperStudentScore}
+        WHERE id = #{id}
+    </update>
 </mapper>

@@ -2,11 +2,16 @@ package com.thoughtWorks.web.infoManage;
 
 import com.thoughtWorks.dao.ModuleOneDao;
 import com.thoughtWorks.dto.Result;
+import com.thoughtWorks.entity.ActiveUser;
+import com.thoughtWorks.entity.StudentTestpaper;
+import com.thoughtWorks.entity.Subject;
 import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,7 +40,12 @@ public class ModuleOneController {
     @ResponseBody
     public Result findTestpaper(){
         try{
-        return Result.success(moduleOneService.findTestpaper(), Constant.SEARCH_SUCCESS);
+            Map<String, Object> data = new HashMap<>();
+            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+            List<Map<String,Object>> testPaperList =  moduleOneService.findTestpaper();
+            data.put("user", user);
+            data.put("testPaperList", testPaperList);
+        return Result.success(data, Constant.SEARCH_SUCCESS);
         }catch (Exception e){
            e.printStackTrace();
         }
@@ -58,5 +68,16 @@ public class ModuleOneController {
             map.put("msg",Constant.SEARCH_FAILURE);
         }
         return map;
+    }
+    @RequestMapping("/updateScore")
+    @ResponseBody
+    public Result updateScore(StudentTestpaper studentTestpaper){
+        try{
+            moduleOneService.updateScore(studentTestpaper);
+            return Result.success(null, Constant.UPLOAD_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.UPLOAD_FAILURE);
     }
 }

@@ -1,7 +1,7 @@
 package com.thoughtWorks.service.impl;
 
 import com.thoughtWorks.dao.ModuleOneDao;
-import com.thoughtWorks.entity.Testpaper;
+import com.thoughtWorks.entity.StudentTestpaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +31,11 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
         List<Map<String,Object>> list1 = moduleOneDao.selectSubjectfromid(list) ;
 
         return list1;
+    }
+
+    @Override
+    public StudentTestpaper updateScore(StudentTestpaper studentTestpaper) {
+        moduleOneDao.updateScore(studentTestpaper);
+        return null;
     }
 }
