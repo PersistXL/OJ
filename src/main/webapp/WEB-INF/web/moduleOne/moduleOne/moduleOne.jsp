@@ -18,6 +18,10 @@
 
 </div>
 
+<div id="watchadd" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
+
+</div>
+
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -109,12 +113,15 @@
                                                 <td>` + s.split("_").length + `</td>
                                                 <td>` + score + `</td>
                                                 <td>` + status + `</td>
-                                                <td>
-                                                    <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + dataList[i].id + `)">
-                                                        <i class="layui-icon">&#xe642;</i>答题</a>
-                                                    <a class="layui-btn  layui-btn-small">
-                                                        <i class="layui-icon">&#xe60a;</i>预览</a>
-                                                </td>
+                                                <td>`)
+                                                if(dataList[i].testpaper_student_score == null && d1 >= d2){
+                                                    _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + dataList[i].id + `)">
+                                                        <i class="layui-icon">&#xe642;</i>答题</a>`)
+                                                        }else{
+                                                    _html += (`<a class="layui-btn  layui-btn-small" onclick="watch(`+ dataList[i].id +`)">
+                                                        <i class="layui-icon">&#xe60a;</i>预览</a>`)
+                                                        }
+                                                _html +=(`</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -144,7 +151,7 @@
                                     <b>题目：</b>
                                     <p>` + data.data[i].subject + `</p>
                                 </div>`);
-                if (data.data[i].subject_img !== '') {
+                if (data.data[i].subject_img !== undefined) {
                     _html += (`<b style="margin-left: 12px">题目图片</b>
                                                     <div class="layui-field-box box">
                                     <img width="300px" height="300px" src="` + data.data[i].subject_img + `"/><br>
@@ -164,10 +171,17 @@
                                 <div class="layui-field-box">
 
                                     <label><b><input type="radio" style="width: 10px;height: 10px;" name="` + data.data[i].id + `"  value="D" class="checkboxD">选项D：</b></label>` + data.data[i].option_d + `
-                                </div>
+                                </div>`)
 
-                    </fieldset>`);
-            }
+                if (data.data[i].subject_e === undefined) {
+
+                                _html += (`<div class="layui-field-box">
+
+                                    <label><b><input type="radio" style="width: 10px;height: 10px;" name="` + data.data[i].id + `"  value="E" class="checkboxD">选项E：</b></label>` + data.data[i].option_e + `
+                                </div>`)
+}
+                    _html += (`</fieldset>`);
+                }
             _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" onclick="examination_paper()">`
             $("#view").html(_html);
         });
@@ -204,6 +218,59 @@
             }
         });
     };
+
+    function watch(id) {
+        $.post("${baseurl}/moduleOne/selectTestpaperById", {id: id}, function (data) {
+            var _html = "";
+            for (var i = 0; i < data.data.length; i++) {
+                _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
+                                <legend>试题` + (i + 1) + `：</legend>
+                                <div class="layui-field-box">
+                                    <b>题目：</b>
+                                    <p>` + data.data[i].subject + `</p>
+                                </div>`);
+                if (data.data[i].subject_img !== undefined) {
+                    _html += (`<b style="margin-left: 12px">题目图片</b>
+                                                    <div class="layui-field-box box">
+                                    <img width="300px" height="300px" src="` + data.data[i].subject_img + `"/><br>
+                                </div>`)
+                }
+                _html += (`<div class="layui-field-box">
+                                    <label><b>选项A：</b></label>` + data.data[i].option_a + `
+                                </div>
+                                <div class="layui-field-box">
+
+                                    <label><b>选项B：</b></label>` + data.data[i].option_b + `
+                                </div>
+                                <div class="layui-field-box">
+
+                                    <label><b>选项C：</b></label>` + data.data[i].option_c + `
+                                </div>
+                                <div class="layui-field-box">
+
+                                    <label><b>选项D：</b></label>` + data.data[i].option_d + `
+                                </div>`)
+
+                if (data.data[i].subject_e === undefined) {
+
+                    _html += (`<div class="layui-field-box">
+
+                                    <label><b>选项E：</b></label>` + data.data[i].option_e + `
+                                </div>`)
+                }
+                _html += (`</fieldset>`);
+            }
+            $("#watchadd").html(_html);
+        });
+        layer.open({
+            type: 1,
+            title: "试题预览",
+            area: ["100%", "100%"],
+            skin: 'yourclass',
+            content: $('#watchadd')
+        });
+    }
+
 </script>
 </body>
 </html>
