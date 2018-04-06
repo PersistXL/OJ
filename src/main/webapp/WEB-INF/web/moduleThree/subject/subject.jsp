@@ -287,7 +287,7 @@
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                    let _html = "<option value='1'>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
@@ -303,6 +303,7 @@
                     currentIndex: currentIndex,
                     pageSize: pageSize
                 }, function (data) {
+                    console.log(data)
                     _subject.paging();
                     currentIndex = data.page.currentIndex;
                     totalSize = data.page.totalSize;
@@ -318,9 +319,9 @@
                             <td><span class = "hide_title">` + data.data[i].option_d + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].option_e + `</span></td>
                             <td>` + data.data[i].correct + `</td>
-                            <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
-                            <td >` + data.data[i].chapter + `</td>
-                            <td>` + data.data[i].facility + `</td>
+                            <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
+                            <td ><span class = "hide_title">` + data.data[i].chapter + `</span></td>
+                            <td>` +(data.data[i].facility===undefined ?"暂无":data.data[i].facility) + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
@@ -526,8 +527,8 @@
             <tr>
                 <td>` + data.data.questionsName + `</td>
                 <td>` + data.data.chapter + `</td>
-                <td>` + data.data.facility + `</td>
-                <td>` + data.data.type + `</td>
+                <td>` + (data.data.facility === undefined?"暂无": data.data.facility)  + `</td>
+                <td>` + (data.data.type=== undefined?"暂无": data.data.type )+ `</td>
             </tr>
             </tbody>
         </table>

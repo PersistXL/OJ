@@ -85,7 +85,7 @@ public class SubjectController {
                 }
                 System.out.println();
             }
-
+            subjectDao.insertSubjectByExcel(list);
             return Result.failure(path, Constant.UPLOAD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
