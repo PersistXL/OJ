@@ -261,10 +261,12 @@
 </div>
 <div id="addＥxcel" style="display: none;width: auto; margin-top: 20px;">
     <div class="layui-form-item layui-form-text">
-        <form action="${baseurl}/subject/uploadFile" method="POST" enctype="multipart/form-data">
+        <form id='formSumbit' action="${baseurl}/subject/uploadFile" method="POST" enctype="multipart/form-data">
             <input type="file" name="file" lay-type="file" ><br/>
             <input type="submit" value="上传" class="layui-btn"/>
         </form>
+        <br>
+        <h3 style="color:green" id="msg"></h3>
     </div>
 </div>
 <div id="previewSubjectInfo" style="display: none;">
@@ -287,7 +289,7 @@
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                    let _html = "<option value='1'>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
@@ -303,6 +305,7 @@
                     currentIndex: currentIndex,
                     pageSize: pageSize
                 }, function (data) {
+                    console.log(data)
                     _subject.paging();
                     currentIndex = data.page.currentIndex;
                     totalSize = data.page.totalSize;
@@ -318,9 +321,9 @@
                             <td><span class = "hide_title">` + data.data[i].option_d + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].option_e + `</span></td>
                             <td>` + data.data[i].correct + `</td>
-                            <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
-                            <td >` + data.data[i].chapter + `</td>
-                            <td>` + data.data[i].facility + `</td>
+                            <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
+                            <td ><span class = "hide_title">` + data.data[i].chapter + `</span></td>
+                            <td>` +(data.data[i].facility===undefined ?"暂无":data.data[i].facility) + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
@@ -365,7 +368,6 @@
                 });
             },
             addＥxcel: function () {
-
                 layer.open({
                     type: 1,
                     title: 'Ｅxcel录入题目',
@@ -475,7 +477,7 @@
             <b>题目：</b>
             <p>` + data.data.subject + `</p>
         </div>`;
-                    if (data.data.subject_img !== '') {
+                    if (data.data.subject_img !== undefined) {
                         _html += `<div class="layui-field-box box">
             <img width="300px" height="300px" src="` + data.data.subject_img + `"/><br>
             <b>题目图片</b>
@@ -526,8 +528,8 @@
             <tr>
                 <td>` + data.data.questionsName + `</td>
                 <td>` + data.data.chapter + `</td>
-                <td>` + data.data.facility + `</td>
-                <td>` + data.data.type + `</td>
+                <td>` + (data.data.facility === undefined?"暂无": data.data.facility)  + `</td>
+                <td>` + (data.data.type=== undefined?"暂无": data.data.type )+ `</td>
             </tr>
             </tbody>
         </table>
@@ -588,6 +590,57 @@
                         }
                     }
                 });
+            });
+
+            $('#formSumbit').submit(function (event) {
+                //首先验证文件格式
+                var fileName = $(this).find("input[name=file]").val();
+                var fileType = (fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length)).toLowerCase();
+                event.preventDefault();
+                var form = $(this);
+                if (fileName === '') {
+                    layer.msg('请选择文件');
+                }else
+                if (fileType !== 'xls' && fileType !== 'xlsx') {
+                    layer.msg('文件格式不正确，excel文件！');
+                }else
+                if (form.hasClass('upload')) {
+                    //普通表单
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: form.serialize(),
+                        dataType: "JSON"
+                    }).success(function (data) {
+                       layer.msg(data.msg)
+                        //成功提交
+                    });
+                }
+                else {
+                    // mulitipart form,如文件上传类
+                    var formData = new FormData(this);
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: formData,
+                        dataType: "JSON",
+                        mimeType: "multipart/form-data",
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        error : function(XHR, textStatus, errorThrown) {
+                            layer.msg("网络错误！XHR=" + XHR + "\ntextStatus=" + textStatus
+                                + "\nerrorThrown=" + errorThrown);
+                        },
+                        success : function(data) {
+                            layer.confirm(data.msg, function(index){
+                                //do something
+                                $("#msg").html(data.msg)
+                                layer.close(index);
+                            });
+                        }
+                    });
+                }
             });
         });
     });

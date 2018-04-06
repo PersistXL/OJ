@@ -18,29 +18,30 @@
         SELECT count(1)
         FROM o_subject
         <where>
-        <if test=" questionsId !=''and questionsId != null">
-            and questions_id = #{questionsId}
-        </if>
-        <if test=" chapter !=''and chapter !=null">
-            and chapter like "%"#{chapter}"%"
-        </if>
-        <if test=" facility !=''and facility !=null">
-            and facility = #{facility}
-        </if>
+            <if test=" questionsId !=''and questionsId != null">
+                and questions_id = #{questionsId}
+            </if>
+            <if test=" chapter !=''and chapter !=null">
+                and chapter like "%"#{chapter}"%"
+            </if>
+            <if test=" facility !=''and facility !=null">
+                and facility = #{facility}
+            </if>
         </where>
     </select>
     <select id="selectSubject" resultType="map" parameterType="map">
         SELECT o_subject.*,o_questions.name questionsName
-        FROM o_subject,o_questions where questions_id = o_questions.id
-        <if test=" subject.questionsId !=''and subject.questionsId != null">
-            and questions_id = #{subject.questionsId}
-        </if>
-        <if test=" subject.chapter !=''and subject.chapter !=null">
-            and chapter like "%"#{subject.chapter}"%"
-        </if>
-        <if test=" subject.facility !=''and subject.facility !=null">
-            and facility = #{subject.facility}
-        </if>
+        FROM o_subject,o_questions
+        where  questions_id = o_questions.id
+            <if test=" subject.questionsId !=''and subject.questionsId != null">
+                and questions_id = #{subject.questionsId}
+            </if>
+            <if test=" subject.chapter !=''and subject.chapter !=null">
+                and chapter like "%"#{subject.chapter}"%"
+            </if>
+            <if test=" subject.facility !=''and subject.facility !=null">
+                and facility = #{subject.facility}
+            </if>
         limit #{start},#{end}
     </select>
     <select id="selectSubjectById" resultType="map" parameterType="int">
@@ -58,5 +59,11 @@
         chapter=#{chapter},facility=#{facility},type=#{type}
         WHERE id = #{id}
     </update>
-
+    <insert id="insertSubjectByExcel" parameterType="list">
+        INSERT INTO o_subject (subject,option_a,option_b,option_c,option_d,option_e,chapter,correct)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.subject},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d},#{item.option_e},#{item.chapter},#{item.correct})
+        </foreach>
+    </insert>
 </mapper>

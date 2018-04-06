@@ -48,5 +48,10 @@ public interface SubjectDao {
      */
     void updateSubjectById(Subject subject);
 
+    /**
+     * excel倒入数据
+     * @param list
+     */
+    void insertSubjectByExcel( List<Map<String,String>> list);
 
 }
