@@ -20,6 +20,7 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+
     .hide_title1 {
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -48,9 +49,10 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <select name="select_questions" id = "select_questions" lay-filter="modules_1" lay-verify="required" lay-search=""
-                                       >
-                                        <option value="">请选择</option>
+                                <select name="select_questions" id="select_questions" lay-filter="modules_1"
+                                        lay-verify="required" lay-search=""
+                                >
+                                    <option value="">请选择</option>
                                 </select>
                             </div>
                         </div>
@@ -59,7 +61,8 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <select name="select_facility" lay-filter="modules_1" lay-verify="required" lay-search="">
+                                <select name="select_facility" lay-filter="modules_1" lay-verify="required"
+                                        lay-search="">
                                     <option value="">请选择</option>
                                     <option value="">请选择</option>
                                     <option value="简单">简单</option>
@@ -75,19 +78,20 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                    <input type="text" name="select_chapter"
-                                           autocomplete="off"
-                                           placeholder="请输入知识点" class="layui-input" >
-                                </div>
+                                <input type="text" name="select_chapter"
+                                       autocomplete="off"
+                                       placeholder="请输入知识点" class="layui-input">
                             </div>
+                        </div>
                     </div>
                     <div class="layui-input-inline">
                         <div class="layui-inline">
                             <a class="layui-btn" onclick="currentIndex = 1;_subject.page()"><i
                                     class="layui-icon">&#xe615;</i>搜索</a>
                             <shiro:hasPermission name="moduleThree:update">
-                                <a class="layui-btn" onclick="_subject.addsingleEntry()"><i class="layui-icon">&#xe621;</i>单个录入</a>
-                                <a class="layui-btn"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
+                                <a class="layui-btn" onclick="_subject.addsingleEntry()"><i
+                                        class="layui-icon">&#xe621;</i>单个录入</a>
+                                <a class="layui-btn" onclick="_subject.addＥxcel()"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
                             </shiro:hasPermission>
                         </div>
                     </div>
@@ -101,7 +105,8 @@
                     <table class="layui-table">
                         <colgroup>
                             <col width="60">
-                            <col width="250">
+                            <col width="200">
+                            <col width="100">
                             <col width="100">
                             <col width="100">
                             <col width="100">
@@ -121,6 +126,7 @@
                             <th>选项B</th>
                             <th>选项C</th>
                             <th>选项D</th>
+                            <th>选项E</th>
                             <th>正确选项</th>
                             <th>题库</th>
                             <th>知识点</th>
@@ -167,13 +173,28 @@
                     <input name="option_c" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
                            class="layui-input">
                 </div>
-
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">选项D：</label>
                 <div class="layui-input-inline">
                     <input name="option_d" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
                            class="layui-input">
                 </div>
-
+                <label class="layui-form-label">选项E：</label>
+                <div class="layui-input-inline">
+                    <input name="option_e" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
+                           class="layui-input">
+                </div>
+                <label class="layui-form-label">正确选项：</label>
+                <div class="layui-input-inline">
+                    <select name="correct" lay-verify="required" lay-search="" id="correct">
+                        <option value="A">选项A</option>
+                        <option value="B">选项B</option>
+                        <option value="C">选项C</option>
+                        <option value="D">选项D</option>
+                        <option value="E">选项E</option>
+                    </select>
+                </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">题目图片：</label>
@@ -190,15 +211,7 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">正确选项：</label>
-                <div class="layui-input-inline">
-                    <select name="correct" lay-verify="required" lay-search="" id="correct">
-                        <option value="A">选项A</option>
-                        <option value="B">选项B</option>
-                        <option value="C">选项C</option>
-                        <option value="D">选项D</option>
-                    </select>
-                </div>
+
                 <label class="layui-form-label">题库：</label>
                 <div class="layui-input-inline">
                     <select name="questions_id" lay-verify="required" lay-search="" id="questions_id">
@@ -246,6 +259,14 @@
         </form>
     </div>
 </div>
+<div id="addＥxcel" style="display: none;width: auto; margin-top: 20px;">
+    <div class="layui-form-item layui-form-text">
+        <form action="${baseurl}/subject/uploadFile" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" lay-type="file" ><br/>
+            <input type="submit" value="上传" class="layui-btn"/>
+        </form>
+    </div>
+</div>
 <div id="previewSubjectInfo" style="display: none;">
 </div>
 </body>
@@ -262,9 +283,9 @@
             laytpl = layui.laytpl;
         _subject = {
             page: function () {
-               var select_questions = $("select[name='select_questions']").val();
-               var select_facility = $("select[name='select_facility']").val();
-               var select_chapter = $("input[name='select_chapter']").val();
+                var select_questions = $("select[name='select_questions']").val();
+                var select_facility = $("select[name='select_facility']").val();
+                var select_chapter = $("input[name='select_chapter']").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
                     let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
@@ -275,7 +296,13 @@
                     form.render();
                 });
 
-                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility,currentIndex: currentIndex, pageSize: pageSize}, function (data) {
+                $.post("${baseurl}/subject/selectSubject", {
+                    questionsId: select_questions,
+                    chapter: select_chapter,
+                    facility: select_facility,
+                    currentIndex: currentIndex,
+                    pageSize: pageSize
+                }, function (data) {
                     _subject.paging();
                     currentIndex = data.page.currentIndex;
                     totalSize = data.page.totalSize;
@@ -289,6 +316,7 @@
                             <td><span class = "hide_title">` + data.data[i].option_b + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].option_c + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].option_d + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].option_e + `</span></td>
                             <td>` + data.data[i].correct + `</td>
                             <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
                             <td >` + data.data[i].chapter + `</td>
@@ -336,6 +364,16 @@
                     }
                 });
             },
+            addＥxcel: function () {
+
+                layer.open({
+                    type: 1,
+                    title: 'Ｅxcel录入题目',
+                    area: ['100%', '100%'],
+                    skin: 'yourclass',
+                    content: $('#addＥxcel')
+                });
+            },
             addsingleEntry: function () {
                 $("#update").hide();
                 $("#add").show();
@@ -369,6 +407,7 @@
                         $("input[name='option_b']").val(data.data.option_b);
                         $("input[name='option_c']").val(data.data.option_c);
                         $("input[name='option_d']").val(data.data.option_d);
+                        $("input[name='option_e']").val(data.data.option_e);
                         $("select[name='correct']").val(data.data.correct);
                         // let _html_correct ="";
                         // for(){
@@ -402,6 +441,7 @@
                 let option_b = $("input[name='option_b']").val();
                 let option_c = $("input[name='option_c']").val();
                 let option_d = $("input[name='option_d']").val();
+                let option_e = $("input[name='option_e']").val();
                 let correct = $("select[name='correct']").val();
                 let imagesToUpdate = $("input[name='file_img']").val();
                 let questions_id = $("select[name='questions_id']").val();
@@ -415,6 +455,7 @@
                     optionB: option_b,
                     optionC: option_c,
                     optionD: option_d,
+                    optionE: option_e,
                     correct: correct,
                     subjectImg: imagesToUpdate,
                     questionsId: questions_id,
@@ -454,6 +495,10 @@
         <div class="layui-field-box">
 
             <p><b>选项D：</b>` + data.data.option_d + `</p>
+        </div>
+        <div class="layui-field-box">
+
+            <p><b>选项E：</b>` + data.data.option_e + `</p>
         </div>
         <div class="layui-field-box">
             <b>正确选项：</b>
@@ -503,6 +548,7 @@
                 let option_b = $("input[name='option_b']").val();
                 let option_c = $("input[name='option_c']").val();
                 let option_d = $("input[name='option_d']").val();
+                let option_e = $("input[name='option_e']").val();
                 let correct = $("select[name='correct']").val();
                 let imagesToUpdate = $("input[name='file_img']").val();
                 let questions_id = $("select[name='questions_id']").val();
@@ -515,6 +561,7 @@
                     optionB: option_b,
                     optionC: option_c,
                     optionD: option_d,
+                    optionE: option_e,
                     correct: correct,
                     subjectImg: imagesToUpdate,
                     questionsId: questions_id,

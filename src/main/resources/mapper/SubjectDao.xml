@@ -5,8 +5,8 @@
 <mapper namespace="com.thoughtWorks.dao.SubjectDao">
     <insert id="addSubject" parameterType="Subject">
     INSERT INTO o_subject (subject,subject_img,option_a,option_b,
-    option_c,option_d,correct,questions_id,chapter,facility,type)
-    VALUES (#{subject},#{subjectImg},#{optionA},#{optionB},#{optionC},#{optionD},
+    option_c,option_d,option_e,correct,questions_id,chapter,facility,type)
+    VALUES (#{subject},#{subjectImg},#{optionA},#{optionB},#{optionC},#{optionD},#{optionE},
     #{correct},#{questionsId},#{chapter},#{facility},#{type})
     </insert>
 
@@ -54,7 +54,7 @@
     <update id="updateSubjectById" parameterType="Subject">
         UPDATE o_subject
         SET subject=#{subject},subject_img=#{subjectImg},option_a=#{optionA},option_b=#{optionB},
-        option_c=#{optionC},option_d=#{optionD},correct=#{correct},questions_id=#{subject.questionsId},
+        option_c=#{optionC},option_d=#{optionD},option_e=#{optionE},correct=#{correct},questions_id=#{questionsId},
         chapter=#{chapter},facility=#{facility},type=#{type}
         WHERE id = #{id}
     </update>
