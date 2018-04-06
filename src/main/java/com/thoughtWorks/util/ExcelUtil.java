@@ -26,7 +26,7 @@ public class ExcelUtil {
         Row row = null;
         List<Map<String,String>> list = null;
         String cellData = null;
-        String filePath = "/home/huan/IDEA/OJ/src/main/webapp/public/excel/test.xlsx";
+        String filePath = "/home/huan/IDEA/OJ/src/main/webapp/excel/file/test.xlsx";
         String columns[] = {"chapter","subject","correct","option_a","option_b","option_c","option_d","option_e"};
         wb = readExcel(filePath);
         if(wb != null){
@@ -62,6 +62,43 @@ public class ExcelUtil {
             System.out.println();
         }
 
+    }
+    public List<Map<String,String>> file(String file) {
+        Workbook wb =null;
+        Sheet sheet = null;
+        Row row = null;
+        List<Map<String,String>> list = null;
+        String cellData = null;
+        String filePath = file;
+        String columns[] = {"chapter","subject","correct","option_a","option_b","option_c","option_d","option_e"};
+        wb = readExcel(filePath);
+        if(wb != null){
+            //用来存放表中数据
+            list = new ArrayList<Map<String,String>>();
+            //获取第一个sheet
+            sheet = wb.getSheetAt(0);
+            //获取最大行数
+            int rownum = sheet.getPhysicalNumberOfRows();
+            //获取第一行
+            row = sheet.getRow(0);
+            //获取最大列数
+            int colnum = row.getPhysicalNumberOfCells();
+            for (int i = 1; i<rownum; i++) {
+                Map<String,String> map = new LinkedHashMap<String,String>();
+                row = sheet.getRow(i);
+                if(row !=null){
+                    for (int j=0;j<colnum;j++){
+                        cellData = (String) getCellFormatValue(row.getCell(j));
+                        map.put(columns[j], cellData);
+                    }
+                }else{
+                    break;
+                }
+                list.add(map);
+            }
+        }
+
+        return list;
     }
     //读取excel
     public static Workbook readExcel(String filePath){

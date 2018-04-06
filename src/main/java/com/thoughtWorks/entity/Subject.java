@@ -11,11 +11,20 @@ public class Subject {
     private String optionB;
     private String optionC;
     private String optionD;
+    private String optionE;
     private String correct;
     private Integer questionsId;
     private String chapter;
     private String facility;
     private String type;
+
+    public String getOptionE() {
+        return optionE;
+    }
+
+    public void setOptionE(String optionE) {
+        this.optionE = optionE;
+    }
 
     public Integer getId() {
         return id;
