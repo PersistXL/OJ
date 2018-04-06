@@ -476,7 +476,7 @@
             <b>题目：</b>
             <p>` + data.data.subject + `</p>
         </div>`;
-                    if (data.data.subject_img !== '') {
+                    if (data.data.subject_img !== undefined) {
                         _html += `<div class="layui-field-box box">
             <img width="300px" height="300px" src="` + data.data.subject_img + `"/><br>
             <b>题目图片</b>
