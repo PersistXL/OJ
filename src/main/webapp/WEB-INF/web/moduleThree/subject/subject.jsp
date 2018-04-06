@@ -226,7 +226,7 @@
                 </div>
                 <label class="layui-form-label">难易度：</label>
                 <div class="layui-input-inline">
-                    <select name="facility" lay-verify="required" lay-search="">
+                    <select name="facility" lay-verify="required" lay-search="" id="facility">
                         <option value="简单">简单</option>
                         <option value="较易">较易</option>
                         <option value="一般">一般</option>
@@ -289,7 +289,7 @@
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "<option value='1'>请选择</option>";
+                    let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
@@ -410,17 +410,31 @@
                         $("input[name='option_c']").val(data.data.option_c);
                         $("input[name='option_d']").val(data.data.option_d);
                         $("input[name='option_e']").val(data.data.option_e);
-                        $("select[name='correct']").val(data.data.correct);
-                        // let _html_correct ="";
-                        // for(){
-                        //
-                        // }
-
-                        // $("#correct").html();
+                        // $("select[name='correct']").val(data.data.correct);
+                        let _html_correct =`<option value="A" `+(data.data.correct === "A"?"selected='selected'":"")+`>选项A</option>
+                        <option value="B"`+(data.data.correct === "B"?"selected='selected'":"")+`>选项B</option>
+                        <option value="C"`+(data.data.correct === "C"?"selected='selected'":"")+`>选项C</option>
+                        <option value="D"`+(data.data.correct === "D"?"selected='selected'":"")+`>选项D</option>
+                        <option value="E"`+(data.data.correct === "E"?"selected='selected'":"")+`>选项E</option>`;
+                        $("#correct").html(_html_correct);
+                        let _html_facility =`<option value="简单" `+(data.data.facility === "简单"?"selected='selected'":"")+`>简单</option>
+                        <option value="较易"`+(data.data.facility === "较易"?"selected='selected'":"")+`>较易</option>
+                        <option value="一般"`+(data.data.facility === "一般"?"selected='selected'":"")+`>一般</option>
+                        <option value="较难"`+(data.data.facility === "较难"?"selected='selected'":"")+`>较难</option>
+                        <option value="困难"`+(data.data.facility === "困难"?"selected='selected'":"")+`>困难</option>`;
+                        $("#facility").html(_html_facility);
+                        let questionsName= data.data.questionsName;
+                        $.post("${baseurl}/subject/selectQuestions", function (data) {
+                            let _html = "";
+                            for (let i = 0; i < data.data.length; i++) {
+                                _html += `<option value='` + data.data[i].id + `' `+( questionsName=== data.data[i].name?"selected='selected'":"")+`>` + data.data[i].name + `</option>`;
+                            }
+                            $("#questions_id").html(_html);
+                            form.render();
+                        });
+                        form.render();
                         $("input[name='file_img']").val(data.data.subject_img);
-                        $("select[name='questions_id']").val(data.data.questions_id);
                         $("input[name='chapter']").val(data.data.chapter);
-                        $("select[name='facility']").val(data.data.facility);
                         $("textarea[name='type']").val(data.data.type);
                         $("input[name='id']").val(data.data.id);
                         $("#imagesToUpdate").text("").attr("src", data.data.subject_img);
