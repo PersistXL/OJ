@@ -20,9 +20,9 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
-<%--<div id="wrongTitle" style="width: 90%;margin-left: 5%;margin-bottom: 50px">--%>
+<div id="watchWrongTitle" style="display:none;width: 90%;margin-left: 5%;margin-bottom: 50px">
 
-<%--</div>--%>
+</div>
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -98,6 +98,7 @@
             $.post("${baseurl}/wrongTitle/selectWrongTitleNo",  function (data) {
                 console.log(data.data.testPaperList)
                 var dataList = data.data.testPaperList;
+                dataList1 = dataList
                 let _html = "";
                 for (let i = 0; i < dataList.length; i++) {
                     _html += `<tr>
@@ -142,6 +143,55 @@
             });
             layer.close(index);
         });
+    }
+    function previewWrongTitle(id) {
+    var _html = "";
+    for (var i = 0; i < dataList1.length; i++) {
+    _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
+    <legend>试题` + (i + 1) + `：</legend>
+    <div class="layui-field-box">
+    <b>题目：</b>
+    <p>` + dataList1[i].subject + `</p>
+    </div>`);
+    if (dataList1[i].subject_img !== undefined) {
+    _html += (`<b style="margin-left: 12px">题目图片</b>
+    <div class="layui-field-box box">
+    <img width="300px" height="300px" src="` + dataList1[i].subject_img + `"/><br>
+    </div>`)
+    }
+    _html += (`<div class="layui-field-box">
+    <label><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `" value="A" class="checkboxA"> <b>选项A：</b></label>` + dataList1[i].option_a + `
+    </div>
+    <div class="layui-field-box">
+
+    <label><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="B" class="checkboxB"> <b>选项B：</b></label>` + dataList1[i].option_b + `
+    </div>
+    <div class="layui-field-box">
+
+    <label><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="C" class="checkboxC"><b>选项C：</b></label>` + dataList1[i].option_c + `
+    </div>
+    <div class="layui-field-box">
+
+    <label><b><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="D" class="checkboxD">选项D：</b></label>` + dataList1[i].option_d + `
+    </div>`)
+
+    if (dataList1[i].subject_e === undefined) {
+
+    _html += (`<div class="layui-field-box">
+
+    <label><b><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="E" class="checkboxD">选项E：</b></label>` + dataList1[i].option_e + `
+    </div>`)
+    }
+    _html += (`</fieldset>`);
+    }
+        layer.open({
+            type: 1,
+            title: "查看错题",
+            area: ["100%", "100%"],
+            skin: 'yourclass',
+            content: $('#watchWrongTitle')
+        });
+        $("#watchWrongTitle").html(_html);
     }
 </script>
 
