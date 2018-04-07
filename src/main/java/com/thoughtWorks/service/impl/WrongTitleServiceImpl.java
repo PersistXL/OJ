@@ -24,8 +24,8 @@ import java.util.Map;
     }
 
     @Override
-    public List<Map<String, Object>> selectWrongTitleNo() {
-        List<Map<String, Object>> list = wrongTitleDao.selectWrongTitleNo();
+    public List<Map<String, Object>> selectWrongTitleNo(String username) {
+        List<Map<String, Object>> list = wrongTitleDao.selectWrongTitleNo(username);
         return list;
     }
 

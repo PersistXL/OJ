@@ -10,10 +10,11 @@
         VALUES (#{subjectId},#{studentId})
     </insert>
 
-    <select id="selectWrongTitleNo" resultType="map">
+    <select id="selectWrongTitleNo" parameterType="String" resultType="map">
         SELECT o_wrong_title.*,oj.o_subject.*
         FROM oj.o_wrong_title,oj.o_subject
-        WHERE o_wrong_title.subject_id = o_subject.id
+        WHERE o_wrong_title.student_id = #{username}
+        AND o_wrong_title.subject_id = o_subject.id
     </select>
 
     <delete id="deleteWrongTitle" parameterType="int">

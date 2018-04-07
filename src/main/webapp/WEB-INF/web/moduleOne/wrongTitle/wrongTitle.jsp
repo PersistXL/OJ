@@ -86,7 +86,6 @@
                 layedit = layui.layedit,
                 laytpl = layui.laytpl;
 
-
             //全选
             form.on('checkbox(allChoose)', function (data) {
                 var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
@@ -95,10 +94,9 @@
                 });
                 form.render('checkbox');
             });
-            $.post("${baseurl}/wrongTitle/selectWrongTitleNo",  function (data) {
-                console.log(data.data.testPaperList)
+            $.post("${baseurl}/wrongTitle/selectWrongTitleNo", function (data) {
                 var dataList = data.data.testPaperList;
-                dataList1 = dataList
+                dataList1 = dataList;
                 let _html = "";
                 for (let i = 0; i < dataList.length; i++) {
                     _html += `<tr>
@@ -160,26 +158,31 @@
     </div>`)
     }
     _html += (`<div class="layui-field-box">
-    <label><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `" value="A" class="checkboxA"> <b>选项A：</b></label>` + dataList1[i].option_a + `
+    <label><b>选项A：</b></label>` + dataList1[i].option_a + `
     </div>
     <div class="layui-field-box">
 
-    <label><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="B" class="checkboxB"> <b>选项B：</b></label>` + dataList1[i].option_b + `
+    <label><b>选项B：</b></label>` + dataList1[i].option_b + `
     </div>
     <div class="layui-field-box">
 
-    <label><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="C" class="checkboxC"><b>选项C：</b></label>` + dataList1[i].option_c + `
+    <label><b>选项C：</b></label>` + dataList1[i].option_c + `
     </div>
     <div class="layui-field-box">
 
-    <label><b><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="D" class="checkboxD">选项D：</b></label>` + dataList1[i].option_d + `
+    <label><b>选项D：</b></label>` + dataList1[i].option_d + `
     </div>`)
 
     if (dataList1[i].subject_e === undefined) {
 
     _html += (`<div class="layui-field-box">
 
-    <label><b><input type="radio" style="width: 10px;height: 10px;" name="` + dataList1[i].id + `"  value="E" class="checkboxD">选项E：</b></label>` + dataList1[i].option_e + `
+    <label><b>选项E：</b></label>` + dataList1[i].option_e + `
+    </div>
+
+    <div class="layui-field-box">
+
+    <label><b>正确答案：</b></label>` + dataList1[i].correct + `
     </div>`)
     }
     _html += (`</fieldset>`);

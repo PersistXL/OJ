@@ -46,7 +46,8 @@ public class WrongTitleControl {
         try{
             Map<String, Object> data = new HashMap<>();
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
-            List<Map<String,Object>> testPaperList =  wrongTitleService.selectWrongTitleNo();
+            String username = user.getUserName();
+            List<Map<String, Object>> testPaperList = wrongTitleService.selectWrongTitleNo(username);
             data.put("user", user);
             data.put("testPaperList", testPaperList);
             return Result.success(data, Constant.SEARCH_SUCCESS);
