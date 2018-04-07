@@ -11,7 +11,7 @@
     </insert>
 
     <select id="selectWrongTitleNo" parameterType="String" resultType="map">
-        SELECT o_wrong_title.*,oj.o_subject.*
+        SELECT DISTINCT o_wrong_title.subject_id,oj.o_subject.*
         FROM oj.o_wrong_title,oj.o_subject
         WHERE o_wrong_title.student_id = #{username}
         AND o_wrong_title.subject_id = o_subject.id
