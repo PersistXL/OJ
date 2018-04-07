@@ -58,7 +58,7 @@
                 form.render('checkbox');
             });
             $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                console.log(data)
+                // console.log(data)
                 // console.log(data.data.user.userName)
                 dataListObject = data
                 var dataList = data.data.testPaperList;
@@ -144,7 +144,6 @@
             totalScore = data.testpaper.score;
             var _html = "";
             for (var i = 0; i < data.data.length; i++) {
-                var subject = data.data[i].subject
                 _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
                                 <legend>试题` + (i + 1) + `：</legend>
                                 <div class="layui-field-box">
