@@ -5,6 +5,9 @@ import com.thoughtWorks.entity.WrongTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author persistXL
  * @data 2018/4/6 16:59
@@ -18,5 +21,16 @@ import org.springframework.stereotype.Service;
     public WrongTitle wrongTitleId(WrongTitle wrongTitle) {
         wrongTitleDao.wrongTitleId(wrongTitle);
         return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectWrongTitleNo() {
+        List<Map<String, Object>> list = wrongTitleDao.selectWrongTitleNo();
+        return list;
+    }
+
+    @Override
+    public void deleteWrongTitle(int id) {
+        wrongTitleDao.deleteWrongTitle(id);
     }
 }

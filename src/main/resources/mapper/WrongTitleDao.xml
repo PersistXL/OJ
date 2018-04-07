@@ -10,4 +10,14 @@
         VALUES (#{subjectId},#{studentId})
     </insert>
 
+    <select id="selectWrongTitleNo" resultType="map">
+        SELECT o_wrong_title.*,oj.o_subject.*
+        FROM oj.o_wrong_title,oj.o_subject
+        WHERE o_wrong_title.subject_id = o_subject.id
+    </select>
+
+    <delete id="deleteWrongTitle" parameterType="int">
+        DELETE FROM o_wrong_title WHERE id=#{id}
+    </delete>
+
 </mapper>
