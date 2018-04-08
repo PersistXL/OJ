@@ -18,7 +18,7 @@
     </select>
 
     <delete id="deleteWrongTitle" parameterType="int">
-        DELETE FROM o_wrong_title WHERE id=#{id}
+        DELETE FROM o_wrong_title WHERE subject_id=#{id}
     </delete>
 
 </mapper>
