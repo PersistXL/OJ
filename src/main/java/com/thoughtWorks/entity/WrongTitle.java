@@ -6,6 +6,7 @@ package com.thoughtWorks.entity;
 public class WrongTitle {
     private String subjectId;
     private String studentId;
+    private String wrongOptions;
 
     public String getSubjectId() {
         return subjectId;
@@ -23,11 +24,20 @@ public class WrongTitle {
         this.studentId = studentId;
     }
 
+    public String getWrongOptions() {
+        return wrongOptions;
+    }
+
+    public void setWrongOptions(String wrongOptions) {
+        this.wrongOptions = wrongOptions;
+    }
+
     @Override
     public String toString() {
         return "WrongTitle{" +
                 "subjectId='" + subjectId + '\'' +
                 ", studentId='" + studentId + '\'' +
+                ", wrongOptions='" + wrongOptions + '\'' +
                 '}';
     }
 }

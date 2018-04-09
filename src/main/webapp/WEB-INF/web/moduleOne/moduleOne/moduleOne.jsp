@@ -205,7 +205,7 @@
             } else {
                 var falseid = testQuestions.data[i].id;
                 //存储错题的id
-                $.post("${baseurl}/wrongTitle/wrongTitleId",{subjectId : falseid,studentId : userName},function (data) {
+                $.post("${baseurl}/wrongTitle/wrongTitleId",{subjectId : falseid,studentId : userName,wrongOptions : checkBoxs[i]},function (data) {
 
                 });
             }
