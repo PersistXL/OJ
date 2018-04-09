@@ -54,4 +54,15 @@ public interface SubjectDao {
      */
     void insertSubjectByExcel( List<Map<String,String>> list);
 
+    /**
+     * 移动端查询题库
+     * @return
+     */
+    List<Map<String,Object>> mobileSelectSubject();
+
+    /**
+     * 移动端查询三维题库
+     * @return
+     */
+    List<Map<String,Object>> mobileSelectSubjectModel();
 }

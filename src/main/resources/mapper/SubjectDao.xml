@@ -11,9 +11,9 @@
     </insert>
 
     <select id="selectQuestions" resultType="Questions">
-        SELECT *
-        FROM o_questions
-    </select>
+    SELECT *
+    FROM o_questions
+</select>
     <select id="querySubjectTotalCount" resultType="long" parameterType="subject">
         SELECT count(1)
         FROM o_subject
@@ -66,4 +66,12 @@
             (#{item.subject},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d},#{item.option_e},#{item.chapter},#{item.correct})
         </foreach>
     </insert>
+
+    <select id="mobileSelectSubject" resultType="map">
+        SELECT * FROM o_subject
+    </select>
+
+    <select id="mobileSelectSubjectModel" resultType="map">
+        SELECT * FROM o_subject_model
+    </select>
 </mapper>

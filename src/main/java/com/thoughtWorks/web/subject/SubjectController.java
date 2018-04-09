@@ -7,12 +7,10 @@ import com.thoughtWorks.util.Constant;
 import com.thoughtWorks.util.ExcelUtil;
 import com.thoughtWorks.util.PageUtil;
 import com.thoughtWorks.web.ImgUtil;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -20,7 +18,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 @Component
@@ -176,5 +173,27 @@ public class SubjectController {
         }
 
         return Result.failure(null, Constant.DELETE_FAILURE);
+    }
+    @RequestMapping("/mobileSelectSubject")
+    @ResponseBody
+    public Result mobileSelectSubject() throws Exception{
+        try {
+            List<Map<String,Object>> list = subjectDao.mobileSelectSubject();
+            return Result.success(list,Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.SEARCH_FAILURE);
+    }
+    @RequestMapping("/mobileSelectSubjectModel")
+    @ResponseBody
+    public Result mobileSelectSubjectModel() throws Exception{
+        try {
+            List<Map<String, Object>> list = subjectDao.mobileSelectSubjectModel();
+            return Result.success(list, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
 }
