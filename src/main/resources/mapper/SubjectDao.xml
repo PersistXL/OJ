@@ -66,4 +66,11 @@
             (#{item.subject},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d},#{item.option_e},#{item.chapter},#{item.correct})
         </foreach>
     </insert>
+    <insert id="insertSubjectByExcelThree" parameterType="list">
+        INSERT INTO o_subject_model (chapter,chapter_no,subject,facility,chapter_type,assetbundle,modelName,model_tip,correct,option_a,option_b,option_c,option_d)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.chapter},#{item.chapter_no},#{item.subject},#{item.facility},#{item.chapter_type},#{item.assetbundle},#{item.modelName},#{item.model_tip},#{item.correct},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d})
+        </foreach>
+    </insert>
 </mapper>
