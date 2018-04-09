@@ -11,4 +11,8 @@ public class PageController {
     public String text(){
         return "/moduleThree/addTaskQuestions/addTaskQuestions";
     }
+    @RequestMapping("/questionsInput")
+    public String subjectThree(){
+        return "/moduleThree/subjectThree/subjectThree";
+    }
 }

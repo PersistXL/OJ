@@ -44,7 +44,7 @@ public class SubjectController {
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
     public Result upLoadFile(HttpServletRequest request) {
-        String path ="";
+        String path = "";
         try {
             // @RequestParam("file") MultipartFile file,
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
@@ -64,7 +64,7 @@ public class SubjectController {
                         // 如果名称不为“”,说明该文件存在，否则说明该文件不存在
                         if (myFileName.trim() != "") {
                             // 定义上传路径
-                             path = request.getServletContext().getRealPath("/excel") + Constant.USER_FILE_PATH
+                            path = request.getServletContext().getRealPath("/excel") + Constant.USER_FILE_PATH
                                     + myFileName;
                             File localFile = new File(path);
                             f.transferTo(localFile);
@@ -74,15 +74,66 @@ public class SubjectController {
             }
             System.out.println(path);
             ExcelUtil excelUtil = new ExcelUtil();
-            List<Map<String,String>> list =  excelUtil.file(path);
+            String columns[] = {"chapter","subject","correct","option_a","option_b","option_c","option_d","option_e"};
+            List<Map<String, String>> list = excelUtil.file(path,columns);
             //遍历解析出来的list
-            for (Map<String,String> map : list) {
-                for (Map.Entry<String,String> entry : map.entrySet()) {
-                    System.out.print(entry.getKey()+":"+entry.getValue()+",");
+            for (Map<String, String> map : list) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    System.out.print(entry.getKey() + ":" + entry.getValue() + ",");
                 }
                 System.out.println();
             }
             subjectDao.insertSubjectByExcel(list);
+            return Result.failure(path, Constant.UPLOAD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.UPLOAD_FAILURE);
+    }
+
+    @RequestMapping(value = "/uploadFileThree", method = RequestMethod.POST)
+    @ResponseBody
+    public Result uploadFileThree(HttpServletRequest request) {
+        String path = "";
+        try {
+            // @RequestParam("file") MultipartFile file,
+            CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+                    request.getSession().getServletContext());
+            // 判断 request 是否有文件上传,即多部分请求
+            if (multipartResolver.isMultipart(request)) {
+                // 转换成多部分request
+                MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+                // 取得request中的所有文件名
+                Iterator<String> iter = multiRequest.getFileNames();
+                while (iter.hasNext()) {
+                    // 取得上传文件
+                    MultipartFile f = multiRequest.getFile(iter.next());
+                    if (f != null) {
+                        // 取得当前上传文件的文件名称
+                        String myFileName = f.getOriginalFilename();
+                        // 如果名称不为“”,说明该文件存在，否则说明该文件不存在
+                        if (myFileName.trim() != "") {
+                            // 定义上传路径
+                            path = request.getServletContext().getRealPath("/excel") + Constant.USER_FILE_PATH
+                                    + myFileName;
+                            File localFile = new File(path);
+                            f.transferTo(localFile);
+                        }
+                    }
+                }
+            }
+            System.out.println(path);
+            ExcelUtil excelUtil = new ExcelUtil();
+            String columns[] = {"chapter","chapter_no","subject","facility","chapter_type","assetbundle","modelName","model_tip","correct","option_a","option_b","option_c","option_d"};
+            List<Map<String, String>> list = excelUtil.file(path,columns);
+            //遍历解析出来的list
+            for (Map<String, String> map : list) {
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    System.out.print(entry.getKey() + ":" + entry.getValue() + ",");
+                }
+                System.out.println();
+            }
+            subjectDao.insertSubjectByExcelThree(list);
             return Result.failure(path, Constant.UPLOAD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

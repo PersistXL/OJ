@@ -63,14 +63,14 @@ public class ExcelUtil {
         }
 
     }
-    public List<Map<String,String>> file(String file) {
+    public List<Map<String,String>> file(String file,String []columns) {
         Workbook wb =null;
         Sheet sheet = null;
         Row row = null;
         List<Map<String,String>> list = null;
         String cellData = null;
         String filePath = file;
-        String columns[] = {"chapter","subject","correct","option_a","option_b","option_c","option_d","option_e"};
+
         wb = readExcel(filePath);
         if(wb != null){
             //用来存放表中数据
