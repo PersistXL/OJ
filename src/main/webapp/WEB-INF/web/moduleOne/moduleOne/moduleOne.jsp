@@ -140,7 +140,6 @@
     function work(id) {
         $.post("${baseurl}/moduleOne/selectTestpaperById", {id: id}, function (data) {
             ID = id;
-            alert(ID)
             testQuestions = data;
             totalScore = data.testpaper.score;
             var _html = "";
