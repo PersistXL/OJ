@@ -33,6 +33,6 @@
     <update id="updateScore" parameterType="com.thoughtWorks.entity.StudentTestpaper">
         UPDATE o_student_testpaper
         SET testpaper_student_score = #{testpaperStudentScore}
-        WHERE id = #{id}
+        WHERE oj.o_student_testpaper.testpaper_id = #{id}
     </update>
 </mapper>

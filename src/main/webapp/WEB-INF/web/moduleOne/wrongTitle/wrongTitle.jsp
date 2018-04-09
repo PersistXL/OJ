@@ -26,51 +26,51 @@
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
-<div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
+            <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
 
-    <div class="layui-form">
-        <table class="layui-table">
-            <colgroup>
-                <col width="60">
-                <col width="210">
-                <col width="110">
-                <col width="110">
-                <col width="110">
-                <col width="110">
-                <col width="110">
-                <col width="110">
-                <%--<col width="100">--%>
-                <col width="110">
-                <col width="110">
-                <col width="230">
-            </colgroup>
+                <div class="layui-form">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="60">
+                            <col width="210">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            <%--<col width="100">--%>
+                            <col width="110">
+                            <col width="110">
+                            <col width="230">
+                        </colgroup>
 
-            <thead>
-            <tr>
-                <th>编号</th>
-                <th>题目</th>
-                <th>选项A</th>
-                <th>选项B</th>
-                <th>选项C</th>
-                <th>选项D</th>
-                <th>选项E</th>
-                <th>正确选项</th>
-                <%--<th>题库</th>--%>
-                <th>知识点</th>
-                <th>难易度</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody id="wrongTitle">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>题目</th>
+                            <th>选项A</th>
+                            <th>选项B</th>
+                            <th>选项C</th>
+                            <th>选项D</th>
+                            <th>选项E</th>
+                            <th>正确选项</th>
+                            <%--<th>题库</th>--%>
+                            <th>知识点</th>
+                            <th>难易度</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="wrongTitle">
 
-            </tbody>
-        </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="demo7"></div>
+            </div>
+            <div id="demo1"></div>
+        </div>
     </div>
-    <div id="demo7"></div>
-</div>
-<div id="demo1"></div>
-</div>
-</div>
 </section>
 <script src="${baseurl}/public/js/layui/layui.js" charset="utf-8"></script>
 <script>
@@ -110,7 +110,7 @@
                             <td>` + dataList[i].correct + `</td>
                             <!--<td><span class = "hide_title">` + dataList[i].questionsName + `</span></td>-->
                             <td ><span class = "hide_title">` + dataList[i].chapter + `</span></td>
-                            <td>` +(dataList[i].facility===undefined ?"暂无":dataList[i].facility) + `</td>
+                            <td>` + (dataList[i].facility === undefined ? "暂无" : dataList[i].facility) + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
@@ -133,6 +133,7 @@
 
         })
     });
+
     function deleteWrongTitle(id) {
         layer.confirm('是否删除信息？', function (index) {
             $.post("${baseurl}/wrongTitle/deleteWrongTitle", {id: id}, function (data) {
@@ -142,22 +143,23 @@
             layer.close(index);
         });
     }
+
     function previewWrongTitle(id) {
-    var _html = "";
-    for (var i = 0; i < dataList1.length; i++) {
-    _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
+        var _html = "";
+        for (var i = 0; i < dataList1.length; i++) {
+            _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
     <legend>试题` + (i + 1) + `：</legend>
     <div class="layui-field-box">
     <b>题目：</b>
     <p>` + dataList1[i].subject + `</p>
     </div>`);
-    if (dataList1[i].subject_img !== undefined) {
-    _html += (`<b style="margin-left: 12px">题目图片</b>
+            if (dataList1[i].subject_img !== undefined) {
+                _html += (`<b style="margin-left: 12px">题目图片</b>
     <div class="layui-field-box box">
     <img width="300px" height="300px" src="` + dataList1[i].subject_img + `"/><br>
     </div>`)
-    }
-    _html += (`<div class="layui-field-box">
+            }
+            _html += (`<div class="layui-field-box">
     <label><b>选项A：</b></label>` + dataList1[i].option_a + `
     </div>
     <div class="layui-field-box">
@@ -173,9 +175,9 @@
     <label><b>选项D：</b></label>` + dataList1[i].option_d + `
     </div>`)
 
-    if (dataList1[i].subject_e === undefined) {
+            if (dataList1[i].subject_e === undefined) {
 
-    _html += (`<div class="layui-field-box">
+                _html += (`<div class="layui-field-box">
 
     <label><b>选项E：</b></label>` + dataList1[i].option_e + `
     </div>
@@ -184,9 +186,9 @@
 
     <label><b>正确答案：</b></label>` + dataList1[i].correct + `
     </div>`)
-    }
-    _html += (`</fieldset>`);
-    }
+            }
+            _html += (`</fieldset>`);
+        }
         layer.open({
             type: 1,
             title: "查看错题",
