@@ -8,5 +8,10 @@ import java.util.Map;
  * @data 2018/4/11 18:19
  */
 public interface JobListDao {
-    List<Map<String, Object>> selectSubject();
+    /**
+     * 根据用户名查询作业试题
+     * @param userName
+     * @return
+     */
+    List<Map<String, Object>> selectSubject(String userName);
 }

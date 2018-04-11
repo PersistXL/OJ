@@ -1,8 +1,10 @@
 package com.thoughtWorks.web.jobList;
 
 import com.thoughtWorks.dto.Result;
+import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.service.JobListService;
 import com.thoughtWorks.util.Constant;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +30,9 @@ public class JobListController {
     @ResponseBody
     public Result selectSubject(){
         try {
-            List<Map<String,Object>> list = jobListService.selectSubject();
+            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+            String userName = user.getUserName();
+            List<Map<String,Object>> list = jobListService.selectSubject(userName);
             return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

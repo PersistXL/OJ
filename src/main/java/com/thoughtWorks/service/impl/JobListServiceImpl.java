@@ -17,8 +17,8 @@ public class JobListServiceImpl implements com.thoughtWorks.service.JobListServi
     @Autowired
     JobListDao jobListDao;
     @Override
-    public List<Map<String, Object>> selectSubject() {
-        List<Map<String, Object>> list = jobListDao.selectSubject();
+    public List<Map<String, Object>> selectSubject(String userName) throws Exception {
+        List<Map<String, Object>> list = jobListDao.selectSubject(userName);
         return list;
     }
 }
