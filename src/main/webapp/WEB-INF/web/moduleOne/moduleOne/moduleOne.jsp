@@ -27,8 +27,7 @@
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
                 <div class="layui-collapse" lay-filter="test" style="margin-top:20px;" id="notice">
-
-
+                    <h3>暂无</h3>
                 </div>
             </div>
         </div>
@@ -82,6 +81,7 @@
                             status = "已截止";
                             var q = "";
                         }
+                        if(dataListObject != null){
                         _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
                             + dataList[i].ClassName + `<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">`
                             + q
@@ -131,6 +131,7 @@
                     }
                     $("#notice").html(_html);
                     element.init();
+                }
                 }
             });
 
