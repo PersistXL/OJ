@@ -32,5 +32,34 @@
     </div>
 </section>
 
+<script>
+    //动态拼接教师端作业列表
+    $(function () {
+        layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree', 'layedit'], function () {
+            window.jQuery = window.$ = layui.jquery;
+            window.layer = layui.layer;
+
+            var element = layui.element(),
+                form = layui.form(),
+                layedit = layui.layedit,
+                laytpl = layui.laytpl;
+
+
+            //全选
+            form.on('checkbox(allChoose)', function (data) {
+                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                child.each(function (index, item) {
+                    item.checked = data.elem.checked;
+                });
+                form.render('checkbox');
+            });
+            //使用Ajax传值
+            $.post("${baseurl}/jobList/selectSubject", function (data) {
+                console.log(data)
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

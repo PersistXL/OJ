@@ -1,7 +1,15 @@
 package com.thoughtWorks.web.jobList;
 
+import com.thoughtWorks.dto.Result;
+import com.thoughtWorks.service.JobListService;
+import com.thoughtWorks.util.Constant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author persistXL
@@ -10,8 +18,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Component
 @RequestMapping("/jobList")
 public class JobListController {
+    @Autowired
+    JobListService jobListService;
     @RequestMapping()
     public String index(){
         return "moduleThree/jobList/jobList";
+    }
+    @RequestMapping("/selectSubject")
+    @ResponseBody
+    public Result selectSubject(){
+        try {
+            List<Map<String,Object>> list = jobListService.selectSubject();
+            return Result.success(list, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.SEARCH_FAILURE);
     }
 }
