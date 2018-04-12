@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thoughtWorks.dao.TestpaperDao">
+
+    <select id="addTestpaperCursor" resultType="map">
+        SELECT *
+        FROM o_testpaper_cursor
+    </select>
+    <delete id="deleteTestpaperCursor" parameterType="id">
+        delete from o_testpaper_cursor where id = #{id}
+    </delete>
+</mapper>

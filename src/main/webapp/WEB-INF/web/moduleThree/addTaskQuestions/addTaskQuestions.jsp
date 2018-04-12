@@ -243,6 +243,9 @@
                     $("#select_questions").html(_html);
                     form.render();
                 });
+                $.post("${baseurl}/Testpaper/addTestpaperCursor", function (data) {
+                    console.log(data)
+                });
 
                 $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility,currentIndex: currentIndex, pageSize: pageSize}, function (data) {
                     _subject.paging();
@@ -256,7 +259,7 @@
                             <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
                             <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
                             <td ><span class = "hide_title1">` + data.data[i].chapter + `</span></td>
-                            <td>` + data.data[i].facility + `</td>
+                            <td>` + (data.data[i].facility === undefined?"未指定":data.data[i].facility)+ `</td>
                             <td>
 
                                 <div class="layui-btn-group">
