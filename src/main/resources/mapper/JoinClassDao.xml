@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thoughtWorks.dao.JoinClassDao">
+
+    <insert id="joinClassInStudent" parameterType="com.thoughtWorks.entity.Student">
+        insert into o_student (no, name, gender, classes_id)
+        values (#{student.no},#{student.name},#{student.gender},#{student.classesId});
+    </insert>
+
+    <insert id="joinClassInUser" parameterType="com.thoughtWorks.entity.User">
+        insert into t_user (username, password, roleId, available, name, staff)
+        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff});
+    </insert>
+</mapper>
