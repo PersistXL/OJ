@@ -99,21 +99,21 @@
 
                                             <thead>
                                             <tr>
-                                                <th>测试名称</th>
-                                                <th>题目数量</th>
-                                                <th>成绩</th>
-                                                <th>状态</th>
-                                                <th>操作</th>
+                                                <th style="text-align: center">测试名称</th>
+                                                <th style="text-align: center">题目数量</th>
+                                                <th style="text-align: center">成绩</th>
+                                                <th style="text-align: center">状态</th>
+                                                <th style="text-align: center">操作</th>
                                             </tr>
                                             </thead>
 
                                             <tbody id="test_questions">
                                             <tr>
-                                                <td>` + dataList[i].name + `</td>
-                                                <td>` + s.split("_").length + `</td>
-                                                <td>` + score + `</td>
-                                                <td>` + status + `</td>
-                                                <td>`)
+                                                <td style="text-align: center">` + dataList[i].name + `</td>
+                                                <td style="text-align: center">` + s.split("_").length + `</td>
+                                                <td style="text-align: center">` + score + `</td>
+                                                <td style="text-align: center">` + status + `</td>
+                                                <td style="text-align: center">`)
                                                 if(dataList[i].testpaper_student_score == null && d1 >= d2){
                                                     _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + dataList[i].id + `)">
                                                         <i class="layui-icon">&#xe642;</i>答题</a>`)

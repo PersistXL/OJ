@@ -1,11 +1,15 @@
 package com.thoughtWorks.dao;
 
+import com.thoughtWorks.entity.ClassesTemporary;
 import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.entity.User;
 import org.apache.ibatis.annotations.Param;
 
-public interface JoinClassDao {
-    void joinClassInStudent(@Param("student") Student student);
+import java.util.List;
+import java.util.Map;
 
-    void joinClassInUser(@Param("user") User user);
+public interface JoinClassDao {
+    void joinClassInStudent(@Param("classesTemporary") ClassesTemporary classesTemporary);
+
+    List<Map<String, Object>> getClassList(@Param("stuNo") String stuNo);
 }
