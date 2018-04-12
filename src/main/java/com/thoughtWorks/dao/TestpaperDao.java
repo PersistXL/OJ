@@ -1,5 +1,7 @@
 package com.thoughtWorks.dao;
 
+import com.thoughtWorks.entity.TestpaperCursor;
+
 import java.util.*;
 
 /**
@@ -10,11 +12,15 @@ public interface TestpaperDao {
      * 查询所有的试题暂存表信息
      * @return
      */
-    List<Map<String,Object>> addTestpaperCursor();
+    List<Map<String,Object>> selectTestpaperCursor();
 
     /**
      * 移除暂存的试题
      */
    void deleteTestpaperCursor(int id);
 
+    /**
+     * 移除暂存的试题
+     */
+    void addTestpaperCursor(TestpaperCursor testpaperCursor);
 }

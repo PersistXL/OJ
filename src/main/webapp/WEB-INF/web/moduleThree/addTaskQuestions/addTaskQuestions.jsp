@@ -20,6 +20,7 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+
     .hide_title1 {
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -46,47 +47,38 @@
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                     <legend>我选择的试题</legend>
                 </fieldset>
-                <form  lay-filter="role-add" class="layui-form layui-form-pane" method="post">
-                <div class="layui-input-inline">
-                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷名称</label>
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" name=""
-                                   autocomplete="off"
-                                   placeholder="请输入试卷名称" class="layui-input">
+                <form lay-filter="role-add" class="layui-form layui-form-pane" method="post">
+                    <div class="layui-input-inline">
+                        <input type="text" hidden id="idAll">
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷名称</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" name=""
+                                       autocomplete="off"
+                                       placeholder="请输入试卷名称" class="layui-input">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="layui-input-inline">
-                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷类型</label>
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" name=""
-                                   autocomplete="off"
-                                   placeholder="请输入试卷类型" class="layui-input">
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷时长</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" name=""
+                                       autocomplete="off"
+                                       placeholder="请输入时长（单位/分钟）" class="layui-input">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="layui-input-inline">
-                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷时长</label>
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" name=""
-                                   autocomplete="off"
-                                   placeholder="请输入时长（单位/分钟）" class="layui-input">
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" name=""
+                                       autocomplete="off"
+                                       placeholder="请输入分数" class="layui-input">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="layui-input-inline">
-                    <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" name=""
-                                   autocomplete="off"
-                                   placeholder="请输入分数" class="layui-input">
-                        </div>
-                    </div>
-                </div>
                 </form>
                 <div class="layui-form">
                     <table class="layui-table">
@@ -100,18 +92,8 @@
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody id="">
-                        <th>1</th>
-                        <th>骨学试题</th>
-                        <th>第一章骨学</th>
-                        <th>骨学、肌肉</th>
-                        <th>简单</th>
-                        <th>
-                            <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
-                                <i class="layui-icon">&#xe602;</i>
-                                移除
-                            </a>
-                        </th>
+                        <tbody id="cursorTaskQuestions">
+
                         </tbody>
                     </table>
                 </div>
@@ -136,51 +118,52 @@
                 </fieldset>
                 <blockquote class="layui-elem-quote mylog-info-tit" style="height: 120px;">
                     <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
-                            <div class="layui-input-inline">
-                                <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
-                                <div class="layui-inline">
-                                    <div class="layui-input-inline">
-                                        <select name="select_questions" id="select_questions" lay-filter="modules_1"
-                                                lay-verify="required" lay-search=""
-                                        >
-                                            <option value="">请选择</option>
-                                        </select>
-                                    </div>
+                        <div class="layui-input-inline">
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <select name="select_questions" id="select_questions" lay-filter="modules_1"
+                                            lay-verify="required" lay-search=""
+                                    >
+                                        <option value="">请选择</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="layui-input-inline">
-                                <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
-                                <div class="layui-inline">
-                                    <div class="layui-input-inline">
-                                        <select name="select_facility" lay-filter="modules_1" lay-verify="required"
-                                                lay-search="">
-                                            <option value="">请选择</option>
-                                            <option value="">请选择</option>
-                                            <option value="简单">简单</option>
-                                            <option value="较易">较易</option>
-                                            <option value="一般">一般</option>
-                                            <option value="较难">较难</option>
-                                            <option value="困难">困难</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div><br>
-                            <div class="layui-input-inline">
-                                <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
-                                <div class="layui-inline">
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="select_chapter"
-                                               autocomplete="off"
-                                               placeholder="请输入知识点" class="layui-input">
-                                    </div>
+                        </div>
+                        <div class="layui-input-inline">
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <select name="select_facility" lay-filter="modules_1" lay-verify="required"
+                                            lay-search="">
+                                        <option value="">请选择</option>
+                                        <option value="">请选择</option>
+                                        <option value="简单">简单</option>
+                                        <option value="较易">较易</option>
+                                        <option value="一般">一般</option>
+                                        <option value="较难">较难</option>
+                                        <option value="困难">困难</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="layui-input-inline">
-                                <div class="layui-inline">
-                                    <a class="layui-btn" onclick="currentIndex = 1;_subject.page()"><i
-                                            class="layui-icon">&#xe615;</i>搜索</a>
+                        </div>
+                        <br>
+                        <div class="layui-input-inline">
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input type="text" name="select_chapter"
+                                           autocomplete="off"
+                                           placeholder="请输入知识点" class="layui-input">
                                 </div>
                             </div>
+                        </div>
+                        <div class="layui-input-inline">
+                            <div class="layui-inline">
+                                <a class="layui-btn" onclick="currentIndex = 1;_subject.page()"><i
+                                        class="layui-icon">&#xe615;</i>搜索</a>
+                            </div>
+                        </div>
                     </form>
                 </blockquote>
                 <div class="layui-form">
@@ -243,11 +226,36 @@
                     $("#select_questions").html(_html);
                     form.render();
                 });
-                $.post("${baseurl}/Testpaper/addTestpaperCursor", function (data) {
-                    console.log(data)
+                $.post("${baseurl}/Testpaper/selectTestpaperCursor", function (data) {
+                    let _html = ""
+                    let idAll = [];
+                    for (let i = 0; i < data.data.length; i++) {
+                        idAll.push(data.data[i].id)
+                        let count = i+1;
+                        _html += `<tr>
+                        <th>` + count + `</th>
+                        <th>` + data.data[i].subject + `</th>
+                        <th>` + data.data[i].questionsName + `</th>
+                        <th>` + data.data[i].chapter + `</th>
+                        <th>` +(data.data[i].facility === undefined ? "未指定" : data.data[i].facility) + `</th>
+                        <th>
+                            <a class="layui-btn layui-btn-mini" onclick="_subject.removeTestpaperCursor(` + data.data[i].id + `)">
+                                <i class="layui-icon">&#xe602;</i>
+                                移除
+                            </a>
+                        </th></tr>`;
+                    }
+                    $("#cursorTaskQuestions").html(_html);
+                    $("#idAll").val(idAll.join("_"));
                 });
 
-                $.post("${baseurl}/subject/selectSubject",{questionsId:select_questions,chapter:select_chapter,facility:select_facility,currentIndex: currentIndex, pageSize: pageSize}, function (data) {
+                $.post("${baseurl}/subject/selectSubject", {
+                    questionsId: select_questions,
+                    chapter: select_chapter,
+                    facility: select_facility,
+                    currentIndex: currentIndex,
+                    pageSize: pageSize
+                }, function (data) {
                     _subject.paging();
                     currentIndex = data.page.currentIndex;
                     totalSize = data.page.totalSize;
@@ -259,11 +267,11 @@
                             <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
                             <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
                             <td ><span class = "hide_title1">` + data.data[i].chapter + `</span></td>
-                            <td>` + (data.data[i].facility === undefined?"未指定":data.data[i].facility)+ `</td>
+                            <td>` + (data.data[i].facility === undefined ? "未指定" : data.data[i].facility) + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
-                                        <a class="layui-btn layui-btn-mini" onclick="" >
+                                        <a class="layui-btn layui-btn-mini" onclick="_subject.addTestpaperCursor(` + data.data[i].id + `)" >
                                             <i class="layui-icon">&#xe642;</i>
                                             选择
                                         </a>
@@ -306,82 +314,13 @@
                     content: $('#addInfo')
                 });
             },
-            deleteSubjectInfo: function (id) {
-                layer.confirm('是否删除信息？', function (index) {
-                    $.post("${baseurl}/subject/deleteSubjectById", {id: id}, function (data) {
+            removeTestpaperCursor: function (id) {
+                layer.confirm('是否移除试题？', function (index) {
+                    $.post("${baseurl}/Testpaper/deleteTestpaperCursor", {id: id}, function (data) {
                         layer.msg(data.msg);
                         location.reload();
                     });
                     layer.close(index);
-                });
-            },
-            updataInfo: function (id) {
-
-                layui.use('form', function () {
-                    let $ = layui.jquery, form = layui.form();
-                    $.post("${baseurl}/subject/selectSubjectById", {id: id}, function (data) {
-                        $("#add").hide();
-                        $("#update").show();
-
-                        $("textarea[name='subject']").val(data.data.subject);
-                        $("input[name='option_a']").val(data.data.option_a);
-                        $("input[name='option_b']").val(data.data.option_b);
-                        $("input[name='option_c']").val(data.data.option_c);
-                        $("input[name='option_d']").val(data.data.option_d);
-                        $("select[name='correct']").val(data.data.correct);
-                        // let _html_correct ="";
-                        // for(){
-                        //
-                        // }
-
-                        // $("#correct").html();
-                        $("input[name='file_img']").val(data.data.subject_img);
-                        $("select[name='questions_id']").val(data.data.questions_id);
-                        $("input[name='chapter']").val(data.data.chapter);
-                        $("select[name='facility']").val(data.data.facility);
-                        $("textarea[name='type']").val(data.data.type);
-                        $("input[name='id']").val(data.data.id);
-                        $("#imagesToUpdate").text("").attr("src", data.data.subject_img);
-                        layer.open({
-                            type: 1,
-                            title: '试题预览',
-                            area: ['100%', '100%'],
-                            skin: 'yourclass',
-                            content: $('#addInfo')
-                        });
-                    });
-                    form.render();
-
-                });
-            },
-            updateInfo_new: function () {
-                let id = $("input[name='id']").val();
-                let subject = $("textarea[name='subject']").val();
-                let option_a = $("input[name='option_a']").val();
-                let option_b = $("input[name='option_b']").val();
-                let option_c = $("input[name='option_c']").val();
-                let option_d = $("input[name='option_d']").val();
-                let correct = $("select[name='correct']").val();
-                let imagesToUpdate = $("input[name='file_img']").val();
-                let questions_id = $("select[name='questions_id']").val();
-                let chapter = $("input[name='chapter']").val();
-                let facility = $("select[name='facility']").val();
-                let type = $("textarea[name='type']").val();
-                $.post("${baseurl}/subject/updateSubjectById", {
-                    id: id,
-                    subject: subject,
-                    optionA: option_a,
-                    optionB: option_b,
-                    optionC: option_c,
-                    optionD: option_d,
-                    correct: correct,
-                    subjectImg: imagesToUpdate,
-                    questionsId: questions_id,
-                    chapter: chapter,
-                    facility: facility,
-                    type: type
-                }, function (data) {
-                    layer.msg(data.msg);
                 });
             },
             previewSubjectInfo: function (id) {
@@ -456,32 +395,12 @@
                     });
                 });
             },
-            addsingleEntryInfo: function () {
-                let subject = $("textarea[name='subject']").val();
-                let option_a = $("input[name='option_a']").val();
-                let option_b = $("input[name='option_b']").val();
-                let option_c = $("input[name='option_c']").val();
-                let option_d = $("input[name='option_d']").val();
-                let correct = $("select[name='correct']").val();
-                let imagesToUpdate = $("input[name='file_img']").val();
-                let questions_id = $("select[name='questions_id']").val();
-                let chapter = $("input[name='chapter']").val();
-                let facility = $("select[name='facility']").val();
-                let type = $("textarea[name='type']").val();
-                $.post("${baseurl}/subject/addSubject", {
-                    subject: subject,
-                    optionA: option_a,
-                    optionB: option_b,
-                    optionC: option_c,
-                    optionD: option_d,
-                    correct: correct,
-                    subjectImg: imagesToUpdate,
-                    questionsId: questions_id,
-                    chapter: chapter,
-                    facility: facility,
-                    type: type
+            addTestpaperCursor: function (id) {
+                $.post("${baseurl}/Testpaper/addTestpaperCursor", {
+                    subjectId: id
                 }, function (data) {
                     layer.msg(data.msg);
+                    location.reload();
                 });
 
             }
