@@ -13,4 +13,8 @@
         insert into t_user (username, password, roleId, available, name, staff)
         values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff});
     </insert>
+
+    <select id="getClassList" parameterType="string" resultType="map">
+        select * from o_classes WHERE student_id = #{stuNo};
+    </select>
 </mapper>

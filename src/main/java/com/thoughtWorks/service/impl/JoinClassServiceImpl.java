@@ -1,12 +1,16 @@
 package com.thoughtWorks.service.impl;
 
 import com.thoughtWorks.dao.JoinClassDao;
+import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.entity.User;
 import com.thoughtWorks.service.JoinClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 @Service
 public class JoinClassServiceImpl implements JoinClassService {
 
@@ -26,4 +30,10 @@ public class JoinClassServiceImpl implements JoinClassService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Classes> getClassList(String stuNo) {
+        return joinClassDao.getClassList(stuNo);
+    }
+
 }
