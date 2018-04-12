@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/studentClass")
 public class JoinClassController {
 
-    private Student student;
-
     @Autowired
     private JoinClassService joinClassService;
 

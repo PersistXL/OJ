@@ -5,7 +5,7 @@
 <mapper namespace="com.thoughtWorks.dao.JoinClassDao">
 
     <insert id="joinClassInStudent" parameterType="com.thoughtWorks.entity.Student">
-        insert into o_student ("no", name, gender, classes_id)
+        insert into o_student (no, name, gender, classes_id)
         values (#{student.no},#{student.name},#{student.gender},#{student.classesId});
     </insert>
 
