@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thoughtWorks.dao.TestpaperDao">
+
+    <select id="selectTestpaperCursor" resultType="map">
+        SELECT o_questions.name questionsName,o_testpaper_cursor.*,o_subject.*
+        FROM o_testpaper_cursor,o_subject,o_questions where o_testpaper_cursor.subject_id=o_subject.id and o_questions.id = o_subject.questions_id
+    </select>
+    <delete id="deleteTestpaperCursor" parameterType="int">
+        delete from o_testpaper_cursor where id = #{id}
+    </delete>
+    <insert id="addTestpaperCursor" parameterType="TestpaperCursor">
+    INSERT INTO o_testpaper_cursor (teacher_name,subject_id)
+    VALUES (#{teacherName},#{subjectId})
+    </insert>
+</mapper>
