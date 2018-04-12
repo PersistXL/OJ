@@ -5,8 +5,9 @@ import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.entity.User;
 import com.thoughtWorks.service.JoinClassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+@Service
 public class JoinClassServiceImpl implements JoinClassService {
 
     @Autowired
