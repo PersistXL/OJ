@@ -1,12 +1,12 @@
 package com.thoughtWorks.service;
 
-import com.thoughtWorks.entity.Classes;
-import com.thoughtWorks.entity.Student;
+import com.thoughtWorks.entity.ClassesTemporary;
 
 import java.util.List;
+import java.util.Map;
 
 public interface JoinClassService {
-    void joinClass(Student student);
+    void joinClass(ClassesTemporary classesTemporary);
 
-    List<Classes> getClassList(String stuNo);
+    List<Map<String, Object>> getClassList(String stuNo);
 }

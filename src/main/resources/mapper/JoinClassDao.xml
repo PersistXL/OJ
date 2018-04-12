@@ -4,17 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thoughtWorks.dao.JoinClassDao">
 
-    <insert id="joinClassInStudent" parameterType="com.thoughtWorks.entity.Student">
-        insert into o_student (no, name, gender, classes_id)
-        values (#{student.no},#{student.name},#{student.gender},#{student.classesId});
-    </insert>
-
-    <insert id="joinClassInUser" parameterType="com.thoughtWorks.entity.User">
-        insert into t_user (username, password, roleId, available, name, staff)
-        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff});
+    <insert id="joinClassInStudent" parameterType="com.thoughtWorks.entity.ClassesTemporary">
+        insert into o_classes_temporary (class_id, phone_number)
+        values (#{classesTemporary.classId},#{classesTemporary.phoneNumber});
     </insert>
 
     <select id="getClassList" parameterType="string" resultType="map">
-        select * from o_classes WHERE student_id = #{stuNo};
+        select oc.name,ot.name teaName from o_classes oc
+        LEFT JOIN (select * from o_teacher) ot ON oc.teacher_id = (SELECT ot.id + 0)
+        WHERE student_id = #{stuNo};
     </select>
 </mapper>
