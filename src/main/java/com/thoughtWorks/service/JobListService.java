@@ -1,5 +1,7 @@
 package com.thoughtWorks.service;
 
+import com.thoughtWorks.entity.Testpaper;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,4 +17,13 @@ public interface JobListService {
      * @throws Exception
      */
     List<Map<String,Object>> selectSubject(String userName) throws Exception;
+
+    /**
+     * 根据班课id
+     *      教师id
+     *
+     * @param testpaper
+     * @return
+     */
+    List<Map<String, Object>> selectStudentTestpaper(Testpaper testpaper);
 }

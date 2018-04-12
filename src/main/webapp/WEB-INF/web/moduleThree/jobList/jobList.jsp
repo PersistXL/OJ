@@ -21,13 +21,13 @@
 </head>
 <body>
 <div id="previewAdd" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
-123
+
 </div>
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-                <div class="layui-collapse" lay-accordion="" id="jobList">
+                <div class="layui-collapse" lay-accordion="" style="margin-top: 10px" id="jobList">
 
                 </div>
             </div>
@@ -60,6 +60,8 @@
                 dataList = data.data
                 // console.log(data.data)
                 for (var i =0;i<data.data.length;i++) {
+                    testpaperName = data.data[i].name
+                    teacherId = data.data[1].teacher_id
                     var _html = "";
                     _html += (`<div class="layui-colla-item">
                         <h2 class="layui-colla-title">班课：` + dataList[i].ClassesName + `</h2>
@@ -87,7 +89,7 @@
                                       <td style="text-align: center">` +s.split("_").length+ `</td>
                                       <td style="text-align: center">` + data.data[j].score+ `</td>
                                       <td style="text-align: center">
-                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + dataList[j].id + `)">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + dataList[j].classes_id + `)">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
                                       </td>
                                     </tr>
@@ -101,8 +103,42 @@
             });
         });
     });
-function preview(id) {
-
+function preview(classes_id) {
+    $.post("${baseurl}/jobList/selectStudentTestpaper",
+        {
+            classesId : classes_id,
+            name : testpaperName,
+            teacherId : teacherId
+        },
+        function (data) {
+        console.log(data)
+        var _html = "";
+        _html +=(`<table class="layui-table">
+                      <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col width="150">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th style="text-align: center">学生姓名</th>
+                          <th style="text-align: center">成绩</th>
+                          <th style="text-align: center">状态</th>
+                        </tr>
+                      </thead>`)
+        for(var i = 0; i<data.data.length;i++){
+  _html +=(`<tbody>
+                <tr>
+                  <td style="text-align: center">data.data[i].id</td>
+                  <td style="text-align: center">`+data.data[i].testpaper_student_score+`</td>
+                  <td style="text-align: center">未提交</td>
+                </tr>
+            </tbody>`)
+    }
+  _html +=(`
+       </table>`)
+        $("#previewAdd").html(_html);
+    })
     layer.open({
         type: 1
         ,title : "预览作业情况"

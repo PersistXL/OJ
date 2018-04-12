@@ -1,5 +1,7 @@
 package com.thoughtWorks.dao;
 
+import com.thoughtWorks.entity.Testpaper;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +16,6 @@ public interface JobListDao {
      * @return
      */
     List<Map<String, Object>> selectSubject(String userName);
+
+    List<Map<String, Object>> selectStudentTestpaper(Testpaper testpaper);
 }
