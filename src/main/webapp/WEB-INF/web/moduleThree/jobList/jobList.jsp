@@ -20,18 +20,20 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
+<div id="previewAdd" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
+123
+</div>
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-                <div class="layui-collapse" lay-filter="test" style="margin-top:20px;" id="notice">
-                    <h3>暂无</h3>
+                <div class="layui-collapse" lay-accordion="" id="jobList">
+
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <script>
     //动态拼接教师端作业列表
     $(function () {
@@ -55,10 +57,61 @@
             });
             //使用Ajax传值
             $.post("${baseurl}/jobList/selectSubject", function (data) {
-                console.log(data)
+                dataList = data.data
+                // console.log(data.data)
+                for (var i =0;i<data.data.length;i++) {
+                    var _html = "";
+                    _html += (`<div class="layui-colla-item">
+                        <h2 class="layui-colla-title">班课：` + dataList[i].ClassesName + `</h2>
+                        <div class="layui-colla-content">
+                        <table class="layui-table">
+                                  <colgroup>
+                                    <col width="200">
+                                    <col width="200">
+                                    <col width="200">
+                                    <col width="200">
+                                  </colgroup>
+                                  <thead>
+                                    <tr>
+                                      <th style="text-align: center">测试名称</th>
+                                      <th style="text-align: center">题目数量</th>
+                                      <th style="text-align: center">总成绩</th>
+                                      <th style="text-align: center">操作</th>
+                                    </tr>
+                                  </thead>`)
+                                  for(var j=0;j<data.data.length;j++) {
+                                      var s = dataList[j].subject_id;
+                                      _html += (`<tbody>
+                                    <tr>
+                                      <td style="text-align: center">` + data.data[j].name + `</td>
+                                      <td style="text-align: center">` +s.split("_").length+ `</td>
+                                      <td style="text-align: center">` + data.data[j].score+ `</td>
+                                      <td style="text-align: center">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + dataList[j].id + `)">
+                                      <i class="layui-icon">&#xe623;</i>预览</a>
+                                      </td>
+                                    </tr>
+                                </tbody>`)
+                                  }
+                        _html +=(`</div>
+                    </div>`)
+                }
+                $("#jobList").html(_html);
+                element.init();
             });
         });
     });
+function preview(id) {
+
+    layer.open({
+        type: 1
+        ,title : "预览作业情况"
+        ,area: ["100%", "100%"]
+        ,skin: 'yourclass'
+        ,content: $("#previewAdd")
+
+    });
+}
 </script>
 
 </body>
