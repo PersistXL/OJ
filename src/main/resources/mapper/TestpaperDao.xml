@@ -4,15 +4,31 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thoughtWorks.dao.TestpaperDao">
 
-    <select id="selectTestpaperCursor" resultType="map">
+    <select id="selectTestpaperCursor" resultType="map" parameterType="int">
         SELECT o_questions.name questionsName,o_testpaper_cursor.*,o_subject.*
-        FROM o_testpaper_cursor,o_subject,o_questions where o_testpaper_cursor.subject_id=o_subject.id and o_questions.id = o_subject.questions_id
+        FROM o_testpaper_cursor,o_subject,o_questions where o_testpaper_cursor.subject_id=o_subject.id and o_questions.id = o_subject.questions_id and o_testpaper_cursor.teacher_id = #{id}
     </select>
+
     <delete id="deleteTestpaperCursor" parameterType="int">
         delete from o_testpaper_cursor where id = #{id}
     </delete>
+    <delete id="deleteTestpaperCursorByName" parameterType="int">
+        delete from o_testpaper_cursor where teacher_id = #{id}
+    </delete>
     <insert id="addTestpaperCursor" parameterType="TestpaperCursor">
-    INSERT INTO o_testpaper_cursor (teacher_name,subject_id)
-    VALUES (#{teacherName},#{subjectId})
+    INSERT INTO o_testpaper_cursor (teacher_id,subject_id)
+    VALUES (#{teacherId},#{subjectId})
     </insert>
+    <insert id="addTestpaperCursorToTestpaper" parameterType="Testpaper">
+    INSERT INTO o_testpaper (subject_id,classes_id,teacher_id,start_time,name,score,close_time)
+    VALUES (#{subjectId},#{classesId},#{teacherId},#{startTime},#{name},#{score},#{closeTime})
+    </insert>
+    <select id="selectIdByName" resultType="int" parameterType="String">
+        SELECT id
+        FROM o_teacher where o_teacher.no = #{username}
+    </select>
+    <select id="selectClasses" resultType="map" parameterType="int">
+        SELECT *
+        FROM o_classes where teacher_id = #{id}
+    </select>
 </mapper>

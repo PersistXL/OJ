@@ -1,5 +1,6 @@
 package com.thoughtWorks.dao;
 
+import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.entity.TestpaperCursor;
 
 import java.util.*;
@@ -12,7 +13,7 @@ public interface TestpaperDao {
      * 查询所有的试题暂存表信息
      * @return
      */
-    List<Map<String,Object>> selectTestpaperCursor();
+    List<Map<String,Object>> selectTestpaperCursor(int  id);
 
     /**
      * 移除暂存的试题
@@ -20,7 +21,21 @@ public interface TestpaperDao {
    void deleteTestpaperCursor(int id);
 
     /**
-     * 移除暂存的试题
+     * 添加试题
      */
     void addTestpaperCursor(TestpaperCursor testpaperCursor);
+    /**
+     * 删除所有试题通过老师id
+     * @return
+     */
+    void deleteTestpaperCursorByName(int id);
+    /**
+     * 添加试题到试卷表
+     * @return
+     */
+    void addTestpaperCursorToTestpaper(Testpaper testpaper);
+
+    int selectIdByName(String username);
+
+    List<Map<String,Object>> selectClasses(int id);
 }
