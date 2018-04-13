@@ -59,7 +59,7 @@
             $.post("${baseurl}/jobList/selectSubject", function (data) {
                 dataList = data.data
                 testName = []
-                console.log(data.data)
+                // console.log(data.data)
                 for (var i =0;i<data.data.length;i++) {
                     teacherId = data.data[0].teacher_id
                     testName[i] = data.data[i].name
@@ -79,8 +79,8 @@
                                     <tr>
                                       <th style="text-align: center">测试名称</th>
                                       <th style="text-align: center">题目数量</th>
-                                      <th style="text-align: center">总成绩</th>
-                                      <th style="text-align: center">操作</th>
+                                      <th style="text-align: center">试卷成绩</th>
+                                      <th style="text-align: center">相关操作</th>
                                     </tr>
                                   </thead>`)
                                   for(var j=0;j<data.data.length;j++) {
@@ -108,7 +108,6 @@
         });
     });
 function preview(classesId,name) {
-    console.log(classesId,name)
     $.post("${baseurl}/jobList/selectStudentTestpaper",
         {
             classesId ,
@@ -116,7 +115,6 @@ function preview(classesId,name) {
             teacherId
         },
         function (data) {
-        console.log(data)
         var _html = "";
         _html +=(`<table class="layui-table">
                       <colgroup>
@@ -138,13 +136,12 @@ function preview(classesId,name) {
                 <tr>
                   <td style="text-align: center">` + data.data[i].no + `</td>
                   <td style="text-align: center">` + data.data[i].studentName + `</td>
-                  <td style="text-align: center">` + data.data[i].testpaper_student_score + `</td>
-                  <td style="text-align: center">未提交</td>
+                  <td style="text-align: center">` + (data.data[i].testpaper_student_score ===undefined ? "未答题" : data.data[i].testpaper_student_score) + `</td>
+                  <td style="text-align: center">`+(data.data[i].testpaper_student_score ===undefined ? "未提交" : "已提交")+`</td>
                 </tr>
             </tbody>`)
     }
-  _html +=(`
-       </table>`)
+  _html +=(`</table>`)
         $("#previewAdd").html(_html);
     })
     layer.open({
