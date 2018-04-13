@@ -58,11 +58,13 @@
             //使用Ajax传值
             $.post("${baseurl}/jobList/selectSubject", function (data) {
                 dataList = data.data
-                // console.log(data.data)
+                testName = []
+                console.log(data.data)
                 for (var i =0;i<data.data.length;i++) {
-                    testpaperName = data.data[i].name
-                    teacherId = data.data[1].teacher_id
+                    teacherId = data.data[0].teacher_id
+                    testName[i] = data.data[i].name
                     var _html = "";
+
                     _html += (`<div class="layui-colla-item">
                         <h2 class="layui-colla-title">班课：` + dataList[i].ClassesName + `</h2>
                         <div class="layui-colla-content">
@@ -83,13 +85,15 @@
                                   </thead>`)
                                   for(var j=0;j<data.data.length;j++) {
                                       var s = dataList[j].subject_id;
+                                      var name = dataList[j].name
+                                      var id = dataList[j].classes_id
                                       _html += (`<tbody>
                                     <tr>
                                       <td style="text-align: center">` + data.data[j].name + `</td>
                                       <td style="text-align: center">` +s.split("_").length+ `</td>
                                       <td style="text-align: center">` + data.data[j].score+ `</td>
                                       <td style="text-align: center">
-                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + dataList[j].classes_id + `)">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(`+id+ `,'`+ name+`')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
                                       </td>
                                     </tr>
@@ -103,12 +107,13 @@
             });
         });
     });
-function preview(classes_id) {
+function preview(classesId,name) {
+    console.log(classesId,name)
     $.post("${baseurl}/jobList/selectStudentTestpaper",
         {
-            classesId : classes_id,
-            name : testpaperName,
-            teacherId : teacherId
+            classesId ,
+            name,
+            teacherId
         },
         function (data) {
         console.log(data)
@@ -116,21 +121,24 @@ function preview(classes_id) {
         _html +=(`<table class="layui-table">
                       <colgroup>
                         <col width="150">
+                        <col width="150">
                         <col width="200">
                         <col width="150">
                       </colgroup>
                       <thead>
                         <tr>
+                          <th style="text-align: center">学生学号</th>
                           <th style="text-align: center">学生姓名</th>
                           <th style="text-align: center">成绩</th>
                           <th style="text-align: center">状态</th>
                         </tr>
                       </thead>`)
         for(var i = 0; i<data.data.length;i++){
-  _html +=(`<tbody>
+                _html += (`<tbody>
                 <tr>
-                  <td style="text-align: center">data.data[i].id</td>
-                  <td style="text-align: center">`+data.data[i].testpaper_student_score+`</td>
+                  <td style="text-align: center">` + data.data[i].no + `</td>
+                  <td style="text-align: center">` + data.data[i].studentName + `</td>
+                  <td style="text-align: center">` + data.data[i].testpaper_student_score + `</td>
                   <td style="text-align: center">未提交</td>
                 </tr>
             </tbody>`)
@@ -145,7 +153,6 @@ function preview(classes_id) {
         ,area: ["100%", "100%"]
         ,skin: 'yourclass'
         ,content: $("#previewAdd")
-
     });
 }
 </script>
