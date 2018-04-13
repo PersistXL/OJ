@@ -29,6 +29,9 @@ public class JobListController {
     }
     @RequestMapping("/selectSubject")
     @ResponseBody
+    /**
+     * 查询试卷
+     */
     public Result selectSubject(){
         try {
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
@@ -43,6 +46,9 @@ public class JobListController {
 
     @RequestMapping("/selectStudentTestpaper")
     @ResponseBody
+    /**
+     * 根据testpaper查询学生的答题情况
+     */
     public Result selectStudentTestpaper(Testpaper testpaper) {
         try {
             List<Map<String, Object>> list = jobListService.selectStudentTestpaper(testpaper);

@@ -21,7 +21,8 @@ public interface JobListService {
     /**
      * 根据班课id
      *      教师id
-     *
+     *      测试名称
+     * 查询学生的答题情况
      * @param testpaper
      * @return
      */
