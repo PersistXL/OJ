@@ -15,4 +15,8 @@ public class PageController {
     public String subjectThree(){
         return "/moduleThree/subjectThree/subjectThree";
     }
+    @RequestMapping("/createClass")
+    public String createClass(){
+        return "/moduleThree/classes/classes";
+    }
 }

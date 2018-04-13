@@ -65,7 +65,7 @@
                             <div class="layui-input-inline">
                                 <input type="number" id="time" name=""
                                        autocomplete="off"
-                                       placeholder="请输入时长（单位/分钟）" class="layui-input">
+                                       placeholder="时长（单位/分钟）" class="layui-input">
                             </div>
                         </div>
                     </div><br>
