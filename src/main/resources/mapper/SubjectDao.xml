@@ -10,10 +10,38 @@
     #{correct},#{questionsId},#{chapter},#{facility},#{type})
     </insert>
 
+    <!-- 题库管理功能 - 开始 -->
+
+    <!-- 添加题库 -->
+    <insert id="addQbank" parameterType="QuestionBankParameter">
+        INSERT INTO o_questions (name, comment)
+        VALUES (#{qbname},#{qbcomment})
+    </insert>
+
+    <!-- 查询题库 -->
     <select id="selectQuestions" resultType="Questions">
-    SELECT *
-    FROM o_questions
-</select>
+        SELECT *
+        FROM o_questions
+    </select>
+
+    <!-- 按id查询题库 -->
+    <select id="selectQbankById" resultType="Questions" parameterType="int">
+        SELECT *
+        FROM o_questions where id = #{id}
+    </select>
+
+    <!-- 删除题库 -->
+    <delete id="deleteQbankById" parameterType="int">
+        delete FROM o_questions where id = #{id}
+    </delete>
+
+    <update id="updateQbankById" parameterType="QuestionBankParameter">
+        UPDATE o_questions
+        SET name=#{qbname}, comment=#{qbcomment}
+        WHERE id = #{qbid}
+    </update>
+
+    <!-- 题库管理功能 - 结束 -->
     <select id="querySubjectTotalCount" resultType="long" parameterType="subject">
         SELECT count(1)
         FROM o_subject

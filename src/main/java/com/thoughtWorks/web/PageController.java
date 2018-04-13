@@ -19,4 +19,10 @@ public class PageController {
     public String createClass(){
         return "/moduleThree/classes/classes";
     }
+
+    @RequestMapping("/qbmanager")
+    public String GetManagerPage()
+    {
+        return "/moduleThree/qbmanager_page";
+    }
 }
