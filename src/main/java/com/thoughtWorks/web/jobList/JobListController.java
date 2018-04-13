@@ -2,6 +2,7 @@ package com.thoughtWorks.web.jobList;
 
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
+import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.service.JobListService;
 import com.thoughtWorks.util.Constant;
 import org.apache.shiro.SecurityUtils;
@@ -34,6 +35,18 @@ public class JobListController {
             String userName = user.getUserName();
             List<Map<String,Object>> list = jobListService.selectSubject(userName);
             return Result.success(list, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.SEARCH_FAILURE);
+    }
+
+    @RequestMapping("/selectStudentTestpaper")
+    @ResponseBody
+    public Result selectStudentTestpaper(Testpaper testpaper) {
+        try {
+            List<Map<String, Object>> list = jobListService.selectStudentTestpaper(testpaper);
+            return Result.success(list,Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }

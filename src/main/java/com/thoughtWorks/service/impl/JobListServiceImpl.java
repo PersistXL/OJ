@@ -1,7 +1,7 @@
 package com.thoughtWorks.service.impl;
 
 import com.thoughtWorks.dao.JobListDao;
-import com.thoughtWorks.service.JobListService;
+import com.thoughtWorks.entity.Testpaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,12 @@ public class JobListServiceImpl implements com.thoughtWorks.service.JobListServi
     @Override
     public List<Map<String, Object>> selectSubject(String userName) throws Exception {
         List<Map<String, Object>> list = jobListDao.selectSubject(userName);
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectStudentTestpaper(Testpaper testpaper) {
+        List<Map<String, Object>> list = jobListDao.selectStudentTestpaper(testpaper);
         return list;
     }
 }
