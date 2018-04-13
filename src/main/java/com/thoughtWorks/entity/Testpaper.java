@@ -4,9 +4,27 @@ public class Testpaper {
     private String subjectId;
     private int classesId;
     private int teacherId;
-    private String time;
+    private String startTime;
     private String name;
     private double score;
+    private String closeTime;
+    private int day;
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
 
     public String getSubjectId() {
         return subjectId;
@@ -32,12 +50,12 @@ public class Testpaper {
         this.teacherId = teacherId;
     }
 
-    public String getTime() {
-        return time;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public String getName() {

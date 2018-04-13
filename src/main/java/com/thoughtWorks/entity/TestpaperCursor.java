@@ -5,7 +5,7 @@ package com.thoughtWorks.entity;
  */
 public class TestpaperCursor {
     private Integer id ;
-    private String teacherName;
+    private int teacherId;
     private int subjectId;
 
     public int getId() {
@@ -16,12 +16,12 @@ public class TestpaperCursor {
         this.id = id;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public int getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
     }
 
     public int getSubjectId() {
