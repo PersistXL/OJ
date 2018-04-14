@@ -104,5 +104,25 @@ public class TestpaperController {
         }
         return Result.failure(null,Constant.ADD_FAILURE);
     }
+    @RequestMapping("deleteClassByTeacherId")
+    public Result deleteClassByTeacherId(int id){
+        try{
+            testpaperDao.deleteClassByTeacherId(id);
+            testpaperDao.deleteStudentByClassByTeacherId(id);
+            return Result.success(null,Constant.DELETE_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.DELETE_FAILURE);
+    }
+    @RequestMapping("selectClassesByIdToStudents")
+    public Result selectClassesByIdToStudents(int id){
+        try{
+            return Result.success(testpaperDao.selectClassesByIdToStudents(id),Constant.SEARCH_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.SEARCH_FAILURE);
+    }
 
 }
