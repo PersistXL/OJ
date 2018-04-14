@@ -4,18 +4,14 @@ public class Classes {
     private Integer id;
     private String name;
     private String teacherId;
-    private String departmentId;
-    private String studentId;
 
     public Classes() {
     }
 
-    public Classes(Integer id, String name, String teacherId, String departmentId, String studentId) {
+    public Classes(Integer id, String name, String teacherId) {
         this.id = id;
         this.name = name;
         this.teacherId = teacherId;
-        this.departmentId = departmentId;
-        this.studentId = studentId;
     }
 
     public Integer getId() {
@@ -40,21 +36,5 @@ public class Classes {
 
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
     }
 }
