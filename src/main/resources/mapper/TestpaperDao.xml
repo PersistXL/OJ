@@ -31,4 +31,8 @@
         SELECT *
         FROM o_classes where teacher_id = #{id}
     </select>
+    <insert id="addClasses" parameterType="Classes">
+    INSERT INTO o_classes (name,teacher_id,code,time)
+    VALUES (#{name},#{teacherId},#{code},CURDATE())
+    </insert>
 </mapper>

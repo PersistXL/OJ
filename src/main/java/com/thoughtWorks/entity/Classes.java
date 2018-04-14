@@ -4,19 +4,8 @@ public class Classes {
     private Integer id;
     private String name;
     private String teacherId;
-    private String departmentId;
-    private String studentId;
-
-    public Classes() {
-    }
-
-    public Classes(Integer id, String name, String teacherId, String departmentId, String studentId) {
-        this.id = id;
-        this.name = name;
-        this.teacherId = teacherId;
-        this.departmentId = departmentId;
-        this.studentId = studentId;
-    }
+    private String code;
+    private String time;
 
     public Integer getId() {
         return id;
@@ -42,19 +31,19 @@ public class Classes {
         this.teacherId = teacherId;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getCode() {
+        return code;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public String getTime() {
+        return time;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setTime(String time) {
+        this.time = time;
     }
 }
