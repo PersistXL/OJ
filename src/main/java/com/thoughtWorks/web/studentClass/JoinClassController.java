@@ -1,6 +1,7 @@
 package com.thoughtWorks.web.studentClass;
 
 import com.thoughtWorks.entity.ClassesTemporary;
+import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.service.JoinClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,10 @@ public class JoinClassController {
 
     @RequestMapping("/joinClass")
     @ResponseBody
-    public ResponseEntity joinClass(ClassesTemporary classesTemporary) {
+    public ResponseEntity joinClass(Student student,String classCode) {
         Map<String, Object> classes = new HashMap<>();
         try {
-            joinClassService.joinClass(classesTemporary);
+            joinClassService.joinClass(student,classCode);
             classes.put("stateCode", SUCCESS_CODE);
             classes.put("message", ADD_SUCCESS);
             return new ResponseEntity(classes, HttpStatus.OK);

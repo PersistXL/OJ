@@ -7,6 +7,15 @@ public class Classes {
     private String code;
     private String time;
 
+    public Classes() {
+    }
+
+    public Classes(Integer id, String name, String teacherId) {
+        this.id = id;
+        this.name = name;
+        this.teacherId = teacherId;
+    }
+
     public Integer getId() {
         return id;
     }

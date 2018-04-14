@@ -7,6 +7,7 @@ public class Questions {
     private int id;
     private String name;
     private String explain;
+    private String comment;
 
     public int getId() {
         return id;
@@ -30,5 +31,13 @@ public class Questions {
 
     public void setExplain(String explain) {
         this.explain = explain;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String explain) {
+        this.comment = explain;
     }
 }
