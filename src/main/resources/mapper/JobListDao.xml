@@ -13,12 +13,14 @@
     </select>
 
     <select id="selectStudentTestpaper" parameterType="Testpaper" resultType="map">
-        SELECT o_student_testpaper.*,o_student_classes.*,o_testpaper.*
-        FROM oj.o_student_testpaper,oj.o_student_classes,oj.o_testpaper
-        WHERE o_student_classes.classes_id = #{classesId}
+        SELECT o_student_testpaper.*,o_student_classes.*,o_testpaper.*,o_student.name studentName,o_student.no
+        FROM oj.o_student_testpaper,oj.o_student_classes,oj.o_testpaper,oj.o_student
+        WHERE o_testpaper.teacher_id = #{teacherId}
+        AND o_student_classes.classes_id = #{classesId}
+        AND o_student_classes.student_id = o_student.id
         AND o_student_classes.student_id = o_student_testpaper.student_id
+        AND o_testpaper.id = o_student_testpaper.testpaper_id
         AND o_testpaper.name = #{name}
-        AND o_testpaper.teacher_id = #{teacherId}
     </select>
 
 </mapper>

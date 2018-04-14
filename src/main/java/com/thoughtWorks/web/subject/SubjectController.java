@@ -2,6 +2,7 @@ package com.thoughtWorks.web.subject;
 
 import com.thoughtWorks.dao.SubjectDao;
 import com.thoughtWorks.dto.Result;
+import com.thoughtWorks.entity.QuestionBankParameter;
 import com.thoughtWorks.entity.Subject;
 import com.thoughtWorks.util.Constant;
 import com.thoughtWorks.util.ExcelUtil;
@@ -156,6 +157,24 @@ public class SubjectController {
         return Result.failure(null, Constant.ADD_FAILURE);
     }
 
+
+    // 题库管理功能 -- 开始
+
+    // 添加题库
+    @RequestMapping("/addQbank")
+    @ResponseBody
+    public Result addQbank(QuestionBankParameter qbparameter) {
+        try {
+            subjectDao.addQbank(qbparameter);
+            return Result.success(null, Constant.ADD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.ADD_FAILURE);
+    }
+
+    // 查询题库
     @RequestMapping("/selectQuestions")
     @ResponseBody
     public Result selectQuestions() {
@@ -167,6 +186,49 @@ public class SubjectController {
 
         return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+
+    // 通过id查询题库
+    @RequestMapping("/selectQbankById")
+    @ResponseBody
+    public Result selectQbankById(int id) {
+        try {
+            return Result.success(subjectDao.selectQbankById(id), Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
+    // 删除题库
+    @RequestMapping("/deleteQbankById")
+    @ResponseBody
+    public Result deleteQbankById(int id) {
+        try {
+            subjectDao.deleteQbankById(id);
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.DELETE_FAILURE);
+    }
+
+    // 按 id 更新题库
+    @RequestMapping("/updateQbankById")
+    @ResponseBody
+    public Result updateQbankById(QuestionBankParameter parameter) {
+        try {
+            subjectDao.updateQbankById(parameter);
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.DELETE_FAILURE);
+    }
+
+    // 题库管理功能 -- 结束
 
     @RequestMapping("/selectSubject")
     @ResponseBody

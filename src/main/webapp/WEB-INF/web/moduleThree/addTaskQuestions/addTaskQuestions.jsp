@@ -53,7 +53,7 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷名称</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" name=""
+                                <input type="text" id="name" name=""
                                        autocomplete="off"
                                        placeholder="请输入试卷名称" class="layui-input">
                             </div>
@@ -63,19 +63,30 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷时长</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" name=""
+                                <input type="number" id="time" name=""
                                        autocomplete="off"
-                                       placeholder="请输入时长（单位/分钟）" class="layui-input">
+                                       placeholder="时长（单位/分钟）" class="layui-input">
                             </div>
                         </div>
-                    </div>
+                    </div><br>
                     <div class="layui-input-inline">
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" name=""
+                                <input type="number" id="score" name=""
                                        autocomplete="off"
                                        placeholder="请输入分数" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label"style="width: 100px;font-size: 14px">班课</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                            <select name="classes_id" lay-verify="required" lay-search="" id="classes_id">
+                                <option value="0">班课</option>
+
+                            </select>
                             </div>
                         </div>
                     </div>
@@ -99,7 +110,7 @@
                 </div>
                 <div class="layui-input-inline">
                     <div class="layui-inline">
-                        <a class="layui-btn" onclick=""><i
+                        <a class="layui-btn" onclick="_subject.createTestpaper()"><i
                                 class="layui-icon">&#xe602;</i>完成创建</a>
                     </div>
                 </div>
@@ -160,7 +171,7 @@
                         </div>
                         <div class="layui-input-inline">
                             <div class="layui-inline">
-                                <a class="layui-btn" onclick="currentIndex = 1;_subject.page()"><i
+                                <a class="layui-btn" onclick="_subject.page()"><i
                                         class="layui-icon">&#xe615;</i>搜索</a>
                             </div>
                         </div>
@@ -217,13 +228,12 @@
                 var select_questions = $("select[name='select_questions']").val();
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
-                $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                $.post("${baseurl}/Testpaper/selectClasses", function (data) {
+                    let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
-                    $("#questions_id").html(_html);
-                    $("#select_questions").html(_html);
+                    $("#classes_id").html(_html);
                     form.render();
                 });
                 $.post("${baseurl}/Testpaper/selectTestpaperCursor", function (data) {
@@ -231,13 +241,13 @@
                     let idAll = [];
                     for (let i = 0; i < data.data.length; i++) {
                         idAll.push(data.data[i].id)
-                        let count = i+1;
+                        let count = i + 1;
                         _html += `<tr>
                         <th>` + count + `</th>
                         <th>` + data.data[i].subject + `</th>
                         <th>` + data.data[i].questionsName + `</th>
                         <th>` + data.data[i].chapter + `</th>
-                        <th>` +(data.data[i].facility === undefined ? "未指定" : data.data[i].facility) + `</th>
+                        <th>` + (data.data[i].facility === undefined ? "未指定" : data.data[i].facility) + `</th>
                         <th>
                             <a class="layui-btn layui-btn-mini" onclick="_subject.removeTestpaperCursor(` + data.data[i].id + `)">
                                 <i class="layui-icon">&#xe602;</i>
@@ -303,16 +313,29 @@
                     }
                 });
             },
-            addsingleEntry: function () {
-                $("#update").hide();
-                $("#add").show();
-                layer.open({
-                    type: 1,
-                    title: '录入题目',
-                    area: ['100%', '100%'],
-                    skin: 'yourclass',
-                    content: $('#addInfo')
-                });
+            createTestpaper: function () {
+
+                let subjectId = $("#idAll").val();
+                let name = $("#name").val();
+                let time = $("#time").val();
+                let score = $("#score").val();
+                var classes_id = $("select[name='classes_id']").val();
+                if (name == "" || time == "" || score == "") {
+                    layer.msg("试卷信息不能为空");
+                } else {
+                    $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
+                        subjectId: subjectId,
+                        name:name,
+                        score:score,
+                        day:time,
+                        classesId:classes_id
+                    }, function (data) {
+                        layer.confirm(data.msg, function (index) {
+                            location.reload();
+                            layer.close(index);
+                        });
+                    });
+                }
             },
             removeTestpaperCursor: function (id) {
                 layer.confirm('是否移除试题？', function (index) {
