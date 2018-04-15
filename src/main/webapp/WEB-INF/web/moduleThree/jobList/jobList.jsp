@@ -28,7 +28,7 @@
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
                 <div class="layui-collapse" lay-accordion="" style="margin-top: 10px" id="jobList">
-
+                    <h4>暂无</h4>
                 </div>
             </div>
         </div>
