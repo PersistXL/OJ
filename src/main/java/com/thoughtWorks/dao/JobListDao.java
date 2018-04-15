@@ -26,4 +26,11 @@ public interface JobListDao {
      * @return
      */
     List<Map<String, Object>> selectStudentTestpaper(Testpaper testpaper);
+
+    /**
+     * 根据教师的username查询班课的名称
+     * @param userName
+     * @return
+     */
+    List<Map<String, Object>> selectSubjectClassesName(String userName);
 }

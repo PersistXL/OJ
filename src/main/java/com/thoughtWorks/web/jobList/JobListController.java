@@ -27,6 +27,25 @@ public class JobListController {
     public String index(){
         return "moduleThree/jobList/jobList";
     }
+
+    /**
+     * 查询教师对应的班课
+     * @return
+     */
+    @RequestMapping("/selectSubjectClassesName")
+    @ResponseBody
+    public Result selectSubjectClassesName(){
+        try {
+            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+            String userName = user.getUserName();
+            List<Map<String,Object>> list = jobListService.selectSubjectClassesName(userName);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.SEARCH_FAILURE);
+    }
+
     @RequestMapping("/selectSubject")
     @ResponseBody
     /**
