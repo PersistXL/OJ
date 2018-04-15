@@ -5,11 +5,13 @@
 <mapper namespace="com.thoughtWorks.dao.JobListDao">
 
     <select id="selectSubject" parameterType="String" resultType="map">
-       SELECT o_teacher.id,o_testpaper.*,o_classes.name ClassesName
-       FROM oj.o_teacher,oj.o_testpaper,oj.o_classes
+       SELECT o_teacher.id,o_testpaper.*,o_classes.name ClassesName,o_teacher_classes.*
+       FROM oj.o_teacher,oj.o_testpaper,oj.o_classes,oj.o_teacher_classes
        WHERE o_teacher.no = #{userName}
+       AND o_testpaper.classes_id = o_classes.id
        AND o_teacher.id = o_testpaper.teacher_id
        AND o_teacher.id = o_classes.teacher_id
+       AND o_teacher_classes.teacher_id = o_testpaper.teacher_id
     </select>
 
     <select id="selectStudentTestpaper" parameterType="Testpaper" resultType="map">

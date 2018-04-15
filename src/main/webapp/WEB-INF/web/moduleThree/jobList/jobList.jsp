@@ -59,12 +59,15 @@
             $.post("${baseurl}/jobList/selectSubject", function (data) {
                 dataList = data.data
                 testName = []
-                // console.log(data.data)
+                console.log(data.data)
+                var _html = "";
+
                 for (var i =0;i<data.data.length;i++) {
                     teacherId = data.data[0].teacher_id
                     testName[i] = data.data[i].name
-                    var _html = "";
-
+                    var s = data.data[i].subject_id
+                    var name = dataList[i].name
+                    var id = dataList[i].classes_id
                     _html += (`<div class="layui-colla-item">
                         <h2 class="layui-colla-title">班课：` + dataList[i].ClassesName + `</h2>
                         <div class="layui-colla-content">
@@ -82,24 +85,20 @@
                                       <th style="text-align: center">试卷成绩</th>
                                       <th style="text-align: center">相关操作</th>
                                     </tr>
-                                  </thead>`)
-                                  for(var j=0;j<data.data.length;j++) {
-                                      var s = dataList[j].subject_id;
-                                      var name = dataList[j].name
-                                      var id = dataList[j].classes_id
-                                      _html += (`<tbody>
+                                  </thead>
+                        <tbody>
                                     <tr>
-                                      <td style="text-align: center">` + data.data[j].name + `</td>
-                                      <td style="text-align: center">` +s.split("_").length+ `</td>
-                                      <td style="text-align: center">` + data.data[j].score+ `</td>
+                                      <td style="text-align: center">` + data.data[i].name + `</td>
+                                      <td style="text-align: center">` + s.split("_").length + `</td>
+                                      <td style="text-align: center">` + data.data[i].score + `</td>
                                       <td style="text-align: center">
-                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(`+id+ `,'`+ name+`')">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + id + `,'` + name + `')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
                                       </td>
                                     </tr>
                                 </tbody>`)
-                                  }
-                        _html +=(`</div>
+                         _html +=(`</table>
+                       </div>
                     </div>`)
                 }
                 $("#jobList").html(_html);
