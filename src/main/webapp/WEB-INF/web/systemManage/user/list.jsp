@@ -94,7 +94,6 @@
                     currentIndex: currentIndex,
                     pageSize: pageSize
                 };
-                console.log(searchInfo);
 
                 $.ajax({
                     url: baseUrl + "sysUser/list",
@@ -122,22 +121,12 @@
             },
             addAjax: function () {
                 let data = $("#add-form").serialize();
-                let classedIds = "";
-                let floorIds = "";
-                let classes = $(".classId");
-                let floors = $(".floorId");
-                for (let i = 0; i < classes.length; ++i) {
-                    if ($(classes[i]).prop("checked")) classedIds += $(classes[i]).val() + ",";
-                }
-                data += "&classIds=" + classedIds;
-                for (let i = 0; i < floors.length; ++i) {
-                    if ($(floors[i]).prop("checked")) floorIds += $(floors[i]).val() + ",";
-                }
-                data += "&floorIds=" + floorIds;
-                $.post(baseUrl + "/teacher/add", data, function (data) {
-                    layer.msg(data.msg);
+
+                $.post(baseUrl + "/sysUser/add", data, function (data) {
                     if (data.msg) {
-                        setTimeout("location.reload()", 500);
+                        layer.msg(data.msg);
+                        setTimeout("location.reload();", 1000);
+
                     }
                 })
             },

@@ -13,4 +13,22 @@
         select COUNT(1) from o_teacher;
     </select>
 
+    <select id="checkPhone" parameterType="string" resultType="com.thoughtWorks.entity.Teacher">
+        select * from o_teacher WHERE phone = #{phone};
+    </select>
+
+    <select id="checkEmail" parameterType="string" resultType="com.thoughtWorks.entity.Teacher">
+        select * from o_teacher WHERE phone = #{email};
+    </select>
+
+    <insert id="add" parameterType="com.thoughtWorks.entity.Teacher">
+        insert into o_teacher (no, name, department_id, gender, email, phone)
+        values (#{teacher.no},#{teacher.name},#{teacher.department},#{teacher.gender},#{teacher.email},#{teacher.phone});
+    </insert>
+
+    <insert id="addToUser" parameterType="com.thoughtWorks.entity.User">
+        insert into t_user (username, password, roleId, available, name, staff, phone)
+        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone});
+    </insert>
+
 </mapper>

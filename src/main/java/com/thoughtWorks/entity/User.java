@@ -7,17 +7,27 @@ public class User {
     private Integer available;
     private String name;
     private String staff;
+    private String phone;
 
     public User() {
     }
 
-    public User(String username, String password, Integer roleId, Integer available, String name, String staff) {
+    public User(String username, String password, Integer roleId, Integer available, String name, String staff, String phone) {
         this.username = username;
         this.password = password;
         this.roleId = roleId;
         this.available = available;
         this.name = name;
         this.staff = staff;
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUsername() {

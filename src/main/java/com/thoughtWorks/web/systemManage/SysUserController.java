@@ -1,5 +1,7 @@
 package com.thoughtWorks.web.systemManage;
 
+import com.thoughtWorks.dto.Result;
+import com.thoughtWorks.entity.Teacher;
 import com.thoughtWorks.service.SysUserService;
 import com.thoughtWorks.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +25,27 @@ public class SysUserController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public ResponseEntity list(PageUtil pageUtil) {
-        System.out.println(pageUtil);
-        PageUtil pageUtils = sysUserService.getList(pageUtil);
-        return new ResponseEntity(pageUtil, HttpStatus.OK);
+    public ResponseEntity<Object> list(PageUtil pageUtil) {
+        try {
+            sysUserService.getList(pageUtil);
+
+            return new ResponseEntity<>(pageUtil, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping("/add")
     @ResponseBody
-    public ResponseEntity add(PageUtil pageUtil) {
-        System.out.println(pageUtil);
-        return new ResponseEntity(pageUtil, HttpStatus.OK);
+    public Result add(Teacher teacher) {
+        try {
+            String result = sysUserService.add(teacher);
+            return Result.success("",result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure("", "添加失败");
     }
 
 }

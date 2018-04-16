@@ -51,20 +51,20 @@
             <label class="layui-form-label" style="width:120px;">性别</label>
             <div class="layui-input-inline" style="width:250px;">
                 <input type="radio" name="gender" value="男" title="男">
-                <input type="radio" name="gender" value="女" title="女" checked>
+                <input type="radio" name="gender" value="女" title="女">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width:120px;">电话</label>
             <div class="layui-input-inline" style="width:250px;">
-                <input type="text" name="identityCard"
-                       placeholder="请输入身份证" id="identityCard-add" autocomplete="off" class="layui-input ">
+                <input type="text" name="phone"
+                       placeholder="请输入身份证" id="phone-add" autocomplete="off" class="layui-input ">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width:120px;">邮箱</label>
             <div class="layui-input-inline" style="width:250px;">
-                <input type="text" name="identityCard"
+                <input type="text" name="email"
                        placeholder="请输入邮箱" id="email-add" autocomplete="off" class="layui-input ">
             </div>
         </div>
