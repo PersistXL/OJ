@@ -35,4 +35,18 @@
         DELETE tu,ot FROM o_teacher ot,t_user tu WHERE ot.phone = #{phone} and tu.phone = #{phone}
     </delete>
 
+    <update id="update" parameterType="com.thoughtWorks.entity.Teacher">
+      UPDATE o_teacher
+      SET name = #{teacher.name}, department_id = #{teacher.department}, gender = #{teacher.gender}
+      , email = #{teacher.email}, phone = #{teacher.phone}, no = #{teacher.no}
+      WHERE id = #{teacher.id}
+    </update>
+
+    <update id="updateToUser" parameterType="com.thoughtWorks.entity.User">
+      UPDATE t_user
+      SET username = #{user.username}, password = #{user.password}, roleId = #{user.roleId}
+      , available = #{user.available}, name = #{user.name}, staff = #{user.staff},phone = #{user.phone}
+      WHERE phone = #{user.phone}
+    </update>
+
 </mapper>

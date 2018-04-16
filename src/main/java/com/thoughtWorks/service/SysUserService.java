@@ -9,4 +9,6 @@ public interface SysUserService {
     String add(Teacher teacher);
 
     void delete(String phone);
+
+    String update(Teacher teacher);
 }

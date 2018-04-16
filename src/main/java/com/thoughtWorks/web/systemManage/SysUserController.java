@@ -61,4 +61,17 @@ public class SysUserController {
         return Result.failure("", "删除失败");
     }
 
+    @RequestMapping("/update")
+    @ResponseBody
+    public Result update(Teacher teacher) {
+        try {
+            String result = sysUserService.update(teacher);
+
+            return Result.success("",result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure("", "更新失败");
+    }
+
 }

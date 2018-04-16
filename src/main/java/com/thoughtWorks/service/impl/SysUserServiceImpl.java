@@ -34,12 +34,9 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public String add(Teacher teacher) {
         try {
-            if (checkPhone(teacher.getPhone())) {
-                return "该电话已注册";
-            }
-            if (checkEmail(teacher.getEmail())) {
-                return "该邮箱已注册";
-            }
+            String x = checkInfo(teacher);
+            if (x != null) return x;
+
             sysUserDao.add(teacher);
 
             User user = new User(teacher.getPhone(), "123456", 2, 1, teacher.getName(), "教师", teacher.getPhone());
@@ -55,6 +52,33 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void delete(String phone) {
         sysUserDao.delete(phone);
+    }
+
+    @Transactional
+    @Override
+    public String update(Teacher teacher) {
+        try {
+            sysUserDao.update(teacher);
+
+            User user = new User(teacher.getPhone(), "123456", 2, 1, teacher.getName(), "教师", teacher.getPhone());
+            sysUserDao.updateToUser(user);
+
+            return "更新教师信息成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "更新教师信息失败";
+
+    }
+
+    private String checkInfo(Teacher teacher) {
+        if (checkPhone(teacher.getPhone())) {
+            return "该电话已注册";
+        }
+        if (checkEmail(teacher.getEmail())) {
+            return "该邮箱已注册";
+        }
+        return null;
     }
 
     private boolean checkPhone(String phone) {

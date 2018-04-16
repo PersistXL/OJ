@@ -140,6 +140,35 @@
                     })
                 });
             },
+            update: function (id,no,name,gender,email,phone,department) {
+
+                $("#update-id").val(id);
+                $("#no-update").val(no);
+                $("#name-update").val(name);
+                $("input:radio[value=" + gender + "]").prop('checked', 'true');
+                $("#no-update").val(no);
+                $("#phone-update").val(phone);
+                $("#email-update").val(email);
+                $("#dept-update").val(department);
+                form.render();
+
+                layer.open({
+                    type: 1,
+                    title: '添加',
+                    area: ["50%", "80%"]
+                    , content: $("#update")
+                });
+            },
+            updateAjax: function () {
+                let data = $("#update-form").serialize();
+                $.post(baseUrl + "/sysUser/update", data, function (data) {
+                    if (data.msg) {
+                        layer.msg(data.msg);
+                        setTimeout("location.reload();", 1000);
+
+                    }
+                })
+            }
         };
 
         $(function () {
