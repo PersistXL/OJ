@@ -15,4 +15,8 @@
         LEFT JOIN (select * from o_student_classes) osc ON 
         WHERE student_id = #{stuNo};
     </select>
+
+    <select id="checkClassCode" parameterType="string" resultType="com.thoughtWorks.entity.Classes">
+        select * from o_classes WHERE code = #{classCode};
+    </select>
 </mapper>
