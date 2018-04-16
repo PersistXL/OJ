@@ -25,9 +25,12 @@
     </select>
 
     <select id="selectSubjectClassesName" parameterType="String" resultType="map">
-       SELECT o_teacher_classes.*,o_teacher.id TeacherId,o_classes.name ClassesName
-       FROM oj.o_teacher_classes,oj.o_teacher,oj.o_classes
-       WHERE o_teacher.no = #{userName}
-       AND o_classes.id = o_teacher_classes.classes_id
+       SELECT otc.classes_id clID,teacher.id TeacherId,classes.name ClassesName
+       FROM o_teacher teacher
+            LEFT OUTER JOIN
+                  (select * from o_teacher_classes) otc ON otc.teacher_id = teacher.id
+            LEFT OUTER JOIN
+                  (select * from o_classes) classes ON classes.id = otc.classes_id
+    WHERE teacher.no = #{userName}
     </select>
 </mapper>

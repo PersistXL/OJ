@@ -36,6 +36,20 @@ public class ModuleOneController {
         return "moduleOne/moduleOne/moduleOne";
     }
 
+    @RequestMapping("/findTestpaperClasses")
+    @ResponseBody
+    public Result findTestpaperClasses(){
+        try {
+            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+            String userName = user.getUserName();
+            List<Map<String, Object>> list = moduleOneService.findTestpaperClasses(userName);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
     @RequestMapping("/findTestpaper")
     @ResponseBody
     public Result findTestpaper(){

@@ -56,8 +56,11 @@
                 });
                 form.render('checkbox');
             });
+            $.post("${baseurl}/moduleOne/findTestpaperClasses",function (data) {
+                console.log(data.data)
+            })
             $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                // console.log(data)
+                console.log(data)
                 // console.log(data.data.user.userName)
                 dataListObject = data
                 var dataList = data.data.testPaperList;

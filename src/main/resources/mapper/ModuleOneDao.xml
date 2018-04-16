@@ -10,6 +10,11 @@
     <!--</foreach>-->
     <!--</insert>-->
 
+    <select id="findTestpaperClasses" parameterType="String" resultType="map">
+        SELECT o_student.*,o_student_classes.classes_id
+        FROM oj.o_student_classes,oj.o_student
+        WHERE o_student.no = ${userName}
+    </select>
     <select id="findTestpaper" resultType="map">
         SELECT o_testpaper.*,o_classes.name ClassName,o_student_testpaper.*,o_student.*
         FROM o_testpaper,o_classes,o_student_testpaper,oj.o_student

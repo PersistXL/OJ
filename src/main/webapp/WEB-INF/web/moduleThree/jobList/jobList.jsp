@@ -62,10 +62,9 @@
             $.post("${baseurl}/jobList/selectSubjectClassesName", function (data) {
                 var _html = ""
                 $.post("${baseurl}/jobList/selectSubject", function (data1) {
-                    console.log(data1.data)
                     for (var i = 0; i < data.data.length; i++) {
                         teacherId = data.data[0].teacher_id
-                        classId = data.data[i].classes_id
+                        classId = data.data[i].clID
                         _html += `<div class="layui-colla-item">
                         <h2 class="layui-colla-title" style="margin-bottom: 10px">班课：` + data.data[i].ClassesName + `</h2>
                         <div class="layui-colla-content">

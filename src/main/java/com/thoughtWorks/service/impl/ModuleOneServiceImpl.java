@@ -38,4 +38,10 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
         moduleOneDao.updateScore(studentTestpaper);
         return null;
     }
+
+    @Override
+    public List<Map<String, Object>> findTestpaperClasses(String userName) {
+        List<Map<String,Object>> list = moduleOneDao.findTestpaperClasses(userName);
+        return list;
+    }
 }

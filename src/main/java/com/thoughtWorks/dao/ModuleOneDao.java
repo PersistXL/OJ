@@ -37,4 +37,11 @@ public interface ModuleOneDao {
      * @return
      */
     void updateScore(StudentTestpaper studentTestpaper);
+
+    /**
+     * 根据学生的username查询学生对应的班课
+     * @param userName
+     * @return
+     */
+    List<Map<String,Object>> findTestpaperClasses(String userName);
 }
