@@ -56,7 +56,8 @@ public class ModuleOneController {
         try{
             Map<String, Object> data = new HashMap<>();
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
-            List<Map<String,Object>> testPaperList =  moduleOneService.findTestpaper();
+            String userName = user.getUserName();
+            List<Map<String,Object>> testPaperList =  moduleOneService.findTestpaper(userName);
             data.put("user", user);
             data.put("testPaperList", testPaperList);
         return Result.success(data, Constant.SEARCH_SUCCESS);

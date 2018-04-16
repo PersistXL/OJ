@@ -56,39 +56,14 @@
                 });
                 form.render('checkbox');
             });
-            $.post("${baseurl}/moduleOne/findTestpaperClasses",function (data) {
-                console.log(data.data)
-            })
-            $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                console.log(data)
-                // console.log(data.data.user.userName)
-                dataListObject = data
-                var dataList = data.data.testPaperList;
-                var _html = "";
-                for (var i = 0; i < dataList.length; i++) {
-                    if (dataList[i].no === (data.data.user.userName)) {
-                        var s = dataList[i].subject_id;
-                        var score = dataList[i].testpaper_student_score;
-                        if (score != null) {
-                            score = score;
-                            var q = "";
-                        } else {
-                            score = "未答题";
-                            q = "!";
-                        }
-                        var d2 = new Date();
-                        var d1 = dataList[i].close_time;
-                        if (d1 >= d2) {
-                            var status = "开放";
-                        } else {
-                            status = "已截止";
-                            var q = "";
-                        }
-                        if(dataListObject != null){
-                        _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
-                            + dataList[i].ClassName + `<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">`
-                            + q
-                            + `</p></span></h3>
+            $.post("${baseurl}/moduleOne/findTestpaperClasses",function (data1) {
+                var _html = ""
+                $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
+                    dataList = data.data.testPaperList;
+                    for (var i = 0; i<data1.data.length;i++) {
+                _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
+                    + data1.data[i].ClassesName + `<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">
+                            </p></span></h3>
                                 <div class="layui-colla-content">
                                     <div class="layui-form">
                                         <table class="layui-table">
@@ -108,36 +83,53 @@
                                                 <th style="text-align: center">状态</th>
                                                 <th style="text-align: center">操作</th>
                                             </tr>
-                                            </thead>
-
-                                            <tbody id="test_questions">
-                                            <tr>
-                                                <td style="text-align: center">` + dataList[i].name + `</td>
-                                                <td style="text-align: center">` + s.split("_").length + `</td>
-                                                <td style="text-align: center">` + score + `</td>
-                                                <td style="text-align: center">` + status + `</td>
-                                                <td style="text-align: center">`)
-                                                if(dataList[i].testpaper_student_score == null && d1 >= d2){
-                                                    _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + dataList[i].id + `)">
-                                                        <i class="layui-icon">&#xe642;</i>答题</a>`)
-                                                        }else{
-                                                    _html += (`<a class="layui-btn  layui-btn-small" onclick="watch(`+ dataList[i].id +`)">
-                                                        <i class="layui-icon">&#xe60a;</i>预览</a>`)
-                                                        }
-                                                _html +=(`</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            </thead>`)
+                    for(var j=0 ;j<dataList.length;j++){
+                    if((data1.data[i].classes_id) === dataList[j].classes_id) {
+                        var s = dataList[j].subject_id;
+                        var score = dataList[j].testpaper_student_score;
+                        if (score != null) {
+                            score = score;
+                            var q = "";
+                        } else {
+                            score = "未答题";
+                            q = "!";
+                        }
+                        var d2 = new Date();
+                        var d1 = dataList[j].close_time;
+                        if (d1 >= d2) {
+                            var status = "开放";
+                        } else {
+                            status = "已截止";
+                            var q = "";
+                        }
+                        _html += (`<tbody>
+                        <tr>
+                        <td style="text-align: center">` + dataList[j].name + `</td>
+                            <td style="text-align: center">` + s.split("_").length + `</td>
+                            <td style="text-align: center">` + score + `</td>
+                            <td style="text-align: center">` + status + `</td>
+                            <td style="text-align: center">`)
+                        if (dataList[j].testpaper_student_score == null && d1 >= d2) {
+                            _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + dataList[j].id + `)">
+                            <i class="layui-icon">&#xe642;</i>答题</a>`)
+                        } else {
+                            _html += (`<a class="layui-btn  layui-btn-small" onclick="watch(` + dataList[j].id + `)">
+                            <i class="layui-icon">&#xe60a;</i>预览</a>`)
+                        }
+                        _html += (`</td>
+                        </tr>
+                        </tbody>`)
+                    }
+                    }
+                    _html +=(`</table></div>
                                 </div>
                             </div>`);
-                    }
+            }
                     $("#notice").html(_html);
                     element.init();
-                }
-                }
+            })
             });
-
         });
     });
 

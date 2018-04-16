@@ -12,7 +12,7 @@ public interface ModuleOneService {
      * @return
      * @throws Exception
      */
-    List<Map<String,Object>> findTestpaper() throws Exception;
+    List<Map<String,Object>> findTestpaper(String userName) throws Exception;
 
     /**
      * 通过id查询

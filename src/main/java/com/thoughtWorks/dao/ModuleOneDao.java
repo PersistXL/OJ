@@ -15,7 +15,7 @@ public interface ModuleOneDao {
      * 查询试卷表
      * @return
      */
-    List<Map<String,Object>> findTestpaper();
+    List<Map<String,Object>> findTestpaper(String userName);
 
     /**
      * 通过id查询subject_id
