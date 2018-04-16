@@ -19,4 +19,6 @@ public interface SysUserDao {
     Teacher checkEmail(String email);
 
     void addToUser(@Param("user") User user);
+
+    void delete(String phone);
 }

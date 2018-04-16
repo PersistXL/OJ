@@ -1,7 +1,6 @@
 package com.thoughtWorks.service.impl;
 
 import com.thoughtWorks.dao.SysUserDao;
-import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.Teacher;
 import com.thoughtWorks.entity.User;
 import com.thoughtWorks.service.SysUserService;
@@ -51,6 +50,11 @@ public class SysUserServiceImpl implements SysUserService {
             e.printStackTrace();
         }
         return "添加教师失败";
+    }
+
+    @Override
+    public void delete(String phone) {
+        sysUserDao.delete(phone);
     }
 
     private boolean checkPhone(String phone) {

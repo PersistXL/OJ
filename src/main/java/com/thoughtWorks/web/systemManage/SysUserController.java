@@ -48,4 +48,17 @@ public class SysUserController {
         return Result.failure("", "添加失败");
     }
 
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Result delete(String phone) {
+        try {
+            sysUserService.delete(phone);
+            return Result.success("","删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure("", "删除失败");
+    }
+
 }

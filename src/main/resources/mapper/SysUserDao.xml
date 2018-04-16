@@ -31,4 +31,8 @@
         values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone});
     </insert>
 
+    <delete id="delete" parameterType="string">
+        DELETE tu,ot FROM o_teacher ot,t_user tu WHERE ot.phone = #{phone} and tu.phone = #{phone}
+    </delete>
+
 </mapper>

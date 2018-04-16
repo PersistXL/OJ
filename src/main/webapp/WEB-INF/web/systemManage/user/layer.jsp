@@ -22,7 +22,7 @@
                     onclick="sysUser.update('{{item.id}}',`{{item.identityCard}}`,'{{item.departmentId}}','{{item.directionId}}','{{item.name}}','{{item.gender}}','{{ item.classify}}','{{item.deptId}}')">
                 <i class="layui-icon">&#xe642;</i>修改
             </button>
-            <button class="layui-btn layui-btn-mini  layui-btn-danger" onclick="sysUser.delete('{{item.no}}')">
+            <button class="layui-btn layui-btn-mini  layui-btn-danger" onclick="sysUser.delete('{{item.phone}}')">
                 <i class="layui-icon">&#xe60a;</i>删除
             </button>
         </td>

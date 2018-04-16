@@ -100,7 +100,6 @@
                     type: "post",
                     data: searchInfo,
                     success: function (data) {
-                        console.log(data);
                         currentIndex = data.currentIndex;
                         totalSize = data.totalSize;
                         sysUser.page();
@@ -129,6 +128,17 @@
 
                     }
                 })
+            },
+            delete: function (phone) {
+                layer.confirm('确定删除？', {icon: 3, title: '提示'}, function (index) {
+                    layer.close(index);
+                    $.post(baseUrl + "/sysUser/delete", {phone: phone}, function (data) {
+                        if (data.result) {
+                            layer.msg(data.msg);
+                            setTimeout("location.reload();", 500);
+                        }
+                    })
+                });
             },
         };
 

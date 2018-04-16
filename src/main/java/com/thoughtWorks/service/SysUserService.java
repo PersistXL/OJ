@@ -7,4 +7,6 @@ public interface SysUserService {
     PageUtil getList(PageUtil pageUtil);
 
     String add(Teacher teacher);
+
+    void delete(String phone);
 }
