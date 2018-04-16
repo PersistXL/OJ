@@ -24,7 +24,8 @@ public class JoinClassServiceImpl implements JoinClassService {
     public void joinClass(Student student,String classCode) {
         try {
 
-//            List<Classes> classesList = joinClassDao.checkClassCode(classCode);
+            List<Classes> classesList = joinClassDao.checkClassCode(classCode);
+            System.out.println(classesList);
 
 //            joinClassDao.joinClassInStudent(student);
 

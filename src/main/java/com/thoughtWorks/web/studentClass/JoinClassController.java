@@ -1,6 +1,5 @@
 package com.thoughtWorks.web.studentClass;
 
-import com.thoughtWorks.entity.ClassesTemporary;
 import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.service.JoinClassService;
 import org.springframework.beans.factory.annotation.Autowired;

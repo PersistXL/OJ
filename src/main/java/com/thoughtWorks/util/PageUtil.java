@@ -1,5 +1,9 @@
 package com.thoughtWorks.util;
 
+import com.thoughtWorks.entity.Teacher;
+
+import java.util.List;
+
 /**
  * @author ubuntu
  */
@@ -46,5 +50,15 @@ public class PageUtil {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "PageUtil{" +
+                "totalSize=" + totalSize +
+                ", currentIndex=" + currentIndex +
+                ", pageSize=" + pageSize +
+                ", data=" + data +
+                '}';
     }
 }
