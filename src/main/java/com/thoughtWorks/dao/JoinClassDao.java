@@ -10,9 +10,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface JoinClassDao {
-    void joinClassInStudent(@Param("classesTemporary") ClassesTemporary classesTemporary);
 
     List<Map<String, Object>> getClassList(@Param("stuNo") String stuNo);
 
     List<Classes> checkClassCode(@Param("classCode") String classCode);
+
+    List<Student> isExistOfStudent(String phone);
+
+    void addStudentInfo(@Param("student") Student student);
+
+    void addStudentInfoToUser(@Param("user") User user);
+
+    void addStuAndClassesContact(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
 }

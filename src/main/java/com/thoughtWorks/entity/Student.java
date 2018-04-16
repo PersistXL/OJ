@@ -5,17 +5,27 @@ public class Student {
     private String no;
     private String name;
     private String gender;
+    private String phone;
     private String classesId;
 
     public Student() {
     }
 
-    public Student(Integer id, String no, String name, String gender, String classesId) {
+    public Student(Integer id, String no, String name, String gender, String phone, String classesId) {
         this.id = id;
         this.no = no;
         this.name = name;
         this.gender = gender;
+        this.phone = phone;
         this.classesId = classesId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Integer getId() {
@@ -65,6 +75,7 @@ public class Student {
                 ", no='" + no + '\'' +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
+                ", phone='" + phone + '\'' +
                 ", classesId='" + classesId + '\'' +
                 '}';
     }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,17 +22,33 @@ public class JoinClassServiceImpl implements JoinClassService {
 
     @Transactional
     @Override
-    public void joinClass(Student student,String classCode) {
+    public Map<String, String> joinClass(Student student, String classCode) {
+        Map<String, String> info = new HashMap<>();
         try {
 
             List<Classes> classesList = joinClassDao.checkClassCode(classCode);
-            System.out.println(classesList);
+            List<Student> studentList = joinClassDao.isExistOfStudent(student.getPhone());
+            if (classesList.size() != 0) {
+                if (studentList.size() == 0) {
+                    joinClassDao.addStudentInfo(student);
+                    User user = new User(student.getPhone(), student.getPhone().substring(5, 11), 3, 1, student.getName(), "学生", student.getPhone());
+                    joinClassDao.addStudentInfoToUser(user);
+                }
+                joinClassDao.addStuAndClassesContact(classesList.get(0).getId(), joinClassDao.isExistOfStudent(student.getPhone()).get(0).getId());
+                info.put("result", "success");
+                info.put("info", "班课信息录入成功");
+                return info;
+            }
 
-//            joinClassDao.joinClassInStudent(student);
-
+            info.put("result", "failure");
+            info.put("info", "校验码输入错误");
+            return info;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        info.put("result", "failure");
+        info.put("info", "班课信息录入失败");
+        return info;
     }
 
     @Override
