@@ -23,11 +23,11 @@
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
-            <blockquote class="layui-elem-quote mylog-info-tit" style="height: 70px";>
-                    <ul class="layui-tab-title">
-                        <li class="layui-btn " onclick="sysUser.add()"><i class="layui-icon">&#xe61f;</i>添加教师
-                        </li>
-                    </ul>
+            <blockquote class="layui-elem-quote mylog-info-tit" style="height: 70px" ;>
+                <ul class="layui-tab-title">
+                    <li class="layui-btn " onclick="sysUser.add()"><i class="layui-icon">&#xe61f;</i>添加教师
+                    </li>
+                </ul>
             </blockquote>
             <div class="larry-separate"></div>
 
@@ -55,7 +55,6 @@
         </div>
     </div>
 </section>
-
 
 
 <%@include file="layer.jsp" %>
@@ -105,15 +104,43 @@
                         console.log(data);
                         currentIndex = data.currentIndex;
                         totalSize = data.totalSize;
-                        // sysUser.page();
+                        sysUser.page();
                         laytpl($("#list-tpl").text()).render(data.data, function (html) {
                             $("#list").html(html);
                         });
                         form.render();
-
                     }
                 });
-            }
+            },
+            add: function () {
+                layer.open({
+                    type: 1,
+                    title: '添加',
+                    area: ["50%", "80%"]
+                    , content: $("#add")
+                });
+            },
+            addAjax: function () {
+                let data = $("#add-form").serialize();
+                let classedIds = "";
+                let floorIds = "";
+                let classes = $(".classId");
+                let floors = $(".floorId");
+                for (let i = 0; i < classes.length; ++i) {
+                    if ($(classes[i]).prop("checked")) classedIds += $(classes[i]).val() + ",";
+                }
+                data += "&classIds=" + classedIds;
+                for (let i = 0; i < floors.length; ++i) {
+                    if ($(floors[i]).prop("checked")) floorIds += $(floors[i]).val() + ",";
+                }
+                data += "&floorIds=" + floorIds;
+                $.post(baseUrl + "/teacher/add", data, function (data) {
+                    layer.msg(data.msg);
+                    if (data.msg) {
+                        setTimeout("location.reload()", 500);
+                    }
+                })
+            },
         };
 
         $(function () {
