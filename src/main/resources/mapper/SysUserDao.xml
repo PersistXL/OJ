@@ -38,7 +38,7 @@
     <update id="update" parameterType="com.thoughtWorks.entity.Teacher">
       UPDATE o_teacher
       SET name = #{teacher.name}, department_id = #{teacher.department}, gender = #{teacher.gender}
-      , email = #{teacher.email}, phone = #{teacher.phone}, no = #{teacher.no}
+      , email = #{teacher.email}, phone = #{teacher.phone}
       WHERE id = #{teacher.id}
     </update>
 

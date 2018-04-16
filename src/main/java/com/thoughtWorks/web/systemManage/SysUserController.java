@@ -65,6 +65,9 @@ public class SysUserController {
     @ResponseBody
     public Result update(Teacher teacher) {
         try {
+
+            System.out.println("00000000000000" + teacher);
+
             String result = sysUserService.update(teacher);
 
             return Result.success("",result);

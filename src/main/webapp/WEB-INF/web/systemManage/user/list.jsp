@@ -162,7 +162,7 @@
             updateAjax: function () {
                 let data = $("#update-form").serialize();
                 $.post(baseUrl + "/sysUser/update", data, function (data) {
-                    if (data.msg) {
+                    if (data.result) {
                         layer.msg(data.msg);
                         setTimeout("location.reload();", 1000);
 
