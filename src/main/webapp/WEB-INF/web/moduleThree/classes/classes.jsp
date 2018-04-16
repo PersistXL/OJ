@@ -44,54 +44,11 @@
         <div class="layui-tab">
             <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
                 <blockquote class="layui-elem-quote mylog-info-tit" style="height: 70px;">
-
-                    <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <select name="select_questions" id="select_questions" lay-filter="modules_1"
-                                        lay-verify="required" lay-search=""
-                                >
-                                    <option value="">请选择</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <select name="select_facility" lay-filter="modules_1" lay-verify="required"
-                                        lay-search="">
-                                    <option value="">请选择</option>
-                                    <option value="">请选择</option>
-                                    <option value="简单">简单</option>
-                                    <option value="较易">较易</option>
-                                    <option value="一般">一般</option>
-                                    <option value="较难">较难</option>
-                                    <option value="困难">困难</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="text" name="select_chapter"
-                                       autocomplete="off"
-                                       placeholder="请输入知识点" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
                     <div class="layui-input-inline">
                         <div class="layui-inline">
-                            <a class="layui-btn" onclick="currentIndex = 1;_subject.page()"><i
-                                    class="layui-icon">&#xe615;</i>搜索</a>
                             <shiro:hasPermission name="moduleThree:update">
-                                <a class="layui-btn" onclick="_subject.addsingleEntry()"><i
-                                        class="layui-icon">&#xe621;</i>单个录入</a>
-                                <a class="layui-btn" onclick="_subject.addＥxcel()"><i class="layui-icon">&#xe61e;</i>Excel导入</a>
+                                <a class="layui-btn" onclick="_subject.creatClasses()"><i
+                                        class="layui-icon">&#xe621;</i>创建班课</a>
                             </shiro:hasPermission>
                         </div>
                     </div>
@@ -105,32 +62,14 @@
                     <table class="layui-table">
                         <colgroup>
                             <col width="60">
-                            <col width="200">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="230">
                         </colgroup>
 
                         <thead>
                         <tr>
                             <th>编号</th>
-                            <th>题目</th>
-                            <th>选项A</th>
-                            <th>选项B</th>
-                            <th>选项C</th>
-                            <th>选项D</th>
-                            <th>选项E</th>
-                            <th>正确选项</th>
-                            <th>题库</th>
-                            <th>知识点</th>
-                            <th>难易度</th>
+                            <th>班课名称</th>
+                            <th>创建时间</th>
+                            <th>班课口令</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -145,112 +84,27 @@
         </div>
     </div>
 </section>
-<div id="addInfo" style="display: none;width: auto; margin-top: 20px;">
+<div id="creatClasses" style="display: none;width: auto; margin-top: 20px;">
     <div>
         <form class="layui-form" action="">
-            <div class="layui-form-item layui-form-text">
-                <input name="id" hidden>
-                <label class="layui-form-label">题目：</label>
-                <div class="layui-input-inline" style="width: 50%">
-                    <textarea placeholder="请输入题目" class="layui-textarea" name="subject"></textarea>
-                </div>
-            </div>
-
             <div class="layui-form-item">
-                <label class="layui-form-label">选项A：</label>
+                <label class="layui-form-label">班课名称：</label>
                 <div class="layui-input-inline">
-                    <input name="option_a" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
-                           class="layui-input">
-                </div>
-                <label class="layui-form-label">选项B：</label>
-                <div class="layui-input-inline">
-                    <input name="option_b" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
-                           class="layui-input">
-                </div>
-
-                <label class="layui-form-label">选项C：</label>
-                <div class="layui-input-inline">
-                    <input name="option_c" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
+                    <input name="className" required lay-verify="required" placeholder="请输入班课名称" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">选项D：</label>
+                <label class="layui-form-label">班课口令：</label>
                 <div class="layui-input-inline">
-                    <input name="option_d" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
-                           class="layui-input">
-                </div>
-                <label class="layui-form-label">选项E：</label>
-                <div class="layui-input-inline">
-                    <input name="option_e" required lay-verify="required" placeholder="请输入内容" autocomplete="off"
-                           class="layui-input">
-                </div>
-                <label class="layui-form-label">正确选项：</label>
-                <div class="layui-input-inline">
-                    <select name="correct" lay-verify="required" lay-search="" id="correct">
-                        <option value="A">选项A</option>
-                        <option value="B">选项B</option>
-                        <option value="C">选项C</option>
-                        <option value="D">选项D</option>
-                        <option value="E">选项E</option>
-                    </select>
+                    <input name="code" id="code" readonly lay-verify="required" autocomplete="off"
+                           class="layui-input"><span style="color: gainsboro;">班课口令自动生成</span>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">题目图片：</label>
-                <div class="layui-input-inline">
-                    <div style="width:140px; height: 200px;border: 2px solid #e2e2e2;margin-bottom: 10px">
-                        <img id="imagesToUpdate" class="head_image" style="width: 100%"
-                             height="100%"/>
-                    </div>
-                    <div>
-                        <input type="file" name="file" class="layui-upload-file" style="width: auto"
-                               lay-title="题目图片">
-                        <input type="text" name="file_img" hidden>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-
-                <label class="layui-form-label">题库：</label>
-                <div class="layui-input-inline">
-                    <select name="questions_id" lay-verify="required" lay-search="" id="questions_id">
-                        <option value="0">试题</option>
-
-                    </select>
-                </div>
-                <label class="layui-form-label">知识点：</label>
-                <div class="layui-input-inline">
-                    <input name="chapter" required lay-verify="required" placeholder="请输入知识点关键字" autocomplete="off"
-                           class="layui-input">
-                </div>
-                <label class="layui-form-label">难易度：</label>
-                <div class="layui-input-inline">
-                    <select name="facility" lay-verify="required" lay-search="" id="facility">
-                        <option value="简单">简单</option>
-                        <option value="较易">较易</option>
-                        <option value="一般">一般</option>
-                        <option value="较难">较难</option>
-                        <option value="困难">困难</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">备注：</label>
-                <div class="layui-input-inline" style="width: 50%">
-                    <textarea placeholder="备注信息：可以为空" class="layui-textarea" name="type"></textarea>
-                </div>
-            </div>
-
             <div class="layui-form-item">
                 <label class="layui-form-label"></label>
-                <div class="layui-input-inline " id="add">
-                    <button class="layui-btn" onclick="_subject.addsingleEntryInfo()">立即提交
-                    </button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
-                <div class="layui-input-inline " id="update">
-                    <button class="layui-btn" onclick="_subject.updateInfo_new()">更新提交
+                <div class="layui-input-inline">
+                    <button class="layui-btn" onclick="_subject.addClassInfo()">立即提交
                     </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
@@ -259,17 +113,27 @@
         </form>
     </div>
 </div>
-<div id="addＥxcel" style="display: none;width: auto; margin-top: 20px;">
-    <div class="layui-form-item layui-form-text">
-        <form id='formSumbit' action="${baseurl}/subject/uploadFile" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" lay-type="file" ><br/>
-            <input type="submit" value="上传" class="layui-btn"/>
-        </form>
-        <br>
-        <h3 style="color:green" id="msg"></h3>
+<div id="previewClassesInfo" style="display: none;width: auto; margin-top: 20px;">
+    <div class="layui-form">
+        <table class="layui-table">
+            <colgroup>
+                <col width="60">
+            </colgroup>
+
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>学生姓名</th>
+                <th>学生账号</th>
+                <th>性别</th>
+                <th>手机号</th>
+            </tr>
+            </thead>
+            <tbody id="previewClasses">
+
+            </tbody>
+        </table>
     </div>
-</div>
-<div id="previewSubjectInfo" style="display: none;">
 </div>
 </body>
 <script type="text/javascript">
@@ -285,63 +149,27 @@
             laytpl = layui.laytpl;
         _subject = {
             page: function () {
-                var select_questions = $("select[name='select_questions']").val();
-                var select_facility = $("select[name='select_facility']").val();
-                var select_chapter = $("input[name='select_chapter']").val();
-                $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "";
-                    for (let i = 0; i < data.data.length; i++) {
-                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                    }
-                    $("#questions_id").html(_html);
-                    $("#select_questions").html(_html);
-                    form.render();
-                });
-
-                $.post("${baseurl}/subject/selectSubject", {
-                    questionsId: select_questions,
-                    chapter: select_chapter,
-                    facility: select_facility,
-                    currentIndex: currentIndex,
-                    pageSize: pageSize
-                }, function (data) {
+                $.post("${baseurl}/Testpaper/selectClasses", function (data) {
                     console.log(data)
-                    _subject.paging();
-                    currentIndex = data.page.currentIndex;
-                    totalSize = data.page.totalSize;
-                    _subject.paging();
                     let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += `<tr>
                             <td>` + (i + 1) + `</td>
-                            <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_a + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_b + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_c + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_d + `</span></td>
-                            <td><span class = "hide_title">` + data.data[i].option_e + `</span></td>
-                            <td>` + data.data[i].correct + `</td>
-                            <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
-                            <td ><span class = "hide_title">` + data.data[i].chapter + `</span></td>
-                            <td>` +(data.data[i].facility===undefined ?"暂无":data.data[i].facility) + `</td>
+                            <td ><span class = "hide_title">` + data.data[i].name + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].time + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].code + `</span></td>
                             <td>
 
                                 <div class="layui-btn-group">
-                                    <shiro:hasPermission name="moduleThree:update" >
-                                        <a class="layui-btn layui-btn-mini" onclick="_subject.updataInfo(` + data.data[i].id + `)" >
-                                            <i class="layui-icon">&#xe642;</i>
-                                            编辑
-                                        </a>
-                                    </shiro:hasPermission>
-                                    <shiro:hasPermission name="moduleThree:delete">
-                                        <a class="layui-btn layui-btn-mini" onclick="_subject.deleteSubjectInfo(` + data.data[i].id + `)">
+                                        <shiro:hasPermission name="createClass:delete" >
+                                        <a class="layui-btn layui-btn-mini" onclick="_subject.deleteClassesInfo(` + data.data[i].id + `)">
                                             <i class="layui-icon">&#xe640;</i>
                                             删除
                                         </a>
-                                    </shiro:hasPermission>
-                                    <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
+                                        </shiro:hasPermission>
+                                    <a class="layui-btn layui-btn-mini" onclick="_subject.selectClassesByIdToStudents(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
-                                        预览
+                                        学生信息
                                     </a>
                                 </div>
                             </td>
@@ -376,214 +204,57 @@
                     content: $('#addＥxcel')
                 });
             },
-            addsingleEntry: function () {
-                $("#update").hide();
-                $("#add").show();
+            creatClasses: function () {
+                var num = "";
+                for (var i = 0; i < 6; i++) {
+                    num += Math.floor(Math.random() * 10);
+                }
+                $("#code").val(num)
                 layer.open({
                     type: 1,
-                    title: '录入题目',
+                    title: '创建班课',
                     area: ['100%', '100%'],
                     skin: 'yourclass',
-                    content: $('#addInfo')
+                    content: $('#creatClasses')
                 });
             },
-            deleteSubjectInfo: function (id) {
-                layer.confirm('是否删除信息？', function (index) {
-                    $.post("${baseurl}/subject/deleteSubjectById", {id: id}, function (data) {
+            deleteClassesInfo: function (id) {
+                layer.confirm('删除班课将丢失班课中的学生信息！是否删除？', function (index) {
+                    $.post("${baseurl}/Testpaper/deleteClassByTeacherId", {id: id}, function (data) {
                         layer.msg(data.msg);
                         location.reload();
                     });
                     layer.close(index);
                 });
             },
-            updataInfo: function (id) {
-
-                layui.use('form', function () {
-                    let $ = layui.jquery, form = layui.form();
-                    $.post("${baseurl}/subject/selectSubjectById", {id: id}, function (data) {
-                        $("#add").hide();
-                        $("#update").show();
-
-                        $("textarea[name='subject']").val(data.data.subject);
-                        $("input[name='option_a']").val(data.data.option_a);
-                        $("input[name='option_b']").val(data.data.option_b);
-                        $("input[name='option_c']").val(data.data.option_c);
-                        $("input[name='option_d']").val(data.data.option_d);
-                        $("input[name='option_e']").val(data.data.option_e);
-                        // $("select[name='correct']").val(data.data.correct);
-                        let _html_correct =`<option value="A" `+(data.data.correct === "A"?"selected='selected'":"")+`>选项A</option>
-                        <option value="B"`+(data.data.correct === "B"?"selected='selected'":"")+`>选项B</option>
-                        <option value="C"`+(data.data.correct === "C"?"selected='selected'":"")+`>选项C</option>
-                        <option value="D"`+(data.data.correct === "D"?"selected='selected'":"")+`>选项D</option>
-                        <option value="E"`+(data.data.correct === "E"?"selected='selected'":"")+`>选项E</option>`;
-                        $("#correct").html(_html_correct);
-                        let _html_facility =`<option value="简单" `+(data.data.facility === "简单"?"selected='selected'":"")+`>简单</option>
-                        <option value="较易"`+(data.data.facility === "较易"?"selected='selected'":"")+`>较易</option>
-                        <option value="一般"`+(data.data.facility === "一般"?"selected='selected'":"")+`>一般</option>
-                        <option value="较难"`+(data.data.facility === "较难"?"selected='selected'":"")+`>较难</option>
-                        <option value="困难"`+(data.data.facility === "困难"?"selected='selected'":"")+`>困难</option>`;
-                        $("#facility").html(_html_facility);
-                        let questionsName= data.data.questionsName;
-                        $.post("${baseurl}/subject/selectQuestions", function (data) {
-                            let _html = "";
-                            for (let i = 0; i < data.data.length; i++) {
-                                _html += `<option value='` + data.data[i].id + `' `+( questionsName=== data.data[i].name?"selected='selected'":"")+`>` + data.data[i].name + `</option>`;
-                            }
-                            $("#questions_id").html(_html);
-                            form.render();
-                        });
-                        form.render();
-                        $("input[name='file_img']").val(data.data.subject_img);
-                        $("input[name='chapter']").val(data.data.chapter);
-                        $("textarea[name='type']").val(data.data.type);
-                        $("input[name='id']").val(data.data.id);
-                        $("#imagesToUpdate").text("").attr("src", data.data.subject_img);
-                        layer.open({
-                            type: 1,
-                            title: '试题预览',
-                            area: ['100%', '100%'],
-                            skin: 'yourclass',
-                            content: $('#addInfo')
-                        });
-                    });
-                    form.render();
-
-                });
-            },
-            updateInfo_new: function () {
-                let id = $("input[name='id']").val();
-                let subject = $("textarea[name='subject']").val();
-                let option_a = $("input[name='option_a']").val();
-                let option_b = $("input[name='option_b']").val();
-                let option_c = $("input[name='option_c']").val();
-                let option_d = $("input[name='option_d']").val();
-                let option_e = $("input[name='option_e']").val();
-                let correct = $("select[name='correct']").val();
-                let imagesToUpdate = $("input[name='file_img']").val();
-                let questions_id = $("select[name='questions_id']").val();
-                let chapter = $("input[name='chapter']").val();
-                let facility = $("select[name='facility']").val();
-                let type = $("textarea[name='type']").val();
-                $.post("${baseurl}/subject/updateSubjectById", {
-                    id: id,
-                    subject: subject,
-                    optionA: option_a,
-                    optionB: option_b,
-                    optionC: option_c,
-                    optionD: option_d,
-                    optionE: option_e,
-                    correct: correct,
-                    subjectImg: imagesToUpdate,
-                    questionsId: questions_id,
-                    chapter: chapter,
-                    facility: facility,
-                    type: type
-                }, function (data) {
-                    layer.msg(data.msg);
-                });
-            },
-            previewSubjectInfo: function (id) {
-                $.post("${baseurl}/subject/selectSubjectById", {id: id}, function (data) {
+            selectClassesByIdToStudents: function (id) {
+                $.post("${baseurl}/Testpaper/selectClassesByIdToStudents", {id: id}, function (data) {
                     let _html = "";
-                    _html += `<fieldset class="layui-elem-field">
-        <legend>试题：</legend>
-        <div class="layui-field-box">
-            <b>题目：</b>
-            <p>` + data.data.subject + `</p>
-        </div>`;
-                    if (data.data.subject_img !== undefined) {
-                        _html += `<div class="layui-field-box box">
-            <img width="300px" height="300px" src="` + data.data.subject_img + `"/><br>
-            <b>题目图片</b>
-        </div>`;
+                    for (let i = 0; i < data.data.length; i++) {
+                        _html += `<tr>
+                            <td>` + (i + 1) + `</td>
+                            <td ><span class = "hide_title">` + data.data[i].name + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].no + `</span></td>
+                            <td><span class = "hide_title">` + data.data[i].gender + `</span></td>
+                            <td><span class = "hide_title">` + (data.data[i].phone=== undefined ?"暂无":data.data[i].phone) + `</span></td>
+                        </tr>`;
                     }
-                    _html += `<div class="layui-field-box">
-            <p> <b>选项A：</b>` + data.data.option_a + `</p>
-        </div>
-        <div class="layui-field-box">
-
-            <p><b>选项B：</b>` + data.data.option_b + `</p>
-        </div>
-        <div class="layui-field-box">
-
-            <p><b>选项C：</b>` + data.data.option_c + `</p>
-        </div>
-        <div class="layui-field-box">
-
-            <p><b>选项D：</b>` + data.data.option_d + `</p>
-        </div>
-        <div class="layui-field-box">
-
-            <p><b>选项E：</b>` + data.data.option_e + `</p>
-        </div>
-        <div class="layui-field-box">
-            <b>正确选项：</b>
-            <p>` + data.data.correct + `</p>
-        </div>
-    </fieldset>
-    <fieldset class="layui-elem-field " style="margin-top: 20px;">
-        <legend>题目相关信息：</legend>
-        <table class="layui-table">
-            <colgroup>
-                <col width="150">
-                <col width="150">
-                <col width="200">
-                <col>
-            </colgroup>
-            <thead>
-            <tr>
-                <th>题库</th>
-                <th>知识点</th>
-                <th>难易度</th>
-                <th>备注</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>` + data.data.questionsName + `</td>
-                <td>` + data.data.chapter + `</td>
-                <td>` + (data.data.facility === undefined?"暂无": data.data.facility)  + `</td>
-                <td>` + (data.data.type=== undefined?"暂无": data.data.type )+ `</td>
-            </tr>
-            </tbody>
-        </table>
-    </fieldset>`;
-                    $("#previewSubjectInfo").html(_html);
+                    $("#previewClasses").html(_html);
                     layer.open({
                         type: 1,
                         title: '试题预览',
                         area: ['100%', '100%'],
                         skin: 'yourclass',
-                        content: $('#previewSubjectInfo')
+                        content: $('#previewClassesInfo')
                     });
                 });
             },
-            addsingleEntryInfo: function () {
-                let subject = $("textarea[name='subject']").val();
-                let option_a = $("input[name='option_a']").val();
-                let option_b = $("input[name='option_b']").val();
-                let option_c = $("input[name='option_c']").val();
-                let option_d = $("input[name='option_d']").val();
-                let option_e = $("input[name='option_e']").val();
-                let correct = $("select[name='correct']").val();
-                let imagesToUpdate = $("input[name='file_img']").val();
-                let questions_id = $("select[name='questions_id']").val();
-                let chapter = $("input[name='chapter']").val();
-                let facility = $("select[name='facility']").val();
-                let type = $("textarea[name='type']").val();
-                $.post("${baseurl}/subject/addSubject", {
-                    subject: subject,
-                    optionA: option_a,
-                    optionB: option_b,
-                    optionC: option_c,
-                    optionD: option_d,
-                    optionE: option_e,
-                    correct: correct,
-                    subjectImg: imagesToUpdate,
-                    questionsId: questions_id,
-                    chapter: chapter,
-                    facility: facility,
-                    type: type
+            addClassInfo: function () {
+                let name = $("input[name='className']").val();
+                let code = $("input[name='code']").val();
+                $.post("${baseurl}/Testpaper/addClasses", {
+                    name: name,
+                    code: code
                 }, function (data) {
                     layer.msg(data.msg);
                 });
@@ -595,7 +266,7 @@
             //图片上传
             layui.use('upload', function () {
                 layui.upload({
-                    url: '${baseurl}/subject/updateImage' //上传接口
+                    url: '${baseurl}/Testpaper/updateImage' //上传接口
                     , success: function (res) { //上传成功后的回调
                         if (res.result) {
                             $("#imagesToUpdate").text("").attr("src", HEAD_IMAGE_PREFIX + res.data);
@@ -614,11 +285,9 @@
                 var form = $(this);
                 if (fileName === '') {
                     layer.msg('请选择文件');
-                }else
-                if (fileType !== 'xls' && fileType !== 'xlsx') {
+                } else if (fileType !== 'xls' && fileType !== 'xlsx') {
                     layer.msg('文件格式不正确，excel文件！');
-                }else
-                if (form.hasClass('upload')) {
+                } else if (form.hasClass('upload')) {
                     //普通表单
                     $.ajax({
                         type: form.attr('method'),
@@ -642,12 +311,12 @@
                         contentType: false,
                         cache: false,
                         processData: false,
-                        error : function(XHR, textStatus, errorThrown) {
+                        error: function (XHR, textStatus, errorThrown) {
                             layer.msg("网络错误！XHR=" + XHR + "\ntextStatus=" + textStatus
                                 + "\nerrorThrown=" + errorThrown);
                         },
-                        success : function(data) {
-                            layer.confirm(data.msg, function(index){
+                        success: function (data) {
+                            layer.confirm(data.msg, function (index) {
                                 //do something
                                 $("#msg").html(data.msg)
                                 layer.close(index);

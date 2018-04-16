@@ -31,4 +31,18 @@
         SELECT *
         FROM o_classes where teacher_id = #{id}
     </select>
+    <insert id="addClasses" parameterType="Classes">
+    INSERT INTO o_classes (name,teacher_id,code,time)
+    VALUES (#{name},#{teacherId},#{code},CURDATE())
+    </insert>
+    <delete id="deleteClassByTeacherId" parameterType="int">
+        delete from o_classes where id = #{id}
+    </delete>
+    <delete id="deleteStudentByClassByTeacherId" parameterType="int">
+        delete from o_student_classes where classes_id = #{id}
+    </delete>
+    <select id="selectClassesByIdToStudents" resultType="map" parameterType="int">
+        select o_student.*,o_classes.* from o_classes,o_student_classes,o_student where o_classes.id = o_student_classes.classes_id
+        and o_student_classes.student_id = o_student.id and o_classes.id = #{id}
+    </select>
 </mapper>

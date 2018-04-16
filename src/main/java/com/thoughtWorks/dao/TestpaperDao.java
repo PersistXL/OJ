@@ -1,5 +1,6 @@
 package com.thoughtWorks.dao;
 
+import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.entity.TestpaperCursor;
 
@@ -38,4 +39,11 @@ public interface TestpaperDao {
     int selectIdByName(String username);
 
     List<Map<String,Object>> selectClasses(int id);
+
+    void addClasses(Classes classes);
+
+    void deleteClassByTeacherId(int id);
+    void deleteStudentByClassByTeacherId(int id);
+
+    List<Map<String,Object>> selectClassesByIdToStudents(int id);
 }

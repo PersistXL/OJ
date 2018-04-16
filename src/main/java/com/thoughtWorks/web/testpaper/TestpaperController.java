@@ -3,6 +3,7 @@ package com.thoughtWorks.web.testpaper;
 import com.thoughtWorks.dao.TestpaperDao;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
+import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.entity.TestpaperCursor;
 import com.thoughtWorks.util.Constant;
@@ -89,6 +90,39 @@ public class TestpaperController {
             e.printStackTrace();
         }
         return Result.failure(null,Constant.DELETE_FAILURE);
+    }
+    @RequestMapping("addClasses")
+    public Result addClasses(Classes classes){
+        try{
+            String username = ((ActiveUser)SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int id = testpaperDao.selectIdByName(username);
+            classes.setTeacherId(String.valueOf(id));
+            testpaperDao.addClasses(classes);
+            return Result.success(null,Constant.ADD_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.ADD_FAILURE);
+    }
+    @RequestMapping("deleteClassByTeacherId")
+    public Result deleteClassByTeacherId(int id){
+        try{
+            testpaperDao.deleteClassByTeacherId(id);
+            testpaperDao.deleteStudentByClassByTeacherId(id);
+            return Result.success(null,Constant.DELETE_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.DELETE_FAILURE);
+    }
+    @RequestMapping("selectClassesByIdToStudents")
+    public Result selectClassesByIdToStudents(int id){
+        try{
+            return Result.success(testpaperDao.selectClassesByIdToStudents(id),Constant.SEARCH_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.SEARCH_FAILURE);
     }
 
 }

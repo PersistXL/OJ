@@ -28,7 +28,7 @@
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
                 <div class="layui-collapse" lay-accordion="" style="margin-top: 10px" id="jobList">
-
+                    <h4>暂无</h4>
                 </div>
             </div>
         </div>
@@ -55,18 +55,13 @@
                 });
                 form.render('checkbox');
             });
-            //使用Ajax传值
-            $.post("${baseurl}/jobList/selectSubject", function (data) {
-                dataList = data.data
-                testName = []
-                // console.log(data.data)
+            $.post("${baseurl}/jobList/selectSubjectClassesName",function (data) {
+                var _html =""
                 for (var i =0;i<data.data.length;i++) {
                     teacherId = data.data[0].teacher_id
-                    testName[i] = data.data[i].name
-                    var _html = "";
 
                     _html += (`<div class="layui-colla-item">
-                        <h2 class="layui-colla-title">班课：` + dataList[i].ClassesName + `</h2>
+                        <h2 class="layui-colla-title" style="margin-bottom: 10px">班课：` + data.data[i].ClassesName + `</h2>
                         <div class="layui-colla-content">
                         <table class="layui-table">
                                   <colgroup>
@@ -82,27 +77,39 @@
                                       <th style="text-align: center">试卷成绩</th>
                                       <th style="text-align: center">相关操作</th>
                                     </tr>
-                                  </thead>`)
-                                  for(var j=0;j<data.data.length;j++) {
-                                      var s = dataList[j].subject_id;
-                                      var name = dataList[j].name
-                                      var id = dataList[j].classes_id
-                                      _html += (`<tbody>
-                                    <tr>
-                                      <td style="text-align: center">` + data.data[j].name + `</td>
-                                      <td style="text-align: center">` +s.split("_").length+ `</td>
-                                      <td style="text-align: center">` + data.data[j].score+ `</td>
+                                  </thead>
+                                  <tbody id="studentMessage"></tbody>
+                        `)
+                    _html +=(`</table>
+                       </div>
+                    </div>`)
+                    $("#jobList").html(_html);
+                    element.init();
+                }
+            })
+            //使用Ajax传值
+           $.post("${baseurl}/jobList/selectSubject", function (data) {
+                dataList = data.data
+                testName = []
+                console.log(data.data)
+                var _html = "";
+                for (var i =0;i<data.data.length;i++) {
+                    var s = data.data[i].subject_id
+                    var id = data.data[i].classes_id
+                    var name = data.data[i].name
+                                    _html +=(`<tr>
+                                      <td style="text-align: center">` + data.data[i].name + `</td>
+                                      <td style="text-align: center">`+ s.split("_").length+`</td>
+                                      <td style="text-align: center">` + data.data[i].score + `</td>
                                       <td style="text-align: center">
-                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(`+id+ `,'`+ name+`')">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(`+id+`,'`+name+`')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
                                       </td>
                                     </tr>
-                                </tbody>`)
-                                  }
-                        _html +=(`</div>
-                    </div>`)
+                                `)
+
                 }
-                $("#jobList").html(_html);
+                $("#studentMessage").html(_html);
                 element.init();
             });
         });

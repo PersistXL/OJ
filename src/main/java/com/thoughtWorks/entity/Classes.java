@@ -4,6 +4,8 @@ public class Classes {
     private Integer id;
     private String name;
     private String teacherId;
+    private String code;
+    private String time;
 
     public Classes() {
     }
@@ -36,5 +38,21 @@ public class Classes {
 
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
