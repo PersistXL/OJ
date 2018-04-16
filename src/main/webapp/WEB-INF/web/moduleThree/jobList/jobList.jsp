@@ -55,12 +55,18 @@
                 });
                 form.render('checkbox');
             });
-            $.post("${baseurl}/jobList/selectSubjectClassesName",function (data) {
-                var _html =""
-                for (var i =0;i<data.data.length;i++) {
-                    teacherId = data.data[0].teacher_id
 
-                    _html += (`<div class="layui-colla-item">
+            //使用Ajax传值
+
+            //查询班课的名称
+            $.post("${baseurl}/jobList/selectSubjectClassesName", function (data) {
+                var _html = ""
+                $.post("${baseurl}/jobList/selectSubject", function (data1) {
+                    console.log(data1.data)
+                    for (var i = 0; i < data.data.length; i++) {
+                        teacherId = data.data[0].teacher_id
+                        classId = data.data[i].classes_id
+                        _html += `<div class="layui-colla-item">
                         <h2 class="layui-colla-title" style="margin-bottom: 10px">班课：` + data.data[i].ClassesName + `</h2>
                         <div class="layui-colla-content">
                         <table class="layui-table">
@@ -78,52 +84,47 @@
                                       <th style="text-align: center">相关操作</th>
                                     </tr>
                                   </thead>
-                                  <tbody id="studentMessage"></tbody>
-                        `)
-                    _html +=(`</table>
-                       </div>
-                    </div>`)
-                    $("#jobList").html(_html);
-                    element.init();
-                }
-            })
-            //使用Ajax传值
-           $.post("${baseurl}/jobList/selectSubject", function (data) {
-                dataList = data.data
-                testName = []
-                console.log(data.data)
-                var _html = "";
-                for (var i =0;i<data.data.length;i++) {
-                    var s = data.data[i].subject_id
-                    var id = data.data[i].classes_id
-                    var name = data.data[i].name
-                                    _html +=(`<tr>
-                                      <td style="text-align: center">` + data.data[i].name + `</td>
-                                      <td style="text-align: center">`+ s.split("_").length+`</td>
-                                      <td style="text-align: center">` + data.data[i].score + `</td>
+                                  <tbody id="studentMessage">`
+                        for (var j = 0; j < data1.data.length; j++) {
+                            var s = data1.data[j].subject_id
+                            var id = data1.data[j].classes_id
+                            var name = data1.data[j].name
+                            if (classId === data1.data[j].classes_id) {
+                                _html += (`<tr>
+                                      <td style="text-align: center">` + data1.data[j].name + `</td>
+                                      <td style="text-align: center">` + s.split("_").length + `</td>
+                                      <td style="text-align: center">` + data1.data[j].score + `</td>
                                       <td style="text-align: center">
-                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(`+id+`,'`+name+`')">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + id + `,'` + name + `')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
                                       </td>
                                     </tr>
                                 `)
+                            }
+                        }
+                        _html += `</tbody></table>
+                       </div>
+                    </div>`
+                        $("#jobList").html(_html);
+                        element.init();
+                    }
+                });
+            })
+            //查询教师对应的试卷的信息
 
-                }
-                $("#studentMessage").html(_html);
-                element.init();
-            });
         });
     });
-function preview(classesId,name) {
-    $.post("${baseurl}/jobList/selectStudentTestpaper",
-        {
-            classesId ,
-            name,
-            teacherId
-        },
-        function (data) {
-        var _html = "";
-        _html +=(`<table class="layui-table">
+
+    function preview(classesId, name) {
+        $.post("${baseurl}/jobList/selectStudentTestpaper",
+            {
+                classesId,
+                name,
+                teacherId
+            },
+            function (data) {
+                var _html = "";
+                _html += (`<table class="layui-table">
                       <colgroup>
                         <col width="150">
                         <col width="150">
@@ -138,27 +139,27 @@ function preview(classesId,name) {
                           <th style="text-align: center">状态</th>
                         </tr>
                       </thead>`)
-        for(var i = 0; i<data.data.length;i++){
-                _html += (`<tbody>
+                for (var i = 0; i < data.data.length; i++) {
+                    _html += (`<tbody>
                 <tr>
                   <td style="text-align: center">` + data.data[i].no + `</td>
                   <td style="text-align: center">` + data.data[i].studentName + `</td>
-                  <td style="text-align: center">` + (data.data[i].testpaper_student_score ===undefined ? "未答题" : data.data[i].testpaper_student_score) + `</td>
-                  <td style="text-align: center">`+(data.data[i].testpaper_student_score ===undefined ? "未提交" : "已提交")+`</td>
+                  <td style="text-align: center">` + (data.data[i].testpaper_student_score === undefined ? "未答题" : data.data[i].testpaper_student_score) + `</td>
+                  <td style="text-align: center">` + (data.data[i].testpaper_student_score === undefined ? "未提交" : "已提交") + `</td>
                 </tr>
             </tbody>`)
+                }
+                _html += (`</table>`)
+                $("#previewAdd").html(_html);
+            })
+        layer.open({
+            type: 1
+            , title: "预览作业情况"
+            , area: ["100%", "100%"]
+            , skin: 'yourclass'
+            , content: $("#previewAdd")
+        });
     }
-  _html +=(`</table>`)
-        $("#previewAdd").html(_html);
-    })
-    layer.open({
-        type: 1
-        ,title : "预览作业情况"
-        ,area: ["100%", "100%"]
-        ,skin: 'yourclass'
-        ,content: $("#previewAdd")
-    });
-}
 </script>
 
 </body>
