@@ -24,19 +24,18 @@ public class JoinClassController {
 
     @RequestMapping("/joinClass")
     @ResponseBody
-    public ResponseEntity joinClass(Student student,String classCode) {
+    public ResponseEntity<Map<String, Object>> joinClass(Student student, String classCode) {
         Map<String, Object> classes = new HashMap<>();
-        try {
-            joinClassService.joinClass(student,classCode);
+        Map<String, String> resultInfo = joinClassService.joinClass(student, classCode);
+        if (resultInfo.get("result").equals("success")) {
             classes.put("stateCode", SUCCESS_CODE);
-            classes.put("message", ADD_SUCCESS);
-            return new ResponseEntity(classes, HttpStatus.OK);
-        } catch (Exception e) {
+            classes.put("message", resultInfo.get("info"));
+            return new ResponseEntity<>(classes, HttpStatus.OK);
+        } else {
             classes.put("stateCode", FAILURE_CODE);
-            classes.put("message", ADD_FAILURE);
-            e.printStackTrace();
+            classes.put("message", resultInfo.get("info"));
+            return new ResponseEntity<>(classes, HttpStatus.OK);
         }
-        return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping("/getClasses")
@@ -50,7 +49,7 @@ public class JoinClassController {
             return new ResponseEntity(classes, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            classes.put("stateCode",FAILURE_CODE);
+            classes.put("stateCode", FAILURE_CODE);
         }
         return new ResponseEntity("获取失败", HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -12,11 +12,30 @@
     <select id="getClassList" parameterType="string" resultType="map">
         select oc.name,ot.name teaName from o_classes oc
         LEFT JOIN (select * from o_teacher) ot ON oc.teacher_id = (SELECT ot.id + 0)
-        LEFT JOIN (select * from o_student_classes) osc ON 
-        WHERE student_id = #{stuNo};
+        LEFT JOIN (select * from o_student) os ON os.no = #{stuNo}
+        LEFT JOIN (select * from o_student_classes) osc ON os.id = osc.student_id
+        WHERE oc.id = osc.classes_id;
     </select>
 
     <select id="checkClassCode" parameterType="string" resultType="com.thoughtWorks.entity.Classes">
         select * from o_classes WHERE code = #{classCode};
     </select>
+
+    <select id="isExistOfStudent" parameterType="string" resultType="com.thoughtWorks.entity.Student">
+        select * from o_student WHERE phone = #{phone}
+    </select>
+
+    <insert id="addStudentInfo" parameterType="com.thoughtWorks.entity.Student">
+        insert into o_student (no, name, gender, phone)
+        values (#{student.no},#{student.name},#{student.gender},#{student.phone});
+    </insert>
+
+    <insert id="addStudentInfoToUser" parameterType="com.thoughtWorks.entity.User">
+        insert into oj.t_user (username, password, roleId, available, name, staff, phone)
+        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone});
+    </insert>
+
+    <insert id="addStuAndClassesContact" parameterType="map">
+        insert into o_student_classes (classes_id, student_id) values (#{classId},#{studentId});
+    </insert>
 </mapper>
