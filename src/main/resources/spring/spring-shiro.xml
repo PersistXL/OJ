@@ -29,6 +29,7 @@
                 <!--静态资源通过-->
                 /studentClass/** = anon     <!--学生信息-->
                 /subject/** = anon           <!--查询题库-->
+                /studentTestpaper/** = anon  <!--根据班课id查询试卷信息-->
                 /login = anon
                 /getValidateCode = anon  <!--验证码-->
                 /js/** = anon
