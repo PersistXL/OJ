@@ -27,7 +27,6 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
         for(String item:subject){
             list.add(item);
         }
-        System.out.println(list);
         List<Map<String,Object>> list1 = moduleOneDao.selectSubjectfromid(list) ;
 
         return list1;

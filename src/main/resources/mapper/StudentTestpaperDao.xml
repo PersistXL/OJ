@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thoughtWorks.dao.StudentTestpaperDao">
+    <select id="studentTestpaperTitle" parameterType="int" resultType="map">
+        SELECT o_testpaper.*,o_teacher.name teacherName
+        FROM oj.o_testpaper,oj.o_teacher
+        WHERE o_testpaper.classes_id = #{classesId} and o_teacher.id = o_testpaper.teacher_id
+    </select>
+</mapper>
