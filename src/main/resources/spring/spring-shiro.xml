@@ -27,6 +27,8 @@
         <property name="filterChainDefinitions">
             <value>
                 <!--静态资源通过-->
+                /studentClass/** = anon     <!--学生信息-->
+                /subject/** = anon           <!--查询题库-->
                 /login = anon
                 /getValidateCode = anon  <!--验证码-->
                 /js/** = anon
