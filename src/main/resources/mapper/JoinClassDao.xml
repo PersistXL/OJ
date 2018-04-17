@@ -42,4 +42,9 @@
     <select id="isStudentExists" parameterType="string" resultType="com.thoughtWorks.entity.Student">
         select * from o_student WHERE no = #{no};
     </select>
+
+    <select id="checkClass" parameterType="map" resultType="int">
+        select COUNT(1) from o_student_classes
+        WHERE classes_id = #{classId} AND student_id = #{studentId}
+    </select>
 </mapper>

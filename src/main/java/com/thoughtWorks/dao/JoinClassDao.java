@@ -26,4 +26,6 @@ public interface JoinClassDao {
     List<Student> isStudentExists(String no);
 
     void studentRegister(Student student);
+
+    int checkClass(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
 }

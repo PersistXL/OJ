@@ -31,10 +31,17 @@ public class JoinClassServiceImpl implements JoinClassService {
             List<Student> studentList = joinClassDao.isStudentExists(stuNo);
             if (classesList.size() != 0) {
                 if (studentList.size() != 0) {
-                    joinClassDao.addStuAndClassesContact(classesList.get(0).getId(), studentList.get(0).getId());
-                    info.put("result", "success");
-                    info.put("info", "班课信息录入成功");
-                    return info;
+                    int count = joinClassDao.checkClass(classesList.get(0).getId(), studentList.get(0).getId());
+                    if (count == 0) {
+                        joinClassDao.addStuAndClassesContact(classesList.get(0).getId(), studentList.get(0).getId());
+                        info.put("result", "success");
+                        info.put("info", "班课信息录入成功");
+                        return info;
+                    }else {
+                        info.put("result", "failure");
+                        info.put("info", "重复录入班课信息");
+                        return info;
+                    }
                 }
                 info.put("result", "failure");
                 info.put("info", "学生信息不存在");
