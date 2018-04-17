@@ -69,9 +69,7 @@ public class TestpaperController {
            testpaper.setTeacherId(id);
 
             String start_time = DataUtil.outDate();
-            String close_time = DataUtil.outDateAddMin(testpaper.getDay());
             testpaper.setStartTime(start_time);
-            testpaper.setCloseTime(close_time);
             testpaperDao.addTestpaperCursorToTestpaper(testpaper);
             testpaperDao.deleteTestpaperCursorByName(id);
             return Result.success(null,Constant.ADD_SUCCESS);

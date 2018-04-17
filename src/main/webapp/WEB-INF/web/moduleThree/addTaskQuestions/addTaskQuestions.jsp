@@ -60,12 +60,10 @@
                         </div>
                     </div>
                     <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷时长</label>
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="number" id="time" name=""
-                                       autocomplete="off"
-                                       placeholder="时长（单位/分钟）" class="layui-input">
+                                    <input class="layui-input"id="time" placeholder="选择时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                             </div>
                         </div>
                     </div><br>
@@ -91,6 +89,7 @@
                         </div>
                     </div>
                 </form>
+                <span style="color: gainsboro">请先选择试题后再填试卷信息</span>
                 <div class="layui-form">
                     <table class="layui-table">
                         <thead>
@@ -130,12 +129,11 @@
                 <blockquote class="layui-elem-quote mylog-info-tit" style="height: 120px;">
                     <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
                         <div class="layui-input-inline">
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
                                     <select name="select_questions" id="select_questions" lay-filter="modules_1"
-                                            lay-verify="required" lay-search=""
-                                    >
+                                            lay-verify="required" lay-search="">
                                         <option value="">请选择</option>
                                     </select>
                                 </div>
@@ -228,6 +226,14 @@
                 var select_questions = $("select[name='select_questions']").val();
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
+                $.post("${baseurl}/subject/selectQuestions", function (data) {
+                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                    for (let i = 0; i < data.data.length; i++) {
+                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                    }
+                    $("#select_questions").html(_html);
+                    form.render();
+                });
                 $.post("${baseurl}/Testpaper/selectClasses", function (data) {
                     let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
@@ -317,17 +323,17 @@
 
                 let subjectId = $("#idAll").val();
                 let name = $("#name").val();
-                let time = $("#time").val();
+                let closeTime = $("#time").val();
                 let score = $("#score").val();
                 var classes_id = $("select[name='classes_id']").val();
-                if (name == "" || time == "" || score == "") {
+                if (name == "" || closeTime == "" || score == "") {
                     layer.msg("试卷信息不能为空");
                 } else {
                     $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
                         subjectId: subjectId,
                         name:name,
                         score:score,
-                        day:time,
+                        closeTime:closeTime,
                         classesId:classes_id
                     }, function (data) {
                         layer.confirm(data.msg, function (index) {
@@ -448,5 +454,38 @@
 
 
 </script>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
 
+        var start = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('LAY_demorange_s').onclick = function(){
+            start.elem = this;
+            laydate(start);
+        }
+        document.getElementById('LAY_demorange_e').onclick = function(){
+            end.elem = this
+            laydate(end);
+        }
+
+    });
+</script>
 </html>

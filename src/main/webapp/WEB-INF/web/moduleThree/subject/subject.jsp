@@ -289,7 +289,7 @@
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "";
+                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
