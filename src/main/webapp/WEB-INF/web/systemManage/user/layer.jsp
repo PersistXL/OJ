@@ -58,7 +58,7 @@
             <label class="layui-form-label" style="width:120px;">电话</label>
             <div class="layui-input-inline" style="width:250px;">
                 <input type="text" name="phone"
-                       placeholder="请输入身份证" id="phone-add" autocomplete="off" class="layui-input ">
+                       placeholder="请输入电话号码" id="phone-add" autocomplete="off" class="layui-input ">
             </div>
         </div>
         <div class="layui-form-item">
@@ -124,7 +124,7 @@
             <label class="layui-form-label" style="width:120px;">电话</label>
             <div class="layui-input-inline" style="width:250px;">
                 <input type="text" name="phone"
-                       placeholder="请输入身份证" id="phone-update" autocomplete="off" class="layui-input ">
+                       placeholder="请输入电话号码" id="phone-update" autocomplete="off" class="layui-input ">
             </div>
         </div>
         <div class="layui-form-item">
