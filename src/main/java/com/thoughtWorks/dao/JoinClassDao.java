@@ -22,4 +22,8 @@ public interface JoinClassDao {
     void addStudentInfoToUser(@Param("user") User user);
 
     void addStuAndClassesContact(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
+
+    List<Student> isStudentExists(String no);
+
+    void studentRegister(Student student);
 }

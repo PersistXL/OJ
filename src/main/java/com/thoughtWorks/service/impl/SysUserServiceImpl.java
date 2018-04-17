@@ -81,11 +81,11 @@ public class SysUserServiceImpl implements SysUserService {
         return null;
     }
 
-    private boolean checkPhone(String phone) {
+    public boolean checkPhone(String phone) {
         return sysUserDao.checkPhone(phone) != null;
     }
 
-    private boolean checkEmail(String email) {
+    public boolean checkEmail(String email) {
         return sysUserDao.checkEmail(email) != null;
     }
 

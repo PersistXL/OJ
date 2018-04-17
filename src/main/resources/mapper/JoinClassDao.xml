@@ -26,8 +26,8 @@
     </select>
 
     <insert id="addStudentInfo" parameterType="com.thoughtWorks.entity.Student">
-        insert into o_student (no, name, gender, phone)
-        values (#{student.no},#{student.name},#{student.gender},#{student.phone});
+        insert into o_student (no, name, gender, phone,email)
+        values (#{student.no},#{student.name},#{student.gender},#{student.phone},#{student.email});
     </insert>
 
     <insert id="addStudentInfoToUser" parameterType="com.thoughtWorks.entity.User">
@@ -38,4 +38,8 @@
     <insert id="addStuAndClassesContact" parameterType="map">
         insert into o_student_classes (classes_id, student_id) values (#{classId},#{studentId});
     </insert>
+
+    <select id="isStudentExists" parameterType="string" resultType="com.thoughtWorks.entity.Student">
+        select * from o_student WHERE no = #{no};
+    </select>
 </mapper>

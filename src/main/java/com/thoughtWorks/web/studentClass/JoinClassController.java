@@ -24,9 +24,9 @@ public class JoinClassController {
 
     @RequestMapping("/joinClass")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> joinClass(Student student, String classCode) {
+    public ResponseEntity<Map<String, Object>> joinClass(String stuNo, String classCode) {
         Map<String, Object> classes = new HashMap<>();
-        Map<String, String> resultInfo = joinClassService.joinClass(student, classCode);
+        Map<String, String> resultInfo = joinClassService.joinClass(stuNo, classCode);
         if (resultInfo.get("result").equals("success")) {
             classes.put("stateCode", SUCCESS_CODE);
             classes.put("message", resultInfo.get("info"));
@@ -52,6 +52,45 @@ public class JoinClassController {
             classes.put("stateCode", FAILURE_CODE);
         }
         return new ResponseEntity("获取失败", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * 检测用户是否存在
+     * @param no
+     * @return
+     */
+    @RequestMapping("/isStudentExists")
+    @ResponseBody
+    public ResponseEntity isStudentExists(String no) {
+        Map<String, Object> classes = new HashMap<>();
+        try {
+            boolean bool = joinClassService.isStudentExists(no);
+            classes.put("result", bool);
+            classes.put("stateCode", SUCCESS_CODE);
+            return new ResponseEntity(classes, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            classes.put("result", false);
+            classes.put("stateCode", FAILURE_CODE);
+        }
+        return new ResponseEntity("检测失败", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @RequestMapping("/studentRegister")
+    @ResponseBody
+    public ResponseEntity studentRegister(Student student) {
+        Map<String, Object> classes = new HashMap<>();
+        try {
+            String result = joinClassService.studentRegister(student);
+            classes.put("result", result);
+            classes.put("stateCode", SUCCESS_CODE);
+            return new ResponseEntity(classes, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            classes.put("result", false);
+            classes.put("stateCode", FAILURE_CODE);
+        }
+        return new ResponseEntity("注册失败", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

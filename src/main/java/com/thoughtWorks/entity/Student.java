@@ -7,17 +7,27 @@ public class Student {
     private String gender;
     private String phone;
     private String classesId;
+    private String email;
 
     public Student() {
     }
 
-    public Student(Integer id, String no, String name, String gender, String phone, String classesId) {
+    public Student(Integer id, String no, String name, String gender, String phone, String classesId, String email) {
         this.id = id;
         this.no = no;
         this.name = name;
         this.gender = gender;
         this.phone = phone;
         this.classesId = classesId;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
@@ -77,6 +87,7 @@ public class Student {
                 ", gender='" + gender + '\'' +
                 ", phone='" + phone + '\'' +
                 ", classesId='" + classesId + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
