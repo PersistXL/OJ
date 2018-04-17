@@ -75,10 +75,23 @@ public class JoinClassServiceImpl implements JoinClassService {
             if (x != null) return x;
 
             joinClassDao.addStudentInfo(student);
-            User user = new User(student.getPhone(), student.getPhone().substring(5, 11), 3, 1, student.getName(), "学生", student.getPhone());
-            joinClassDao.addStudentInfoToUser(user);
+            if (student.getPhone() != null || student.getEmail() != null) {
+                if (student.getPhone() != null) {
+                    User user = new User(student.getPhone(), "123456", 3, 1, student.getName(), "学生", student.getPhone());
+                    joinClassDao.addStudentInfoToUser(user);
+                }
 
-            return "学生信息注册成功";
+                if (student.getEmail() != null) {
+                    User user = new User(student.getEmail(), "123456", 3, 1, student.getName(), "学生", "");
+                    joinClassDao.addStudentInfoToUser(user);
+                }
+
+                return "学生信息注册成功";
+            } else {
+                return "手机号或邮箱为空";
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
