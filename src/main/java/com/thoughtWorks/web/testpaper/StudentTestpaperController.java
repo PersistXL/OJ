@@ -1,6 +1,5 @@
 package com.thoughtWorks.web.testpaper;
 
-import com.sun.org.apache.regexp.internal.RE;
 import com.thoughtWorks.dao.StudentTestpaperDao;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.service.ModuleOneService;

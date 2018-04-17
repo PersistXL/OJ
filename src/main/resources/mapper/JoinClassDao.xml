@@ -10,7 +10,7 @@
     </insert>
 
     <select id="getClassList" parameterType="string" resultType="map">
-        select oc.name,ot.name teaName from o_classes oc
+        select oc.name,oc.id,oc.code,ot.name teaName from o_classes oc
         LEFT JOIN (select * from o_teacher) ot ON oc.teacher_id = (SELECT ot.id + 0)
         LEFT JOIN (select * from o_student) os ON os.no = #{stuNo}
         LEFT JOIN (select * from o_student_classes) osc ON os.id = osc.student_id
