@@ -88,15 +88,15 @@ public class ModuleOneController {
         }
         return map;
     }
-    @RequestMapping("/updateScore")
+    @RequestMapping("/inseretScore")
     @ResponseBody
-    public Result updateScore(StudentTestpaper studentTestpaper){
+    public Result inseretScore(StudentTestpaper studentTestpaper){
         try{
-            moduleOneService.updateScore(studentTestpaper);
-            return Result.success(null, Constant.UPLOAD_SUCCESS);
+            moduleOneService.inseretScore(studentTestpaper);
+            return Result.success(null, Constant.ADD_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.UPLOAD_FAILURE);
+        return Result.failure(null,Constant.ADD_FAILURE);
     }
 }

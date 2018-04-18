@@ -21,7 +21,7 @@
     </select>
     <select id="findTestpaper" parameterType="String" resultType="map">
 
-        SELECT o_testpaper.*,o_student_classes.id ClassId,o_student.id,o_student.no
+        SELECT o_testpaper.*,o_student_classes.id ClassId,o_student.id studentId,o_student.no
         FROM o_testpaper,o_student_classes,oj.o_student
         WHERE o_student.no = #{userName}
         AND o_student.id = o_student_classes.student_id
@@ -41,9 +41,9 @@
         </foreach>
     </select>
 
-    <update id="updateScore" parameterType="com.thoughtWorks.entity.StudentTestpaper">
-        UPDATE o_student_testpaper
-        SET testpaper_student_score = #{testpaperStudentScore}
-        WHERE oj.o_student_testpaper.testpaper_id = #{id}
+    <update id="inseretScore" parameterType="com.thoughtWorks.entity.StudentTestpaper">
+        INSERT INTO o_student_testpaper
+          (testpaper_student_score,testpaper_id,student_id)
+        VALUES (#{testpaperStudentScore}, #{id},#{studentId})
     </update>
 </mapper>

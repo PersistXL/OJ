@@ -26,7 +26,7 @@ public interface ModuleOneService {
      * @param studentTestpaper
      * @return
      */
-    StudentTestpaper updateScore(StudentTestpaper studentTestpaper);
+    StudentTestpaper inseretScore(StudentTestpaper studentTestpaper);
 
     /**
      * 根据学生的username查询学生对应的班课

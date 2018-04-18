@@ -84,6 +84,7 @@
                                             </tr>
                                             </thead>`)
                     for(var j=0 ;j<data.data.length;j++){
+                        StudentId = data.data[i].studentId
                         dataListObject = data.data[i].no
                         if((data1.data[i].classes_id) === data.data[j].classes_id) {
                         var s = data.data[j].subject_id;
@@ -136,6 +137,7 @@
     function work(id) {
         $.post("${baseurl}/moduleOne/selectTestpaperById", {id: id}, function (data) {
             ID = id;
+            alert(ID)
             testQuestions = data;
             totalScore = data.testpaper.score;
             var _html = "";
@@ -206,7 +208,8 @@
             }
         }
         //存储成绩
-        $.post("${baseurl}/moduleOne/updateScore", {id: ID, testpaperStudentScore: score}, function (data) {
+        $.post("${baseurl}/moduleOne/inseretScore", {id: ID, testpaperStudentScore: score,studentId : StudentId}, function (data) {
+            console.log(data)
             if (data.result) {
                 layer.msg(data.msg);
                 setTimeout("location.reload()", 500);

@@ -33,8 +33,8 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
     }
 
     @Override
-    public StudentTestpaper updateScore(StudentTestpaper studentTestpaper) {
-        moduleOneDao.updateScore(studentTestpaper);
+    public StudentTestpaper inseretScore(StudentTestpaper studentTestpaper) {
+        moduleOneDao.inseretScore(studentTestpaper);
         return null;
     }
 

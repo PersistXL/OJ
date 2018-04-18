@@ -36,7 +36,7 @@ public interface ModuleOneDao {
      * @param studentTestpaper
      * @return
      */
-    void updateScore(StudentTestpaper studentTestpaper);
+    void inseretScore(StudentTestpaper studentTestpaper);
 
     /**
      * 根据学生的username查询学生对应的班课
