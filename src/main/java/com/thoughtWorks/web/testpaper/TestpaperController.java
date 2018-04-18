@@ -113,6 +113,17 @@ public class TestpaperController {
         }
         return Result.failure(null,Constant.DELETE_FAILURE);
     }
+
+    @RequestMapping("deleteClassesOfStudentInfo")
+    public Result deleteClassesOfStudentInfo(int id){
+        try{
+            testpaperDao.deleteClassesOfStudentInfo(id);
+            return Result.success(null,Constant.DELETE_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.DELETE_FAILURE);
+    }
     @RequestMapping("selectClassesByIdToStudents")
     public Result selectClassesByIdToStudents(int id){
         try{

@@ -45,4 +45,8 @@
         select o_student.*,o_classes.* from o_classes,o_student_classes,o_student where o_classes.id = o_student_classes.classes_id
         and o_student_classes.student_id = o_student.id and o_classes.id = #{id}
     </select>
+
+    <delete id="deleteClassesOfStudentInfo" parameterType="int">
+        DELETE FROM o_student_classes WHERE id = #{id}
+    </delete>
 </mapper>

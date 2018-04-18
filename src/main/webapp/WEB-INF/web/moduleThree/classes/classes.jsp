@@ -127,6 +127,7 @@
                 <th>学生账号</th>
                 <th>性别</th>
                 <th>手机号</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody id="previewClasses">
@@ -227,6 +228,15 @@
                     layer.close(index);
                 });
             },
+            deleteClassesOfStudentInfo: function (id) {
+                layer.confirm('将删除该班课中的学生！是否删除？', function (index) {
+                    $.post("${baseurl}/Testpaper/deleteClassesOfStudentInfo", {id: id}, function (data) {
+                        layer.msg(data.msg);
+                        location.reload();
+                    });
+                    layer.close(index);
+                });
+            },
             selectClassesByIdToStudents: function (id) {
                 $.post("${baseurl}/Testpaper/selectClassesByIdToStudents", {id: id}, function (data) {
                     let _html = "";
@@ -237,7 +247,8 @@
                             <td><span class = "hide_title">` + data.data[i].no + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].gender + `</span></td>
                             <td><span class = "hide_title">` + (data.data[i].phone=== undefined ?"暂无":data.data[i].phone) + `</span></td>
-                        </tr>`;
+                            <td><span class = "hide_title"><a class="layui-btn layui-btn-mini" onclick="_subject.deleteClassesOfStudentInfo(` + data.data[i].id + `)">
+                                            <i class="layui-icon">&#xe640;</i>删除</a></span></td></tr>`;
                     }
                     $("#previewClasses").html(_html);
                     layer.open({
