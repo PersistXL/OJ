@@ -35,6 +35,7 @@ public class StudentTestpaperController {
                 Map<String,Object> value = item.next();
                 map.put("teacherName",value.get("teacherName"));
                 map.put("testpaperName",value.get("name"));
+                map.put("testpaperId",value.get("id"));
                 map.put("score",value.get("score"));
                 map.put("startTime",value.get("start_time").toString());
                 map.put("closeTime",value.get("close_time").toString());
