@@ -12,5 +12,5 @@ public interface JoinClassService {
 
     boolean isStudentExists(String no);
 
-    String studentRegister(Student student);
+    Map<String, String> studentRegister(Student student);
 }

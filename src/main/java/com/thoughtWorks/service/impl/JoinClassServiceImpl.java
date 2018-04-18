@@ -75,31 +75,49 @@ public class JoinClassServiceImpl implements JoinClassService {
 
     @Transactional
     @Override
-    public String studentRegister(Student student) {
+    public Map<String, String> studentRegister(Student student) {
 
+        Map<String, String> result = new HashMap<>();
+
+        String x = checkInfo(student);
+        if (x != null){
+            result.put("msg", x);
+            result.put("state", "500");
+            return result;
+        }
         try {
-            String x = checkInfo(student);
-            if (x != null) return x;
             joinClassDao.addStudentInfo(student);
             if (student.getPhone() != null && student.getEmail() != null) {
                 User user = new User(student.getPhone(), "123456", 3, 1, student.getName(), "学生", student.getPhone());
                 joinClassDao.addStudentInfoToUser(user);
-                return "学生信息注册成功";
+                result.put("msg", "学生信息注册成功");
+                result.put("state", "200");
+                return result;
             } else if (student.getPhone() != null) {
-                return "学生信息注册成功";
+                User user = new User(student.getPhone(), "123456", 3, 1, student.getName(), "学生", student.getPhone());
+                joinClassDao.addStudentInfoToUser(user);
+                result.put("msg", "学生信息注册成功");
+                result.put("state", "200");
+                return result;
             } else if (student.getEmail() != null) {
                 User user = new User(student.getEmail(), "123456", 3, 1, student.getName(), "学生", "");
                 joinClassDao.addStudentInfoToUser(user);
-                return "学生信息注册成功";
+                result.put("msg", "学生信息注册成功");
+                result.put("state", "200");
+                return result;
             } else {
-                return "手机号或邮箱为空";
+                result.put("msg", "手机号或邮箱为空");
+                result.put("state", "500");
+                return result;
             }
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "学生信息注册失败";
+        result.put("msg", "学生信息注册失败");
+        result.put("state", "500");
+        return result;
     }
 
 
