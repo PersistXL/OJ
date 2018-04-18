@@ -47,4 +47,6 @@ public interface TestpaperDao {
 
     List<Map<String,Object>> selectClassesByIdToStudents(int id);
     Long selectTestpaperNameIs(Testpaper testpaper);
+
+    void deleteClassesOfStudentInfo(int id);
 }

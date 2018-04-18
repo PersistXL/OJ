@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thoughtWorks.dao.TestpaperDao">
-
     <select id="selectTestpaperCursor" resultType="map" parameterType="int">
         SELECT o_questions.name questionsName,o_testpaper_cursor.*,o_subject.*
         FROM o_testpaper_cursor,o_subject,o_questions where o_testpaper_cursor.subject_id=o_subject.id and o_questions.id = o_subject.questions_id and o_testpaper_cursor.teacher_id = #{id}
@@ -48,4 +47,7 @@
     <select id="selectTestpaperNameIs" resultType="Long" parameterType="Testpaper">
         select COUNT(*) from o_testpaper where name = #{name} and classes_id = #{classesId}
     </select>
+    <delete id="deleteClassesOfStudentInfo" parameterType="int">
+        DELETE FROM o_student_classes WHERE id = #{id}
+    </delete>
 </mapper>
