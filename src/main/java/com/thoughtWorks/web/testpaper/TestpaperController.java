@@ -113,6 +113,17 @@ public class TestpaperController {
         }
         return Result.failure(null,Constant.DELETE_FAILURE);
     }
+
+    @RequestMapping("deleteClassesOfStudentInfo")
+    public Result deleteClassesOfStudentInfo(int id){
+        try{
+            testpaperDao.deleteClassesOfStudentInfo(id);
+            return Result.success(null,Constant.DELETE_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.DELETE_FAILURE);
+    }
     @RequestMapping("selectClassesByIdToStudents")
     public Result selectClassesByIdToStudents(int id){
         try{
@@ -121,6 +132,20 @@ public class TestpaperController {
             e.printStackTrace();
         }
         return Result.failure(null,Constant.SEARCH_FAILURE);
+    }
+    @RequestMapping("selectTestpaperNameIs")
+    public Result selectTestpaperNameIs(Testpaper testpaper){
+        try{
+            boolean isHave = true;
+            long count = testpaperDao.selectTestpaperNameIs(testpaper);
+            if(count>0){
+                isHave = false;
+            }
+            return Result.success(isHave,Constant.TESTPAPER_IS_FALSE);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.TESTPAPER_IS_TRUE);
     }
 
 }
