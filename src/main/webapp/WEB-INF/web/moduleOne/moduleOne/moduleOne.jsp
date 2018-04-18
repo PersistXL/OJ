@@ -56,12 +56,14 @@
                 });
                 form.render('checkbox');
             });
-            $.post("${baseurl}/moduleOne/findTestpaperClasses",function (data1) {
-                var _html = ""
-                $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                    for (var i = 0; i<data1.data.length;i++) {
-                _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
-                    + data1.data[i].ClassesName + `<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">
+            $.post("${baseurl}/moduleOne/selectStudentTestpapte", function (data) {
+
+                $.post("${baseurl}/moduleOne/findTestpaperClasses", function (data1) {
+                    var _html = ""
+                    $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
+                        for (var i = 0; i < data1.data.length; i++) {
+                            _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
+                                + data1.data[i].ClassesName + `<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">
                             </p></span></h3>
                                 <div class="layui-colla-content">
                                     <div class="layui-form">
@@ -83,53 +85,54 @@
                                                 <th style="text-align: center">操作</th>
                                             </tr>
                                             </thead>`)
-                    for(var j=0 ;j<data.data.length;j++){
-                        StudentId = data.data[i].studentId
-                        dataListObject = data.data[i].no
-                        if((data1.data[i].classes_id) === data.data[j].classes_id) {
-                        var s = data.data[j].subject_id;
-                        var score = data.data[j].testpaper_student_score;
-                        if (score != null) {
-                            score = score;
-                            var q = "";
-                        } else {
-                            score = "未答题";
-                            q = "!";
-                        }
-                        var d2 = new Date();
-                        var d1 = data.data[j].close_time;
-                        if (d1 >= d2) {
-                            var status = "开放";
-                        } else {
-                            status = "已截止";
-                            var q = "";
-                        }
-                        _html += (`<tbody>
+                            for (var j = 0; j < data.data.length; j++) {
+                                StudentId = data.data[i].studentId
+                                dataListObject = data.data[i].no
+                                if ((data1.data[i].classes_id) === data.data[j].classes_id) {
+                                    var s = data.data[j].subject_id;
+                                    var score = data.data[j].testpaper_student_score;
+                                    if (score != null) {
+                                        score = score;
+                                        var q = "";
+                                    } else {
+                                        score = "未答题";
+                                        q = "!";
+                                    }
+                                    var d2 = new Date();
+                                    var d1 = data.data[j].close_time;
+                                    if (d1 >= d2) {
+                                        var status = "开放";
+                                    } else {
+                                        status = "已截止";
+                                        var q = "";
+                                    }
+                                    _html += (`<tbody>
                         <tr>
                         <td style="text-align: center">` + data.data[j].name + `</td>
                             <td style="text-align: center">` + s.split("_").length + `</td>
                             <td style="text-align: center">` + score + `</td>
                             <td style="text-align: center">` + status + `</td>
                             <td style="text-align: center">`)
-                        if (data.data[j].testpaper_student_score == null && d1 >= d2) {
-                            _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + data.data[j].id + `)">
+                                    if (data.data[j].testpaper_student_score == null && d1 >= d2) {
+                                        _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + data.data[j].id + `)">
                             <i class="layui-icon">&#xe642;</i>答题</a>`)
-                        } else {
-                            _html += (`<a class="layui-btn  layui-btn-small" onclick="watch(` + data.data[j].id + `)">
+                                    } else {
+                                        _html += (`<a class="layui-btn  layui-btn-small" onclick="watch(` + data.data[j].id + `)">
                             <i class="layui-icon">&#xe60a;</i>预览</a>`)
-                        }
-                        _html += (`</td>
+                                    }
+                                    _html += (`</td>
                         </tr>
                         </tbody>`)
-                    }
-                    }
-                    _html +=(`</table></div>
+                                }
+                            }
+                            _html += (`</table></div>
                                 </div>
                             </div>`);
-            }
-                    $("#notice").html(_html);
-                    element.init();
-            })
+                        }
+                        $("#notice").html(_html);
+                        element.init();
+                    })
+                });
             });
         });
     });
@@ -179,7 +182,7 @@
 }
                     _html += (`</fieldset>`);
                 }
-            _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" onclick="examination_paper()">`
+            _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" onclick="examination_paper(this)">`
             $("#view").html(_html);
         });
         layer.open({
@@ -192,6 +195,8 @@
     }
 
     function examination_paper() {
+        $(this).attr("disabled",disabled)
+
         let score = 0;  //未答题前成绩为0
         let checkBoxs = []; //自定义选项的数组
         var userName = dataListObject;
@@ -209,10 +214,9 @@
         }
         //存储成绩
         $.post("${baseurl}/moduleOne/inseretScore", {id: ID, testpaperStudentScore: score,studentId : StudentId}, function (data) {
-            console.log(data)
             if (data.result) {
                 layer.msg(data.msg);
-                setTimeout("location.reload()", 500);
+                setTimeout("location.reload()", 5000);
             }
         });
     };
