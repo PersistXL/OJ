@@ -63,10 +63,12 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                    <input class="layui-input"id="time" placeholder="选择时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                <input class="layui-input" id="time" placeholder="选择时间"
+                                       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                             </div>
                         </div>
-                    </div><br>
+                    </div>
+                    <br>
                     <div class="layui-input-inline">
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
                         <div class="layui-inline">
@@ -78,13 +80,13 @@
                         </div>
                     </div>
                     <div class="layui-input-inline">
-                        <label class="layui-form-label"style="width: 100px;font-size: 14px">班课</label>
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                            <select name="classes_id" lay-verify="required" lay-search="" id="classes_id">
-                                <option value="0">班课</option>
+                                <select name="classes_id" lay-verify="required" lay-search="" id="classes_id">
+                                    <option value="0">班课</option>
 
-                            </select>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -326,21 +328,33 @@
                 let closeTime = $("#time").val();
                 let score = $("#score").val();
                 var classes_id = $("select[name='classes_id']").val();
-                if (name == "" || closeTime == "" || score == "") {
+
+                if (name == "" || closeTime == "" || score == ""||subjectId=="") {
                     layer.msg("试卷信息不能为空");
                 } else {
-                    $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
-                        subjectId: subjectId,
-                        name:name,
-                        score:score,
-                        closeTime:closeTime,
-                        classesId:classes_id
-                    }, function (data) {
-                        layer.confirm(data.msg, function (index) {
-                            location.reload();
-                            layer.close(index);
+                    $.post("${baseurl}/Testpaper/selectTestpaperNameIs",
+                        {
+                            name: name,
+                            classesId: classes_id
+                        }, function (isHave) {
+                            if (isHave.data) {
+                                $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
+                                    subjectId: subjectId,
+                                    name: name,
+                                    score: score,
+                                    closeTime: closeTime,
+                                    classesId: classes_id
+                                }, function (data) {
+                                    layer.confirm(data.msg, function (index) {
+                                        location.reload();
+                                        layer.close(index);
+                                    });
+                                });
+                            }else{
+                                layer.msg(isHave.msg);
+                            }
                         });
-                    });
+
                 }
             },
             removeTestpaperCursor: function (id) {
@@ -455,14 +469,14 @@
 
 </script>
 <script>
-    layui.use('laydate', function(){
+    layui.use('laydate', function () {
         var laydate = layui.laydate;
 
         var start = {
             min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
-            ,istoday: false
-            ,choose: function(datas){
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
                 end.min = datas; //开始日选好后，重置结束日的最小日期
                 end.start = datas //将结束日的初始值设定为开始日
             }
@@ -470,18 +484,18 @@
 
         var end = {
             min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
-            ,istoday: false
-            ,choose: function(datas){
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
                 start.max = datas; //结束日选好后，重置开始日的最大日期
             }
         };
 
-        document.getElementById('LAY_demorange_s').onclick = function(){
+        document.getElementById('LAY_demorange_s').onclick = function () {
             start.elem = this;
             laydate(start);
         }
-        document.getElementById('LAY_demorange_e').onclick = function(){
+        document.getElementById('LAY_demorange_e').onclick = function () {
             end.elem = this
             laydate(end);
         }

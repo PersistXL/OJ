@@ -45,4 +45,7 @@
         select o_student.*,o_classes.* from o_classes,o_student_classes,o_student where o_classes.id = o_student_classes.classes_id
         and o_student_classes.student_id = o_student.id and o_classes.id = #{id}
     </select>
+    <select id="selectTestpaperNameIs" resultType="Long" parameterType="Testpaper">
+        select COUNT(*) from o_testpaper where name = #{name} and classes_id = #{classesId}
+    </select>
 </mapper>
