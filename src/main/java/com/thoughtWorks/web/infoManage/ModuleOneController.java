@@ -54,13 +54,17 @@ public class ModuleOneController {
     @ResponseBody
     public Result findTestpaper(){
         try{
-            Map<String, Object> data = new HashMap<>();
+            //获取学生的nuserName并把它传页面
+//            Map<String, Object> data = new HashMap<>();
+//            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+//            String userName = user.getUserName();
+//            List<Map<String,Object>> testPaperList =  moduleOneService.findTestpaper(userName);
+//            data.put("user", user);
+//            data.put("testPaperList", testPaperList);
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
             String userName = user.getUserName();
-            List<Map<String,Object>> testPaperList =  moduleOneService.findTestpaper(userName);
-            data.put("user", user);
-            data.put("testPaperList", testPaperList);
-        return Result.success(data, Constant.SEARCH_SUCCESS);
+            List<Map<String,Object>> list =  moduleOneService.findTestpaper(userName);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
         }catch (Exception e){
            e.printStackTrace();
         }
