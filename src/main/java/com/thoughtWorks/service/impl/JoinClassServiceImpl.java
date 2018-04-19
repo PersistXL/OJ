@@ -116,6 +116,10 @@ public class JoinClassServiceImpl implements JoinClassService {
         return result;
     }
 
+    @Override
+    public List<Classes> isClassesExists(String code) {
+        return joinClassDao.isClassesExists(code);
+    }
 
     private String checkInfo(Student student) {
         if (student.getPhone() != null) {
