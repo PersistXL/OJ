@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Persist
@@ -96,5 +94,17 @@ public class WrongTitleControl {
         }
         return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+    @RequestMapping("/selectStudentWrongTitlteNo")
+    @ResponseBody
+    public Result selectStudentWrongTitlteNo(String no){
+        try {
 
+            int stu = wrongTitleDao.selectStudentWrongTitlteNo(no);
+
+            return Result.success(stu,Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
 }

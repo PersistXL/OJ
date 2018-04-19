@@ -21,4 +21,6 @@ public interface WrongTitleDao {
     List<Map<String,Object>> selectWrongTitle(String no);
 
     int selectStudentId(String userName);
+
+    int selectStudentWrongTitlteNo(String no);
 }

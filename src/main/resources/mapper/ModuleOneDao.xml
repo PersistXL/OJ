@@ -43,8 +43,8 @@
 
     <update id="inseretScore" parameterType="com.thoughtWorks.entity.StudentTestpaper">
         INSERT INTO o_student_testpaper
-          (testpaper_student_score,testpaper_id,student_id)
-        VALUES (#{testpaperStudentScore}, #{id},#{studentId})
+          (testpaper_student_score,testpaper_id,student_id,submission_time)
+        VALUES (#{testpaperStudentScore}, #{id},#{studentId},NOW())
     </update>
 
     <select id="selectStudentTestpapte" resultType="String">
