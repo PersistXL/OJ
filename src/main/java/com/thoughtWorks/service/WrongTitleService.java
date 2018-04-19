@@ -14,5 +14,5 @@ public interface WrongTitleService  {
 
     List<Map<String,Object>> selectWrongTitleNo(String username);
 
-    void deleteWrongTitle(int id);
+    void deleteWrongTitle(int id,String userName);
 }

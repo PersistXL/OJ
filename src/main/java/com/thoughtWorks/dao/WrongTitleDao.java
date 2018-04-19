@@ -1,6 +1,7 @@
 package com.thoughtWorks.dao;
 
 import com.thoughtWorks.entity.WrongTitle;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -15,5 +16,5 @@ public interface WrongTitleDao {
 
     List<Map<String,Object>> selectWrongTitleNo(String username);
 
-    void deleteWrongTitle(int id);
+    void deleteWrongTitle(@Param("id") int id,@Param("userName") String userName);
 }

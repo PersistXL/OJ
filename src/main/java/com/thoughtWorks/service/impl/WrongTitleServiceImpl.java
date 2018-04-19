@@ -30,7 +30,7 @@ import java.util.Map;
     }
 
     @Override
-    public void deleteWrongTitle(int id) {
-        wrongTitleDao.deleteWrongTitle(id);
+    public void deleteWrongTitle(int id,String userName) {
+        wrongTitleDao.deleteWrongTitle(id,userName);
     }
 }

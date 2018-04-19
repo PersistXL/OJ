@@ -17,8 +17,8 @@
         AND o_wrong_title.subject_id = o_subject.id
     </select>
 
-    <delete id="deleteWrongTitle" parameterType="int">
-        DELETE FROM o_wrong_title WHERE subject_id=#{id}
+    <delete id="deleteWrongTitle">
+        DELETE FROM o_wrong_title WHERE subject_id=#{id} AND student_id = #{userName}
     </delete>
 
 </mapper>

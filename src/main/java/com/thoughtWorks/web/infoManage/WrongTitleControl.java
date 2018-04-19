@@ -60,7 +60,9 @@ public class WrongTitleControl {
     @ResponseBody
     public Result deleteWrongTitle(int id){
         try {
-            wrongTitleService.deleteWrongTitle(id);
+            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+            String userName = user.getUserName();
+            wrongTitleService.deleteWrongTitle(id,userName);
             return Result.success(null, Constant.DELETE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
