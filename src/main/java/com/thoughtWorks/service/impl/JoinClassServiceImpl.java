@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,16 @@ public class JoinClassServiceImpl implements JoinClassService {
 
             List<Classes> classesList = joinClassDao.checkClassCode(classCode);
             List<Student> studentList = joinClassDao.isStudentExists(stuNo);
+            String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//            Date nowTime = new Date();
+
             if (classesList.size() != 0) {
+                if (classesList.get(0).getCodeEndTime().before(sdf.parse(nowTime))) {
+                    info.put("result", "failure");
+                    info.put("info", "该班课时间已截止");
+                    return info;
+                }
                 if (studentList.size() != 0) {
                     int count = joinClassDao.checkClass(classesList.get(0).getId(), studentList.get(0).getId());
                     if (count == 0) {
@@ -88,24 +99,12 @@ public class JoinClassServiceImpl implements JoinClassService {
         try {
             joinClassDao.addStudentInfo(student);
             if (student.getPhone() != null && student.getEmail() != null) {
-                User user = new User(student.getPhone(), "123456", 3, 1, student.getName(), "学生", student.getPhone());
+                User user = new User(student.getNo(), "123456", 3, 1, student.getName(), "学生", student.getPhone());
                 joinClassDao.addStudentInfoToUser(user);
                 result.put("msg", "学生信息注册成功");
                 result.put("state", "200");
                 return result;
-            } else if (student.getPhone() != null) {
-                User user = new User(student.getPhone(), "123456", 3, 1, student.getName(), "学生", student.getPhone());
-                joinClassDao.addStudentInfoToUser(user);
-                result.put("msg", "学生信息注册成功");
-                result.put("state", "200");
-                return result;
-            } else if (student.getEmail() != null) {
-                User user = new User(student.getEmail(), "123456", 3, 1, student.getName(), "学生", "");
-                joinClassDao.addStudentInfoToUser(user);
-                result.put("msg", "学生信息注册成功");
-                result.put("state", "200");
-                return result;
-            } else {
+            } {
                 result.put("msg", "手机号或邮箱为空");
                 result.put("state", "500");
                 return result;
