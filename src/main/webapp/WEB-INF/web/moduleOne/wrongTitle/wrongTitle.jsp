@@ -103,8 +103,8 @@
                 form.render('checkbox');
             });
             $.post("${baseurl}/wrongTitle/selectStudentId", function (data) {
-               console.log(data)
-            $.post("${baseurl}/wrongTitle/selectWrongTitleNo", function (data) {
+                stu = data.data
+            $.post("${baseurl}/wrongTitle/selectWrongTitleNo",{stu:stu}, function (data) {
                 console.log(data)
                 var dataList = data.data.testPaperList;
                 userName = data.data.user.userName
@@ -149,7 +149,7 @@
 
     function deleteWrongTitle(id) {
         layer.confirm('是否删除信息？', function (index) {
-            $.post("${baseurl}/wrongTitle/deleteWrongTitle", {id: id,userName:userName}, function (data) {
+            $.post("${baseurl}/wrongTitle/deleteWrongTitle", {id: id,stu:stu}, function (data) {
                 layer.msg(data.msg);
                 location.reload();
             });

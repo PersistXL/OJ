@@ -24,13 +24,13 @@ import java.util.Map;
     }
 
     @Override
-    public List<Map<String, Object>> selectWrongTitleNo(String username) {
-        List<Map<String, Object>> list = wrongTitleDao.selectWrongTitleNo(username);
+    public List<Map<String, Object>> selectWrongTitleNo(int stu) {
+        List<Map<String, Object>> list = wrongTitleDao.selectWrongTitleNo(stu);
         return list;
     }
 
     @Override
-    public void deleteWrongTitle(int id,String userName) {
-        wrongTitleDao.deleteWrongTitle(id,userName);
+    public void deleteWrongTitle(int id,int stu) {
+        wrongTitleDao.deleteWrongTitle(id,stu);
     }
 }

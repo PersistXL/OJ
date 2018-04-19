@@ -95,7 +95,7 @@ public class JoinClassServiceImpl implements JoinClassService {
         try {
             joinClassDao.addStudentInfo(student);
             if (student.getPhone() != null && student.getEmail() != null) {
-                User user = new User(student.getNo(), "123456", 3, 1, student.getName(), "学生", student.getPhone());
+                User user = new User(student.getNo(), "123456", 3, 1, student.getName(), "学生", student.getPhone(),student.getEmail());
                 joinClassDao.addStudentInfoToUser(user);
                 result.put("msg", "学生信息注册成功");
                 result.put("state", "200");

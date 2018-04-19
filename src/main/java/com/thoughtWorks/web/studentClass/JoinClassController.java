@@ -41,18 +41,18 @@ public class JoinClassController {
 
     @RequestMapping("/getClasses")
     @ResponseBody
-    public ResponseEntity getClasses(String stuNo) {
+    public ResponseEntity<Object> getClasses(String stuNo) {
         Map<String, Object> classes = new HashMap<>();
         try {
             List<Map<String, Object>> classesList = joinClassService.getClassList(stuNo);
             classes.put("classesList", classesList);
             classes.put("stateCode", SUCCESS_CODE);
-            return new ResponseEntity(classes, HttpStatus.OK);
+            return new ResponseEntity<Object>(classes, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             classes.put("stateCode", FAILURE_CODE);
         }
-        return new ResponseEntity("获取失败", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<Object>("获取失败", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -63,7 +63,7 @@ public class JoinClassController {
      */
     @RequestMapping("/isStudentExists")
     @ResponseBody
-    public ResponseEntity isStudentExists(String uuid) {
+    public ResponseEntity<Map<String, Object>> isStudentExists(String uuid) {
         Map<String, Object> classes = new HashMap<>();
         try {
             List<Student> stuInfo = joinClassService.isStudentExists(uuid);
@@ -71,24 +71,24 @@ public class JoinClassController {
                 classes.put("result", true);
                 classes.put("stuInfo", stuInfo);
                 classes.put("stateCode", SUCCESS_CODE);
-                return new ResponseEntity(classes, HttpStatus.OK);
+                return new ResponseEntity<>(classes, HttpStatus.OK);
             } else {
                 classes.put("result", false);
                 classes.put("stuInfo", "");
                 classes.put("stateCode", FAILURE_CODE);
-                return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();
             classes.put("result", false);
             classes.put("stateCode", FAILURE_CODE);
-            return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping("/isClassesExists")
     @ResponseBody
-    public ResponseEntity isClassesExists(String code) {
+    public ResponseEntity<Map<String, Object>> isClassesExists(String code) {
         Map<String, Object> classes = new HashMap<>();
         try {
             List<Classes> classesList = joinClassService.isClassesExists(code);
@@ -96,18 +96,18 @@ public class JoinClassController {
                 classes.put("result", true);
                 classes.put("classesList", classesList);
                 classes.put("stateCode", SUCCESS_CODE);
-                return new ResponseEntity(classes, HttpStatus.OK);
+                return new ResponseEntity<>(classes, HttpStatus.OK);
             } else {
                 classes.put("result", false);
                 classes.put("classesList", "");
                 classes.put("stateCode", FAILURE_CODE);
-                return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();
             classes.put("result", false);
             classes.put("stateCode", FAILURE_CODE);
-            return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
