@@ -4,6 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thoughtWorks.dao.WrongTitleDao">
 
+    <select id="selectStudentId" parameterType="String" resultType="int">
+        SELECT o_student.id
+        FROM o_student
+        WHERE o_student.no = #{userName}
+    </select>
+
     <insert id="wrongTitleId" parameterType="com.thoughtWorks.entity.WrongTitle">
         INSERT
         INTO o_wrong_title (subject_id, student_id,wrong_options)
@@ -17,8 +23,16 @@
         AND o_wrong_title.subject_id = o_subject.id
     </select>
 
-    <delete id="deleteWrongTitle" parameterType="int">
-        DELETE FROM o_wrong_title WHERE subject_id=#{id}
+    <delete id="deleteWrongTitle">
+        DELETE FROM o_wrong_title WHERE subject_id=#{id} AND student_id = #{userName}
     </delete>
+
+    <select id="selectWrongTitle" parameterType="String" resultType="map">
+        SELECT DISTINCT o_student.name userName,o_wrong_title.subject_id,oj.o_subject.*
+        FROM oj.o_wrong_title,oj.o_subject,o_student
+        WHERE o_student.no = #{no}
+        AND o_wrong_title.student_id = userName
+        AND o_wrong_title.subject_id = o_subject.id
+    </select>
 
 </mapper>

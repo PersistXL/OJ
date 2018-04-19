@@ -102,8 +102,12 @@
                 });
                 form.render('checkbox');
             });
+            $.post("${baseurl}/wrongTitle/selectStudentId", function (data) {
+               console.log(data)
             $.post("${baseurl}/wrongTitle/selectWrongTitleNo", function (data) {
+                console.log(data)
                 var dataList = data.data.testPaperList;
+                userName = data.data.user.userName
                 dataList1 = dataList;
                 let _html = "";
                 for (let i = dataList.length-1; i >= 0 ; i--) {
@@ -140,11 +144,12 @@
             });
 
         })
+        })
     });
 
     function deleteWrongTitle(id) {
         layer.confirm('是否删除信息？', function (index) {
-            $.post("${baseurl}/wrongTitle/deleteWrongTitle", {id: id}, function (data) {
+            $.post("${baseurl}/wrongTitle/deleteWrongTitle", {id: id,userName:userName}, function (data) {
                 layer.msg(data.msg);
                 location.reload();
             });

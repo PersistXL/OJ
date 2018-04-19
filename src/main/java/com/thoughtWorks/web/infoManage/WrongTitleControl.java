@@ -1,5 +1,6 @@
 package com.thoughtWorks.web.infoManage;
 
+import com.thoughtWorks.dao.WrongTitleDao;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.entity.WrongTitle;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class WrongTitleControl {
     @Autowired
     WrongTitleService wrongTitleService;
+    @Autowired
+    WrongTitleDao wrongTitleDao;
     @RequestMapping()
     public String index() {
         return "moduleOne/wrongTitle/wrongTitle";
@@ -33,6 +36,7 @@ public class WrongTitleControl {
     public Result wrongTitleId(WrongTitle wrongTitle) {
         try {
             wrongTitleService.wrongTitleId(wrongTitle);
+            System.out.println(wrongTitle);
             return Result.success(null, Constant.ADD_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
@@ -58,13 +62,39 @@ public class WrongTitleControl {
     }
     @RequestMapping("/deleteWrongTitle")
     @ResponseBody
-    public Result deleteWrongTitle(int id){
+    public Result deleteWrongTitle(int id,String userName){
         try {
-            wrongTitleService.deleteWrongTitle(id);
+            wrongTitleService.deleteWrongTitle(id,userName);
             return Result.success(null, Constant.DELETE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return Result.failure(null, Constant.DELETE_FAILURE);
     }
+    @RequestMapping("/selectWrongTitle")
+    @ResponseBody
+    public Result selectWrongTitle(String no){
+        try{
+            List<Map<String, Object>> list = wrongTitleDao.selectWrongTitle(no);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.SEARCH_FAILURE);
+    }
+    @RequestMapping("/selectStudentId")
+    @ResponseBody
+    public Result selectStudentId(){
+        try {
+            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+            String userName = user.getUserName();
+            int id = 0;
+            id = wrongTitleDao.selectStudentId(userName);
+            return Result.success(id, Constant.SEARCH_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
 }

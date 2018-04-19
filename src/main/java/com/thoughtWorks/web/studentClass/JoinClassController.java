@@ -56,24 +56,33 @@ public class JoinClassController {
 
     /**
      * 检测用户是否存在
-     * @param no
+     *
+     * @param uuid
      * @return
      */
     @RequestMapping("/isStudentExists")
     @ResponseBody
-    public ResponseEntity isStudentExists(String no) {
+    public ResponseEntity isStudentExists(String uuid) {
         Map<String, Object> classes = new HashMap<>();
         try {
-            boolean bool = joinClassService.isStudentExists(no);
-            classes.put("result", bool);
-            classes.put("stateCode", SUCCESS_CODE);
-            return new ResponseEntity(classes, HttpStatus.OK);
+            List<Student> stuInfo = joinClassService.isStudentExists(uuid);
+            if (stuInfo != null) {
+                classes.put("result", true);
+                classes.put("stuInfo", stuInfo);
+                classes.put("stateCode", SUCCESS_CODE);
+                return new ResponseEntity(classes, HttpStatus.OK);
+            }else {
+                classes.put("result", false);
+                classes.put("stuInfo", "");
+                classes.put("stateCode", FAILURE_CODE);
+                return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             classes.put("result", false);
             classes.put("stateCode", FAILURE_CODE);
+            return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("检测失败", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @RequestMapping("/studentRegister")
@@ -81,7 +90,7 @@ public class JoinClassController {
     public ResponseEntity studentRegister(Student student) {
         Map<String, Object> classes = new HashMap<>();
         try {
-            Map<String,String> result = joinClassService.studentRegister(student);
+            Map<String, String> result = joinClassService.studentRegister(student);
             classes.put("result", result.get("msg"));
             classes.put("stateCode", result.get("state"));
             return new ResponseEntity(classes, HttpStatus.OK);
