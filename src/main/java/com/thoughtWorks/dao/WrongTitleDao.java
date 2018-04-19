@@ -17,4 +17,6 @@ public interface WrongTitleDao {
     List<Map<String,Object>> selectWrongTitleNo(String username);
 
     void deleteWrongTitle(@Param("id") int id,@Param("userName") String userName);
+
+    List<Map<String,Object>> selectWrongTitle(String no);
 }

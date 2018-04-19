@@ -21,4 +21,12 @@
         DELETE FROM o_wrong_title WHERE subject_id=#{id} AND student_id = #{userName}
     </delete>
 
+    <select id="selectWrongTitle" parameterType="String" resultType="map">
+        SELECT DISTINCT o_student.name userName,o_wrong_title.subject_id,oj.o_subject.*
+        FROM oj.o_wrong_title,oj.o_subject,o_student
+        WHERE o_student.no = #{no}
+        AND o_wrong_title.student_id = userName
+        AND o_wrong_title.subject_id = o_subject.id
+    </select>
+
 </mapper>

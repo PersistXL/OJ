@@ -60,6 +60,7 @@
                     var _html = ""
                     $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
                         for (var i = 0; i < data1.data.length; i++) {
+                            studentId = data1.data[0].StudentId
                             _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
                                 + data1.data[i].ClassesName + `</h3>
                                 <div class="layui-colla-content">
@@ -202,7 +203,7 @@
             } else {
                 var falseid = testQuestions.data[i].id;
                 //存储错题的id
-                $.post("${baseurl}/wrongTitle/wrongTitleId",{subjectId : falseid,studentId : userName,wrongOptions : checkBoxs[i]},function (data) {
+                $.post("${baseurl}/wrongTitle/wrongTitleId",{subjectId : falseid,studentId : studentId,wrongOptions : checkBoxs[i]},function (data) {
 
                 });
             }
