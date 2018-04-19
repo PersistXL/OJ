@@ -19,6 +19,14 @@
     <script type="text/javascript" src="${baseurl}/public/common/js/jquery-3.2.0.min.js"></script>
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
+<style>
+    .hide_title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+</style>
 <body>
 <div id="watchWrongTitle" style="display:none;width: 90%;margin-left: 5%;margin-bottom: 50px">
 
@@ -98,7 +106,7 @@
                 var dataList = data.data.testPaperList;
                 dataList1 = dataList;
                 let _html = "";
-                for (let i = 0; i < dataList.length; i++) {
+                for (let i = dataList.length-1; i >= 0 ; i--) {
                     _html += `<tr>
                             <td>` + (i + 1) + `</td>
                             <td ><span class = "hide_title">` + dataList[i].subject + `</span></td>

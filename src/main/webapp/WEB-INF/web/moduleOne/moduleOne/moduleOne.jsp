@@ -61,8 +61,7 @@
                     $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
                         for (var i = 0; i < data1.data.length; i++) {
                             _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
-                                + data1.data[i].ClassesName + `<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">
-                            `+q+`</p></span></h3>
+                                + data1.data[i].ClassesName + `</h3>
                                 <div class="layui-colla-content">
                                     <div class="layui-form">
                                         <table class="layui-table">
@@ -83,7 +82,7 @@
                                                 <th style="text-align: center">操作</th>
                                             </tr>
                                             </thead>`)
-                            for (var j = 0; j < data.data.length; j++) {
+                            for (var j = data.data.length-1; j >=0 ; j--) {
                                 StudentId = data.data[i].studentId
                                 dataListObject = data.data[i].no
                                 if ((data1.data[i].classes_id) === data.data[j].classes_id) {
