@@ -323,7 +323,7 @@
                     $.post("${baseurl}/Testpaper/addClasses", {
                         name: name,
                         code: code,
-                        codeEndTime: codeEndTime
+                        codeTime: codeEndTime
                     }, function (data) {
                         layer.msg(data.msg);
                     });
@@ -337,7 +337,7 @@
                 } else {
                     $.post("${baseurl}/Testpaper/addcodeEndTime", {
                         id: id,
-                        codeEndTime: codeEndTime
+                        codeTime: codeEndTime
                     }, function (data) {
                         layer.msg(data.msg);
                     });
