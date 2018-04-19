@@ -31,8 +31,8 @@
     </insert>
 
     <insert id="addStudentInfoToUser" parameterType="com.thoughtWorks.entity.User">
-        insert into oj.t_user (username, password, roleId, available, name, staff, phone)
-        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone});
+        insert into oj.t_user (username, password, roleId, available, name, staff, phone,email)
+        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone},#{user.email});
     </insert>
 
     <insert id="addStuAndClassesContact" parameterType="map">
