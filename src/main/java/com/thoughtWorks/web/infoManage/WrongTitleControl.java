@@ -24,6 +24,7 @@ import java.util.Map;
 public class WrongTitleControl {
     @Autowired
     WrongTitleService wrongTitleService;
+    @Autowired
     WrongTitleDao wrongTitleDao;
     @RequestMapping()
     public String index() {
@@ -81,4 +82,19 @@ public class WrongTitleControl {
         }
         return Result.failure(null,Constant.SEARCH_FAILURE);
     }
+    @RequestMapping("/selectStudentId")
+    @ResponseBody
+    public Result selectStudentId(){
+        try {
+            ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
+            String userName = user.getUserName();
+            int id = 0;
+            id = wrongTitleDao.selectStudentId(userName);
+            return Result.success(id, Constant.SEARCH_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
 }
