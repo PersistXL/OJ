@@ -274,13 +274,22 @@
                     currentIndex: currentIndex,
                     pageSize: pageSize
                 }, function (data) {
-                    _subject.paging();
-                    currentIndex = data.page.currentIndex;
-                    totalSize = data.page.totalSize;
-                    _subject.paging();
-                    let _html = "";
-                    for (let i = 0; i < data.data.length; i++) {
-                        _html += `<tr>
+                    $.post("${baseurl}/Testpaper/selectTestpaperCursor", function (value) {
+                        _subject.paging();
+                        currentIndex = data.page.currentIndex;
+                        totalSize = data.page.totalSize;
+                        _subject.paging();
+                        let _html = "";
+
+                        for (let i = 0; i < data.data.length; i++) {
+                            let isHave = false;
+                            value.data.map(item => {
+                                if(data.data[i].id === item.subject_id){
+                                    isHave = true;
+                                }
+                            })
+
+                            _html += `<tr>
                             <td>` + (i + 1) + `</td>
                             <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
                             <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
@@ -288,22 +297,29 @@
                             <td>` + (data.data[i].facility === undefined ? "未指定" : data.data[i].facility) + `</td>
                             <td>
 
-                                <div class="layui-btn-group">
-                                        <a class="layui-btn layui-btn-mini" onclick="_subject.addTestpaperCursor(` + data.data[i].id + `)" >
+                                <div class="layui-btn-group">`
+                            if(!isHave){
+                                _html+=`<a class="layui-btn layui-btn-mini" onclick="_subject.addTestpaperCursor(` + data.data[i].id + `)" >
                                             <i class="layui-icon">&#xe642;</i>
                                             选择
-                                        </a>
-                                    <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
+                                        </a>`
+                            }else{
+
+                            }
+
+
+                                    _html+=`<a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
                                 </div>
                             </td>
                         </tr>`;
-                    }
-                    $("#subject_info").html(_html);
-                    form.render();
+                        }
+                        $("#subject_info").html(_html);
+                        form.render();
                 });
+                })
             },
             paging: function () {
                 layui.laypage({
@@ -329,7 +345,7 @@
                 let score = $("#score").val();
                 var classes_id = $("select[name='classes_id']").val();
 
-                if (name == "" || closeTime == "" || score == ""||subjectId=="") {
+                if (name == "" || closeTime == "" || score == "" || subjectId == "") {
                     layer.msg("试卷信息不能为空");
                 } else {
                     $.post("${baseurl}/Testpaper/selectTestpaperNameIs",
@@ -350,7 +366,7 @@
                                         layer.close(index);
                                     });
                                 });
-                            }else{
+                            } else {
                                 layer.msg(isHave.msg);
                             }
                         });
