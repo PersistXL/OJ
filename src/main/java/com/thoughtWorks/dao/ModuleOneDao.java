@@ -2,6 +2,7 @@ package com.thoughtWorks.dao;
 
 import com.thoughtWorks.entity.StudentTestpaper;
 import com.thoughtWorks.entity.Testpaper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -44,4 +45,12 @@ public interface ModuleOneDao {
      * @return
      */
     List<Map<String,Object>> findTestpaperClasses(String userName);
+
+    /**
+     * 根据学生userName查询学生的试卷信息
+     * @param userName
+     * @param testpaperId
+     * @return
+     */
+    String selectStudentTestpapte(@Param("userName")String userName, @Param("testpaperId") int testpaperId);
 }

@@ -21,7 +21,7 @@
     </select>
     <select id="findTestpaper" parameterType="String" resultType="map">
 
-        SELECT o_testpaper.*,o_student_classes.id ClassId,o_student.id studentId,o_student.no
+        SELECT o_testpaper.*,o_testpaper.id testpaperId,o_student_classes.id ClassId,o_student.id studentId,o_student.no
         FROM o_testpaper,o_student_classes,oj.o_student
         WHERE o_student.no = #{userName}
         AND o_student.id = o_student_classes.student_id
@@ -46,4 +46,12 @@
           (testpaper_student_score,testpaper_id,student_id)
         VALUES (#{testpaperStudentScore}, #{id},#{studentId})
     </update>
+
+    <select id="selectStudentTestpapte" resultType="String">
+        SELECT o_student_testpaper.testpaper_student_score,o_student.id
+        FROM o_student_testpaper,o_student
+        WHERE o_student.no = #{userName}
+        AND o_student_testpaper.testpaper_id = #{testpaperId}
+        AND o_student_testpaper.student_id =o_student.id
+    </select>
 </mapper>

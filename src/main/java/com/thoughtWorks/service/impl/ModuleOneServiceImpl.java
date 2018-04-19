@@ -43,4 +43,10 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
         List<Map<String,Object>> list = moduleOneDao.findTestpaperClasses(userName);
         return list;
     }
+
+    @Override
+    public String selectStudentTestpapte(String userName, int testpaperId) {
+        String map = moduleOneDao.selectStudentTestpapte(userName,testpaperId);
+        return map;
+    }
 }

@@ -1,6 +1,7 @@
 package com.thoughtWorks.web.infoManage;
 
 import com.thoughtWorks.dao.ModuleOneDao;
+import com.thoughtWorks.dao.SubjectDao;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.entity.StudentTestpaper;
@@ -15,9 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -61,10 +60,29 @@ public class ModuleOneController {
 //            List<Map<String,Object>> testPaperList =  moduleOneService.findTestpaper(userName);
 //            data.put("user", user);
 //            data.put("testPaperList", testPaperList);
+            List<Map<String, Object>> data = new ArrayList<>();
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
             String userName = user.getUserName();
             List<Map<String,Object>> list =  moduleOneService.findTestpaper(userName);
-            return Result.success(list, Constant.SEARCH_SUCCESS);
+
+            Iterator<Map<String, Object>> item = list.iterator();
+            while (item.hasNext()){
+                Map<String,Object> map = new HashMap<>();
+                Map<String,Object> value = item.next();
+                map.put("name",value.get("name"));
+                map.put("testpaperId", value.get("testpaperId"));
+                map.put("subject_id",value.get("subject_id"));
+                map.put("ClassId",value.get("ClassId"));
+                map.put("classes_id",value.get("classes_id"));
+                map.put("no", value.get("no"));
+                map.put("score", value.get("score"));
+                map.put("studentId", value.get("studentId"));
+                map.put("closeTime", value.get("close_time"));
+                map.put("startTime",value.get("start_time").toString());
+                map.put("studentScore",moduleOneService.selectStudentTestpapte(userName, (Integer) value.get("testpaperId")));
+                data.add(map);
+            }
+            return Result.success(data, Constant.SEARCH_SUCCESS);
         }catch (Exception e){
            e.printStackTrace();
         }

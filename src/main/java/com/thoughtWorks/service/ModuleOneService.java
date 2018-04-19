@@ -34,4 +34,12 @@ public interface ModuleOneService {
      * @return
      */
     List<Map<String,Object>> findTestpaperClasses(String userName);
+
+    /**
+     * 根据学生userName查询学生的试卷信息
+     * @param userName
+     * @return
+     */
+
+    String selectStudentTestpapte(String userName, int testpaperId);
 }
