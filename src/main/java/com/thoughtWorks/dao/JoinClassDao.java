@@ -28,4 +28,6 @@ public interface JoinClassDao {
     void studentRegister(Student student);
 
     int checkClass(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
+
+    List<Classes> isClassesExists(String code);
 }

@@ -1,5 +1,6 @@
 package com.thoughtWorks.web.studentClass;
 
+import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.service.JoinClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,14 +67,39 @@ public class JoinClassController {
         Map<String, Object> classes = new HashMap<>();
         try {
             List<Student> stuInfo = joinClassService.isStudentExists(uuid);
-            if (stuInfo != null) {
+            if (stuInfo.size() != 0) {
                 classes.put("result", true);
                 classes.put("stuInfo", stuInfo);
                 classes.put("stateCode", SUCCESS_CODE);
                 return new ResponseEntity(classes, HttpStatus.OK);
-            }else {
+            } else {
                 classes.put("result", false);
                 classes.put("stuInfo", "");
+                classes.put("stateCode", FAILURE_CODE);
+                return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            classes.put("result", false);
+            classes.put("stateCode", FAILURE_CODE);
+            return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/isClassesExists")
+    @ResponseBody
+    public ResponseEntity isClassesExists(String code) {
+        Map<String, Object> classes = new HashMap<>();
+        try {
+            List<Classes> classesList = joinClassService.isClassesExists(code);
+            if (classesList.size() != 0) {
+                classes.put("result", true);
+                classes.put("classesList", classesList);
+                classes.put("stateCode", SUCCESS_CODE);
+                return new ResponseEntity(classes, HttpStatus.OK);
+            } else {
+                classes.put("result", false);
+                classes.put("classesList", "");
                 classes.put("stateCode", FAILURE_CODE);
                 return new ResponseEntity(classes, HttpStatus.INTERNAL_SERVER_ERROR);
             }

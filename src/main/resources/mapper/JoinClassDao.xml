@@ -47,4 +47,8 @@
         select COUNT(1) from o_student_classes
         WHERE classes_id = #{classId} AND student_id = #{studentId}
     </select>
+
+    <select id="isClassesExists" parameterType="string" resultType="com.thoughtWorks.entity.Classes">
+        select * from o_classes WHERE code = #{code};
+    </select>
 </mapper>
