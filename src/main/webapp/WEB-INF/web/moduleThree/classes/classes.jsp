@@ -70,6 +70,7 @@
                             <th>班课名称</th>
                             <th>创建时间</th>
                             <th>班课口令</th>
+                            <th>口令到期时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -95,6 +96,12 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">口令长度：</label>
+                <div class="layui-input-inline">
+                    <input name="codeLength" min="6" max="15" id="codeLength" value="6" type="number"
+                           lay-verify="required" autocomplete="off"
+                           class="layui-input"><span style="color: gainsboro;">输入口令长度(建议长度在6-15之间)</span>
+                </div>
                 <label class="layui-form-label">班课口令：</label>
                 <div class="layui-input-inline">
                     <input name="code" id="code" readonly lay-verify="required" autocomplete="off"
@@ -102,9 +109,39 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">口令有效时长</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="time" id="time" placeholder="选择时间" required
+                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
                     <button class="layui-btn" onclick="_subject.addClassInfo()">立即提交
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div id="codeEndTime" style="display: none;width: auto; margin-top: 20px;">
+    <div>
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="text" id="idInfo" hidden/>
+                    <input class="layui-input"  id="updateTime" placeholder="选择时间" required
+                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <button class="layui-btn" onclick="_subject.addcodeEndTime()">立即提交
                     </button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
@@ -151,7 +188,6 @@
         _subject = {
             page: function () {
                 $.post("${baseurl}/Testpaper/selectClasses", function (data) {
-                    console.log(data)
                     let _html = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += `<tr>
@@ -159,6 +195,7 @@
                             <td ><span class = "hide_title">` + data.data[i].name + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].time + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].code + `</span></td>
+                            <td><span class = "hide_title">` + (formatDate(data.data[i].code_end_time)) + `</span></td>
                             <td>
 
                                 <div class="layui-btn-group">
@@ -168,10 +205,15 @@
                                             删除
                                         </a>
                                         </shiro:hasPermission>
+                                        <a class="layui-btn layui-btn-mini" onclick="_subject.codeEndTime(` + data.data[i].id + `)">
+                                        <i class="layui-icon">&#xe602;</i>
+                                        修改口令时间
+                                    </a>
                                     <a class="layui-btn layui-btn-mini" onclick="_subject.selectClassesByIdToStudents(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
                                         学生信息
                                     </a>
+
                                 </div>
                             </td>
                         </tr>`;
@@ -205,9 +247,20 @@
                     content: $('#addＥxcel')
                 });
             },
+            codeEndTime: function (id) {
+                $("#idInfo").val(id);
+                layer.open({
+                    type: 1,
+                    title: '修改code时间',
+                    area: ['100%', '100%'],
+                    skin: 'yourclass',
+                    content: $('#codeEndTime')
+                });
+            },
             creatClasses: function () {
+                let codeLength = $("#codeLength").val()
                 var num = "";
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < codeLength; i++) {
                     num += Math.floor(Math.random() * 10);
                 }
                 $("#code").val(num)
@@ -246,7 +299,7 @@
                             <td ><span class = "hide_title">` + data.data[i].name + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].no + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].gender + `</span></td>
-                            <td><span class = "hide_title">` + (data.data[i].phone=== undefined ?"暂无":data.data[i].phone) + `</span></td>
+                            <td><span class = "hide_title">` + (data.data[i].phone === undefined ? "暂无" : data.data[i].phone) + `</span></td>
                             <td><span class = "hide_title"><a class="layui-btn layui-btn-mini" onclick="_subject.deleteClassesOfStudentInfo(` + data.data[i].stuclazzId + `)">
                                             <i class="layui-icon">&#xe640;</i>删除</a></span></td></tr>`;
                     }
@@ -263,16 +316,49 @@
             addClassInfo: function () {
                 let name = $("input[name='className']").val();
                 let code = $("input[name='code']").val();
-                $.post("${baseurl}/Testpaper/addClasses", {
-                    name: name,
-                    code: code
-                }, function (data) {
-                    layer.msg(data.msg);
-                });
-
+                let codeEndTime = $("input[name='time']").val();
+                if (name == '' || codeEndTime == '') {
+                    layer.msg("信息不能为空");
+                } else {
+                    $.post("${baseurl}/Testpaper/addClasses", {
+                        name: name,
+                        code: code,
+                        codeEndTime: codeEndTime
+                    }, function (data) {
+                        layer.msg(data.msg);
+                    });
+                }
+            },
+            addcodeEndTime: function () {
+                let codeEndTime = $("#updateTime").val();
+                let id = $("#idInfo").val();
+                if (codeEndTime == '') {
+                    layer.msg("信息不能为空");
+                } else {
+                    $.post("${baseurl}/Testpaper/addcodeEndTime", {
+                        id: id,
+                        codeEndTime: codeEndTime
+                    }, function (data) {
+                        layer.msg(data.msg);
+                    });
+                }
             }
         }
         $(function () {
+            let codeLength = $("#codeLength").val()
+            $("#codeLength").blur(function () {
+                codeLength = $("#codeLength").val()
+                if (codeLength > 15 || codeLength < 6) {
+                    $("#codeLength").val(6)
+                    codeLength = 6;
+                    layer.msg("长度必须在6-15之间");
+                }
+                var num = "";
+                for (var i = 0; i < codeLength; i++) {
+                    num += Math.floor(Math.random() * 10);
+                }
+                $("#code").val(num)
+            });
             _subject.page();
             //图片上传
             layui.use('upload', function () {
@@ -341,5 +427,49 @@
 
 
 </script>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
 
+        var start = {
+            min: laydate.now()
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: laydate.now()
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('LAY_demorange_s').onclick = function () {
+            start.elem = this;
+            laydate(start);
+        }
+        document.getElementById('LAY_demorange_e').onclick = function () {
+            end.elem = this
+            laydate(end);
+        }
+
+    });
+
+    function formatDate(now) {
+        var date = new Date(now);
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        D = date.getDate() + ' ';
+        h = date.getHours() + ':';
+        m = date.getMinutes() + ':';
+        s = date.getSeconds();
+        return (Y + M + D + h + m + s);
+    }
+</script>
 </html>

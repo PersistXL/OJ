@@ -41,6 +41,7 @@ public interface TestpaperDao {
     List<Map<String,Object>> selectClasses(int id);
 
     void addClasses(Classes classes);
+    void addcodeEndTime(Classes classes);
 
     void deleteClassByTeacherId(int id);
     void deleteStudentByClassByTeacherId(int id);

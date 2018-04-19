@@ -5,6 +5,7 @@ public class Classes {
     private String name;
     private String teacherId;
     private String code;
+    private String codeEndTime;
     private String time;
 
     public Classes() {
@@ -14,6 +15,23 @@ public class Classes {
         this.id = id;
         this.name = name;
         this.teacherId = teacherId;
+    }
+
+    public Classes(Integer id, String name, String teacherId, String code, String codeEndTime, String time) {
+        this.id = id;
+        this.name = name;
+        this.teacherId = teacherId;
+        this.code = code;
+        this.codeEndTime = codeEndTime;
+        this.time = time;
+    }
+
+    public String getCodeEndTime() {
+        return codeEndTime;
+    }
+
+    public void setCodeEndTime(String codeEndTime) {
+        this.codeEndTime = codeEndTime;
     }
 
     public Integer getId() {

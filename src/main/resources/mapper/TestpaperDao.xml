@@ -31,9 +31,12 @@
         FROM o_classes where teacher_id = #{id}
     </select>
     <insert id="addClasses" parameterType="Classes">
-    INSERT INTO o_classes (name,teacher_id,code,time)
-    VALUES (#{name},#{teacherId},#{code},CURDATE())
+    INSERT INTO o_classes (name,teacher_id,code,time,code_end_time)
+    VALUES (#{name},#{teacherId},#{code},CURDATE(),#{codeEndTime})
     </insert>
+    <update id="addcodeEndTime" parameterType="Classes">
+    update o_classes set code_end_time = #{codeEndTime} where id = #{id}
+    </update>
     <delete id="deleteClassByTeacherId" parameterType="int">
         delete from o_classes where id = #{id}
     </delete>

@@ -102,6 +102,16 @@ public class TestpaperController {
         }
         return Result.failure(null,Constant.ADD_FAILURE);
     }
+    @RequestMapping("addcodeEndTime")
+    public Result addcodeEndTime(Classes classes){
+        try{
+            testpaperDao.addcodeEndTime(classes);
+            return Result.success(null,Constant.ADD_SUCCESS);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.ADD_FAILURE);
+    }
     @RequestMapping("deleteClassByTeacherId")
     public Result deleteClassByTeacherId(int id){
         try{
