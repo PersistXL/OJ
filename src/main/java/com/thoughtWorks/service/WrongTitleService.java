@@ -12,7 +12,7 @@ import java.util.Map;
 public interface WrongTitleService  {
     WrongTitle wrongTitleId(WrongTitle wrongTitle);
 
-    List<Map<String,Object>> selectWrongTitleNo(String username);
+    List<Map<String,Object>> selectWrongTitleNo(int stu);
 
-    void deleteWrongTitle(int id,String userName);
+    void deleteWrongTitle(int id,int stu);
 }

@@ -46,12 +46,12 @@ public class WrongTitleControl {
 
     @RequestMapping("/selectWrongTitleNo")
     @ResponseBody
-    public Result selectWrongTitleNo(){
+    public Result selectWrongTitleNo(int stu){
         try{
             Map<String, Object> data = new HashMap<>();
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
             String username = user.getUserName();
-            List<Map<String, Object>> testPaperList = wrongTitleService.selectWrongTitleNo(username);
+            List<Map<String, Object>> testPaperList = wrongTitleService.selectWrongTitleNo(stu);
             data.put("user", user);
             data.put("testPaperList", testPaperList);
             return Result.success(data, Constant.SEARCH_SUCCESS);
@@ -62,9 +62,9 @@ public class WrongTitleControl {
     }
     @RequestMapping("/deleteWrongTitle")
     @ResponseBody
-    public Result deleteWrongTitle(int id,String userName){
+    public Result deleteWrongTitle(int id,int stu){
         try {
-            wrongTitleService.deleteWrongTitle(id,userName);
+            wrongTitleService.deleteWrongTitle(id,stu);
             return Result.success(null, Constant.DELETE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();

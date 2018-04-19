@@ -16,15 +16,15 @@
         VALUES (#{subjectId},#{studentId},#{wrongOptions})
     </insert>
 
-    <select id="selectWrongTitleNo" parameterType="String" resultType="map">
+    <select id="selectWrongTitleNo" parameterType="int" resultType="map">
         SELECT DISTINCT o_wrong_title.subject_id,oj.o_subject.*
         FROM oj.o_wrong_title,oj.o_subject
-        WHERE o_wrong_title.student_id = #{username}
+        WHERE o_wrong_title.student_id = #{stu}
         AND o_wrong_title.subject_id = o_subject.id
     </select>
 
-    <delete id="deleteWrongTitle">
-        DELETE FROM o_wrong_title WHERE subject_id=#{id} AND student_id = #{userName}
+    <delete id="deleteWrongTitle" parameterType="int">
+        DELETE FROM o_wrong_title WHERE subject_id=#{id} AND student_id = #{stu}
     </delete>
 
     <select id="selectWrongTitle" parameterType="String" resultType="map">
