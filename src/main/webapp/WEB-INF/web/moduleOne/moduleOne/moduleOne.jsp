@@ -59,7 +59,6 @@
                 $.post("${baseurl}/moduleOne/findTestpaperClasses", function (data1) {
                     var _html = ""
                     $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
-                        console.log(data)
                         for (var i = 0; i < data1.data.length; i++) {
                             _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
                                 + data1.data[i].ClassesName + `<i class="layui-icon" style="font-size: 25px; margin-left: 20%">&#xe645;</i><span style="display: inline-block;font-size: 15px;font-weight: bold"><p style="color: #ff1631">
