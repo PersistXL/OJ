@@ -1,19 +1,33 @@
 package com.thoughtWorks.entity;
 
+import java.util.Date;
+
 public class Classes {
     private Integer id;
     private String name;
     private String teacherId;
     private String code;
+    private Date codeEndTime;
     private String time;
 
     public Classes() {
     }
 
-    public Classes(Integer id, String name, String teacherId) {
+    public Classes(Integer id, String name, String teacherId, String code, Date codeEndTime, String time) {
         this.id = id;
         this.name = name;
         this.teacherId = teacherId;
+        this.code = code;
+        this.codeEndTime = codeEndTime;
+        this.time = time;
+    }
+
+    public Date getCodeEndTime() {
+        return codeEndTime;
+    }
+
+    public void setCodeEndTime(Date codeEndTime) {
+        this.codeEndTime = codeEndTime;
     }
 
     public Integer getId() {

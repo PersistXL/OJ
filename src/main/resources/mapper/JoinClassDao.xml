@@ -26,8 +26,8 @@
     </select>
 
     <insert id="addStudentInfo" parameterType="com.thoughtWorks.entity.Student">
-        insert into o_student (no, name, gender, phone,email)
-        values (#{student.no},#{student.name},#{student.gender},#{student.phone},#{student.email});
+        insert into o_student (no, name, gender, phone,email,uuid)
+        values (#{student.no},#{student.name},#{student.gender},#{student.phone},#{student.email},#{student.uuid});
     </insert>
 
     <insert id="addStudentInfoToUser" parameterType="com.thoughtWorks.entity.User">

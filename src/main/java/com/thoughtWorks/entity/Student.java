@@ -8,11 +8,12 @@ public class Student {
     private String phone;
     private String classesId;
     private String email;
+    private String uuid;
 
     public Student() {
     }
 
-    public Student(Integer id, String no, String name, String gender, String phone, String classesId, String email) {
+    public Student(Integer id, String no, String name, String gender, String phone, String classesId, String email, String uuid) {
         this.id = id;
         this.no = no;
         this.name = name;
@@ -20,6 +21,15 @@ public class Student {
         this.phone = phone;
         this.classesId = classesId;
         this.email = email;
+        this.uuid = uuid;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getEmail() {
