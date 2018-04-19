@@ -81,9 +81,9 @@ public class JoinClassController {
     public ResponseEntity studentRegister(Student student) {
         Map<String, Object> classes = new HashMap<>();
         try {
-            String result = joinClassService.studentRegister(student);
-            classes.put("result", result);
-            classes.put("stateCode", SUCCESS_CODE);
+            Map<String,String> result = joinClassService.studentRegister(student);
+            classes.put("result", result.get("msg"));
+            classes.put("stateCode", result.get("state"));
             return new ResponseEntity(classes, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

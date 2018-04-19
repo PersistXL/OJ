@@ -17,8 +17,16 @@
         select * from o_teacher WHERE phone = #{phone};
     </select>
 
+    <select id="checkPhoneByStudent" parameterType="string" resultType="com.thoughtWorks.entity.Student">
+        select * from o_student WHERE phone = #{phone};
+    </select>
+
     <select id="checkEmail" parameterType="string" resultType="com.thoughtWorks.entity.Teacher">
-        select * from o_teacher WHERE phone = #{email};
+        select * from o_teacher WHERE email = #{email};
+    </select>
+
+    <select id="checkEmailByStudent" parameterType="string" resultType="com.thoughtWorks.entity.Student">
+        select * from o_student WHERE email = #{email};
     </select>
 
     <insert id="add" parameterType="com.thoughtWorks.entity.Teacher">

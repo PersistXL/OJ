@@ -232,9 +232,9 @@
                 layer.confirm('将删除该班课中的学生！是否删除？', function (index) {
                     $.post("${baseurl}/Testpaper/deleteClassesOfStudentInfo", {id: id}, function (data) {
                         layer.msg(data.msg);
-                        location.reload();
+                        setTimeout("location.reload();", 1000);
                     });
-                    layer.close(index);
+                    // layer.close(index);
                 });
             },
             selectClassesByIdToStudents: function (id) {
@@ -247,7 +247,7 @@
                             <td><span class = "hide_title">` + data.data[i].no + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].gender + `</span></td>
                             <td><span class = "hide_title">` + (data.data[i].phone=== undefined ?"暂无":data.data[i].phone) + `</span></td>
-                            <td><span class = "hide_title"><a class="layui-btn layui-btn-mini" onclick="_subject.deleteClassesOfStudentInfo(` + data.data[i].id + `)">
+                            <td><span class = "hide_title"><a class="layui-btn layui-btn-mini" onclick="_subject.deleteClassesOfStudentInfo(` + data.data[i].stuclazzId + `)">
                                             <i class="layui-icon">&#xe640;</i>删除</a></span></td></tr>`;
                     }
                     $("#previewClasses").html(_html);
