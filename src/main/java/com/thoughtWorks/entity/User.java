@@ -8,6 +8,7 @@ public class User {
     private String name;
     private String staff;
     private String phone;
+    private String email;
 
     public User() {
     }
@@ -20,6 +21,25 @@ public class User {
         this.name = name;
         this.staff = staff;
         this.phone = phone;
+    }
+
+    public User(String username, String password, Integer roleId, Integer available, String name, String staff, String phone, String email) {
+        this.username = username;
+        this.password = password;
+        this.roleId = roleId;
+        this.available = available;
+        this.name = name;
+        this.staff = staff;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {

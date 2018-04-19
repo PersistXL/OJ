@@ -31,8 +31,8 @@
     </insert>
 
     <insert id="addStudentInfoToUser" parameterType="com.thoughtWorks.entity.User">
-        insert into oj.t_user (username, password, roleId, available, name, staff, phone)
-        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone});
+        insert into oj.t_user (username, password, roleId, available, name, staff, phone,email)
+        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone},#{user.email});
     </insert>
 
     <insert id="addStuAndClassesContact" parameterType="map">
@@ -40,11 +40,15 @@
     </insert>
 
     <select id="isStudentExists" parameterType="string" resultType="com.thoughtWorks.entity.Student">
-        select * from o_student WHERE no = #{no};
+        select * from o_student WHERE uuid = #{uuid};
     </select>
 
     <select id="checkClass" parameterType="map" resultType="int">
         select COUNT(1) from o_student_classes
         WHERE classes_id = #{classId} AND student_id = #{studentId}
+    </select>
+
+    <select id="isClassesExists" parameterType="string" resultType="com.thoughtWorks.entity.Classes">
+        select * from o_classes WHERE code = #{code};
     </select>
 </mapper>

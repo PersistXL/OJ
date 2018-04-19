@@ -1,5 +1,6 @@
 package com.thoughtWorks.web.studentClass;
 
+import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.service.JoinClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,40 +41,74 @@ public class JoinClassController {
 
     @RequestMapping("/getClasses")
     @ResponseBody
-    public ResponseEntity getClasses(String stuNo) {
+    public ResponseEntity<Object> getClasses(String stuNo) {
         Map<String, Object> classes = new HashMap<>();
         try {
             List<Map<String, Object>> classesList = joinClassService.getClassList(stuNo);
             classes.put("classesList", classesList);
             classes.put("stateCode", SUCCESS_CODE);
-            return new ResponseEntity(classes, HttpStatus.OK);
+            return new ResponseEntity<Object>(classes, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             classes.put("stateCode", FAILURE_CODE);
         }
-        return new ResponseEntity("获取失败", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<Object>("获取失败", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
      * 检测用户是否存在
-     * @param no
+     *
+     * @param uuid
      * @return
      */
     @RequestMapping("/isStudentExists")
     @ResponseBody
-    public ResponseEntity isStudentExists(String no) {
+    public ResponseEntity<Map<String, Object>> isStudentExists(String uuid) {
         Map<String, Object> classes = new HashMap<>();
         try {
-            boolean bool = joinClassService.isStudentExists(no);
-            classes.put("result", bool);
-            classes.put("stateCode", SUCCESS_CODE);
-            return new ResponseEntity(classes, HttpStatus.OK);
+            List<Student> stuInfo = joinClassService.isStudentExists(uuid);
+            if (stuInfo.size() != 0) {
+                classes.put("result", true);
+                classes.put("stuInfo", stuInfo);
+                classes.put("stateCode", SUCCESS_CODE);
+                return new ResponseEntity<>(classes, HttpStatus.OK);
+            } else {
+                classes.put("result", false);
+                classes.put("stuInfo", "");
+                classes.put("stateCode", FAILURE_CODE);
+                return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             classes.put("result", false);
             classes.put("stateCode", FAILURE_CODE);
+            return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("检测失败", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @RequestMapping("/isClassesExists")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> isClassesExists(String code) {
+        Map<String, Object> classes = new HashMap<>();
+        try {
+            List<Classes> classesList = joinClassService.isClassesExists(code);
+            if (classesList.size() != 0) {
+                classes.put("result", true);
+                classes.put("classesList", classesList);
+                classes.put("stateCode", SUCCESS_CODE);
+                return new ResponseEntity<>(classes, HttpStatus.OK);
+            } else {
+                classes.put("result", false);
+                classes.put("classesList", "");
+                classes.put("stateCode", FAILURE_CODE);
+                return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            classes.put("result", false);
+            classes.put("stateCode", FAILURE_CODE);
+            return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping("/studentRegister")
@@ -81,7 +116,7 @@ public class JoinClassController {
     public ResponseEntity studentRegister(Student student) {
         Map<String, Object> classes = new HashMap<>();
         try {
-            Map<String,String> result = joinClassService.studentRegister(student);
+            Map<String, String> result = joinClassService.studentRegister(student);
             classes.put("result", result.get("msg"));
             classes.put("stateCode", result.get("state"));
             return new ResponseEntity(classes, HttpStatus.OK);

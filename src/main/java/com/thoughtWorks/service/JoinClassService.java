@@ -1,5 +1,6 @@
 package com.thoughtWorks.service;
 
+import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Student;
 
 import java.util.List;
@@ -10,7 +11,9 @@ public interface JoinClassService {
 
     List<Map<String, Object>> getClassList(String stuNo);
 
-    boolean isStudentExists(String no);
+    List<Student> isStudentExists(String uuid);
 
     Map<String, String> studentRegister(Student student);
+
+    List<Classes> isClassesExists(String code);
 }
