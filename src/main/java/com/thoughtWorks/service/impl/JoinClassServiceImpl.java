@@ -76,12 +76,8 @@ public class JoinClassServiceImpl implements JoinClassService {
     }
 
     @Override
-    public boolean isStudentExists(String no) {
-        List<Student> students = joinClassDao.isStudentExists(no);
-        if (students.size() > 0) {
-            return true;
-        }
-        return false;
+    public List<Student> isStudentExists(String uuid) {
+        return joinClassDao.isStudentExists(uuid);
     }
 
     @Transactional

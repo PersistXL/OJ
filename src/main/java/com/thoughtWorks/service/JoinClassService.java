@@ -10,7 +10,7 @@ public interface JoinClassService {
 
     List<Map<String, Object>> getClassList(String stuNo);
 
-    boolean isStudentExists(String no);
+    List<Student> isStudentExists(String uuid);
 
     Map<String, String> studentRegister(Student student);
 }
