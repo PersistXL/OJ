@@ -122,12 +122,12 @@ public class JoinClassServiceImpl implements JoinClassService {
     }
 
     private String checkInfo(Student student) {
-        if (student.getPhone() != null) {
+        if (student.getPhone() != null && !student.getPhone().equals("")) {
             if (checkPhone(student.getPhone())) {
                 return "该电话已注册";
             }
         }
-        if (student.getEmail() != null) {
+        if (student.getEmail() != null && !student.getEmail().equals("")) {
             if (checkEmail(student.getEmail())) {
                 return "该邮箱已注册";
             }
