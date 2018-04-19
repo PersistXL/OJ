@@ -25,9 +25,9 @@ public class JoinClassController {
 
     @RequestMapping("/joinClass")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> joinClass(String stuNo, String classCode) {
+    public ResponseEntity<Map<String, Object>> joinClass(String uuid, String classCode) {
         Map<String, Object> classes = new HashMap<>();
-        Map<String, String> resultInfo = joinClassService.joinClass(stuNo, classCode);
+        Map<String, String> resultInfo = joinClassService.joinClass(uuid, classCode);
         if (resultInfo.get("result").equals("success")) {
             classes.put("stateCode", SUCCESS_CODE);
             classes.put("message", resultInfo.get("info"));
