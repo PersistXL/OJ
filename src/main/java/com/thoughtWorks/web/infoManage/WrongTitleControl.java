@@ -107,8 +107,9 @@ public class WrongTitleControl {
             while (item.hasNext()) {
                 Map<String, Object> map = new HashMap<>();
                 Map<String, Object> value = item.next();
-                map.put("studentId", value.get("id"));
-                map.put("WrongTitle", wrongTitleService.selectWrongTitleNo((Integer) value.get("id")));
+                map.put("stu", value.get("id"));
+                map.put("testpaperName", "错题集");
+                map.put("SubjectData", wrongTitleService.selectWrongTitleNo((Integer) value.get("id")));
                 data.add(map);
             }
             return Result.success(data,Constant.SEARCH_SUCCESS);
