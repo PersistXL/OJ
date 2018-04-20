@@ -75,8 +75,8 @@ public class JoinClassController {
             } else {
                 classes.put("result", false);
                 classes.put("stuInfo", "");
-                classes.put("stateCode", FAILURE_CODE);
-                return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+                classes.put("stateCode", FAILURE_409);
+                return new ResponseEntity<>(classes, HttpStatus.CONFLICT);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,8 +100,8 @@ public class JoinClassController {
             } else {
                 classes.put("result", false);
                 classes.put("classesList", "");
-                classes.put("stateCode", FAILURE_CODE);
-                return new ResponseEntity<>(classes, HttpStatus.INTERNAL_SERVER_ERROR);
+                classes.put("stateCode", FAILURE_409);
+                return new ResponseEntity<>(classes, HttpStatus.CONFLICT);
             }
         } catch (Exception e) {
             e.printStackTrace();
