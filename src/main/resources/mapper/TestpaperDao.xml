@@ -30,12 +30,20 @@
         SELECT *
         FROM o_classes where teacher_id = #{id}
     </select>
-    <insert id="addClasses" parameterType="Classes">
+    <select id="findClassesId" resultType="int" parameterType="String">
+        SELECT id
+        FROM o_classes where code = #{code}
+    </select>
+    <insert id="addClasses" parameterType="Classes" >
     INSERT INTO o_classes (name,teacher_id,code,time,code_end_time)
     VALUES (#{name},#{teacherId},#{code},CURDATE(),#{codeTime})
     </insert>
+    <insert id="insertTeacherClasses">
+        INSERT INTO o_teacher_classes (classes_id,teacher_id)
+        VALUES (#{classes_id},#{teacherId})
+    </insert>
     <update id="addcodeEndTime" parameterType="Classes">
-    update o_classes set code_end_time = #{codeTime} where id = #{id}
+        update o_classes set code_end_time = #{codeTime} where id = #{id}
     </update>
     <delete id="deleteClassByTeacherId" parameterType="int">
         delete from o_classes where id = #{id}

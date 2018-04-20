@@ -3,6 +3,7 @@ package com.thoughtWorks.dao;
 import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.entity.TestpaperCursor;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.*;
 
@@ -50,4 +51,8 @@ public interface TestpaperDao {
     Long selectTestpaperNameIs(Testpaper testpaper);
 
     void deleteClassesOfStudentInfo(int id);
+
+    int findClassesId(String code);
+
+    void insertTeacherClasses(@Param("classes_id") int classes_id,@Param("teacherId") int teacherId);
 }

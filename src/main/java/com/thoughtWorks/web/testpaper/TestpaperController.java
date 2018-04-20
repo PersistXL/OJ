@@ -96,6 +96,9 @@ public class TestpaperController {
             int id = testpaperDao.selectIdByName(username);
             classes.setTeacherId(String.valueOf(id));
             testpaperDao.addClasses(classes);
+            int classes_id = testpaperDao.findClassesId(classes.getCode());
+            int s=Integer.parseInt(classes.getTeacherId());
+            testpaperDao.insertTeacherClasses(classes_id,Integer.parseInt(classes.getTeacherId()));
             return Result.success(null,Constant.ADD_SUCCESS);
         }catch(Exception e){
             e.printStackTrace();
