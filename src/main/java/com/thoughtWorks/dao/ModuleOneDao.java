@@ -40,6 +40,13 @@ public interface ModuleOneDao {
     void inseretScore(StudentTestpaper studentTestpaper);
 
     /**
+     * 存储学生成绩`从手机提交
+     * @param studentTestpaper
+     * @return
+     */
+    void inseretScore_mobile(StudentTestpaper studentTestpaper);
+
+    /**
      * 根据学生的username查询学生对应的班课
      * @param userName
      * @return
@@ -53,4 +60,8 @@ public interface ModuleOneDao {
      * @return
      */
     String selectStudentTestpapte(@Param("userName")String userName, @Param("testpaperId") int testpaperId);
+
+
+    //gj
+    int selectStuIdbyStUuid(String uuid);
 }

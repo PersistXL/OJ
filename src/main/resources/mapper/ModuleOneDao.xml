@@ -43,8 +43,14 @@
 
     <update id="inseretScore" parameterType="com.thoughtWorks.entity.StudentTestpaper">
         INSERT INTO o_student_testpaper
-          (testpaper_student_score,testpaper_id,student_id,submission_time)
-        VALUES (#{testpaperStudentScore}, #{id},#{studentId},NOW())
+          (testpaper_student_score,testpaper_id,student_id, submission_time)
+        VALUES (#{testpaperStudentScore}, #{testpaperId},#{studentId}, NOW())
+    </update>
+
+    <update id="inseretScore_mobile" parameterType="com.thoughtWorks.entity.StudentTestpaper">
+        INSERT INTO o_student_testpaper
+        (testpaper_student_score,testpaper_id,student_id, submission_time)
+        VALUES (#{testpaperStudentScore}, #{testpaperId}, (select id from o_student where o_student.no=#{no}), NOW())
     </update>
 
     <select id="selectStudentTestpapte" resultType="String">
@@ -53,5 +59,9 @@
         WHERE o_student.no = #{userName}
         AND o_student_testpaper.testpaper_id = #{testpaperId}
         AND o_student_testpaper.student_id =o_student.id
+    </select>
+
+    <select id="selectStuIdbyStUuid" parameterType="String" resultType="int">
+        SELECT id from o_student where uuid = #{uuid}
     </select>
 </mapper>
