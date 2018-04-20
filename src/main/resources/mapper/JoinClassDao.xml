@@ -49,6 +49,6 @@
     </select>
 
     <select id="isClassesExists" parameterType="string" resultType="com.thoughtWorks.entity.Classes">
-        select * from o_classes WHERE code = #{code};
+        select o_classes.*,o_teacher.name teaName from o_classes,o_teacher  WHERE code = #{code} and o_teacher.id=o_classes.teacher_id
     </select>
 </mapper>

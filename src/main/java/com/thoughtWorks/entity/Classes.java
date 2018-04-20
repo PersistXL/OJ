@@ -11,6 +11,15 @@ public class Classes {
     private Date codeEndTime;
     private String time;
     private String codeTime;
+    private String teaName;
+
+    public String getTeaName() {
+        return teaName;
+    }
+
+    public void setTeaName(String teaName) {
+        this.teaName = teaName;
+    }
 
     public Classes(Integer id, String name, String teacherId, String code, Date codeEndTime, String time) {
         this.id = id;

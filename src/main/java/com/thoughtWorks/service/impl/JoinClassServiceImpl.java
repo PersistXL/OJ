@@ -25,17 +25,17 @@ public class JoinClassServiceImpl implements JoinClassService {
 
     @Transactional
     @Override
-    public Map<String, String> joinClass(String stuNo, String classCode) {
+    public Map<String, String> joinClass(String uuid, String classCode) {
         Map<String, String> info = new HashMap<>();
         try {
 
             List<Classes> classesList = joinClassDao.checkClassCode(classCode);
-            List<Student> studentList = joinClassDao.isStudentExists(stuNo);
+            List<Student> studentList = joinClassDao.isStudentExists(uuid);
             String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
             if (classesList.size() != 0) {
-                if (sdf.parse(nowTime).before(classesList.get(0).getCodeEndTime())) {
+                if (sdf.parse(nowTime).after(classesList.get(0).getCodeEndTime())) {
                     info.put("result", "failure");
                     info.put("info", "该班课时间已截止");
                     return info;
@@ -122,12 +122,12 @@ public class JoinClassServiceImpl implements JoinClassService {
     }
 
     private String checkInfo(Student student) {
-        if (student.getPhone() != null) {
+        if (student.getPhone() != null && !student.getPhone().equals("")) {
             if (checkPhone(student.getPhone())) {
                 return "该电话已注册";
             }
         }
-        if (student.getEmail() != null) {
+        if (student.getEmail() != null && !student.getEmail().equals("")) {
             if (checkEmail(student.getEmail())) {
                 return "该邮箱已注册";
             }

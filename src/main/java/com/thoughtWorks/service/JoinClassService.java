@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface JoinClassService {
-    Map<String,String> joinClass(String stuNo,String classCode);
+    Map<String,String> joinClass(String uuid,String classCode);
 
     List<Map<String, Object>> getClassList(String stuNo);
 
