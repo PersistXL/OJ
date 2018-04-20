@@ -96,12 +96,22 @@ public class WrongTitleControl {
     }
     @RequestMapping("/selectStudentWrongTitlteNo")
     @ResponseBody
-    public Result selectStudentWrongTitlteNo(String no){
+    public Result selectStudentWrongTitlteNo(String uuid){
         try {
+            List<Map<String, Object>> data = new ArrayList<>();
 
-            int stu = wrongTitleDao.selectStudentWrongTitlteNo(no);
+            List<Map<String,Object>> list = wrongTitleDao.selectStudentWrongTitlteNo(uuid);
 
-            return Result.success(stu,Constant.SEARCH_SUCCESS);
+            Iterator<Map<String, Object>> item = list.iterator();
+
+            while (item.hasNext()) {
+                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> value = item.next();
+                map.put("studentId", value.get("id"));
+                map.put("WrongTitle", wrongTitleService.selectWrongTitleNo((Integer) value.get("id")));
+                data.add(map);
+            }
+            return Result.success(data,Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
