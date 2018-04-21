@@ -125,6 +125,11 @@ public class PermissionServiceImpl implements PermissionService {
         addPermission(permission);
     }
 
+    @Override
+    public String findUserName(ActiveUser user) throws Exception {
+        return permissionDao.findUserName(user);
+    }
+
     private void addPermission(Permission permission) {
         permissionDao.addPermission(permission);
     }

@@ -320,11 +320,13 @@
                 if (name == '' || codeEndTime == '') {
                     layer.msg("信息不能为空");
                 } else {
-                    $.post("${baseurl}/Testpaper/addClasses", {
+                    var data =  {
                         name: name,
                         code: code,
                         codeTime: codeEndTime
-                    }, function (data) {
+                    };
+                    console.log(data);
+                    $.post("${baseurl}/Testpaper/addClasses",data, function (data) {
                         layer.msg(data.msg);
                     });
                 }

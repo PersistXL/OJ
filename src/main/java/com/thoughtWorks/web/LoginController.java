@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.sound.midi.SoundbankResource;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +32,14 @@ public class LoginController {
     @ResponseBody
     private Result login(ActiveUser user) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
+
         try {
-            subject.login(token);
+            String userName = permissionService.findUserName(user);
+
+                UsernamePasswordToken token = new UsernamePasswordToken(userName, user.getPassword());
+                subject.login(token);
+
+
         } catch (UnknownAccountException e) {
             return Result.failure(null, Constant.ACCOUNT_NOT_EXIST);
         } catch (LockedAccountException e) {

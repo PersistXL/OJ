@@ -47,4 +47,6 @@ public interface PermissionDao {
     void deletePermissionsByIds(@Param("ids") List<String> ids);
 
     void deleteHasPermissionsByIds(@Param("ids") List<String> ids);
+
+    String findUserName(ActiveUser user);
 }

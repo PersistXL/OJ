@@ -41,6 +41,7 @@ public class SysUserController {
     public Result add(Teacher teacher) {
         try {
             String result = sysUserService.add(teacher);
+
             return Result.success("",result);
         } catch (Exception e) {
             e.printStackTrace();

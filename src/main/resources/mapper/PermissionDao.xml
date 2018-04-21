@@ -129,4 +129,10 @@
                        FROM t_role_permission) role ON role.sys_role_id = #{roleId}
         WHERE permission.id = role.sys_permission_id AND parentid = #{parentId}
     </select>
+    <select id="findUserName" resultType="String" parameterType="com.thoughtWorks.entity.ActiveUser">
+      SELECT
+        tu.username
+        FROM t_user as tu
+        where (tu.email=#{userName} or tu.username=#{userName} or tu.phone=#{userName}) and tu.password=#{password}
+    </select>
 </mapper>

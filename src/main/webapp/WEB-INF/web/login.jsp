@@ -16,11 +16,11 @@
 <div class="larry-canvas" id="canvas"></div>
 <div class="layui-layout layui-layout-login">
     <h1>
-        <strong>后台系统</strong>
+        <strong>在线测评系统</strong>
         <em> System</em>
     </h1>
     <div class="layui-user-icon larry-login">
-        <input type="text" placeholder="账号" id="userName" required class="login_txtbx"/>
+        <input type="text" placeholder="账号/电话/邮箱" id="userName" required class="login_txtbx"/>
     </div>
     <div class="layui-pwd-icon larry-login">
         <input type="password" placeholder="密码" id="password" required class="login_txtbx"/>
@@ -37,7 +37,6 @@
     </div>
 
     <div class="layui-login-text">
-        <p>© 2017-thoughtWorks studio 版权所有</p>
     </div>
 </div>
 <script type="text/javascript" src="${baseurl}/public/common/js/jquery-1.12.4.min.js"></script>

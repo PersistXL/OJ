@@ -33,4 +33,6 @@ public interface PermissionService {
     void deleteSecondMenu(String id)throws Exception;
 
     void addPer(Permission permission)throws Exception;
+
+    String findUserName(ActiveUser user)throws Exception;
 }
