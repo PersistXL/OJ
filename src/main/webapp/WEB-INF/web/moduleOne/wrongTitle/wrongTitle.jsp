@@ -105,7 +105,6 @@
             $.post("${baseurl}/wrongTitle/selectStudentId", function (data) {
                 stu = data.data
             $.post("${baseurl}/wrongTitle/selectWrongTitleNo",{stu:stu}, function (data) {
-                console.log(data)
                 var dataList = data.data.testPaperList;
                 userName = data.data.user.userName
                 dataList1 = dataList;
