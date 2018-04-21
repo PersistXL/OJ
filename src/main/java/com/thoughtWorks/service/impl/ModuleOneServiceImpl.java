@@ -39,6 +39,12 @@ public class ModuleOneServiceImpl implements com.thoughtWorks.service.ModuleOneS
     }
 
     @Override
+    public StudentTestpaper inseretScore_mobile(StudentTestpaper studentTestpaper) {
+        moduleOneDao.inseretScore_mobile(studentTestpaper);
+        return null;
+    }
+
+    @Override
     public List<Map<String, Object>> findTestpaperClasses(String userName) {
         List<Map<String,Object>> list = moduleOneDao.findTestpaperClasses(userName);
         return list;
