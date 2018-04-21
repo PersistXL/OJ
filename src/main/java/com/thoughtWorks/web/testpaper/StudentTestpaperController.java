@@ -67,17 +67,18 @@ public class StudentTestpaperController {
     @ResponseBody
     public Result studentTestpaperTitle(String testpaperjson)
     {
-        int stuId = 0;
         //String jstr = "{\"uuid\":\"96FBBA30-A1BC-4BD3-A463-B82DC967FD70\",\"testpaperId\":\"22\",\"testpaperStudentScore\":99.5,\"data\":[{\"id\":\"40\",\"option\":\"D\"}]}";
 
         StudentTestpaper sts = JSON.parseObject(testpaperjson, StudentTestpaper.class);
-        sts.setStudentId(stuId);
-        try{
-            stuId = moduleOneDao.selectStuIdbyStUuid(sts.getUuid());
-        }catch(Exception e){
-            e.printStackTrace();
-            return Result.failure(null,Constant.ACCOUNT_NOT_EXIST);
-        }
+        //uuid参数改为studentId
+//        sts.setStudentId(stuId);
+//        try{
+//            stuId = moduleOneDao.selectStuIdbyStUuid(sts.getUuid());
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            return Result.failure(null,Constant.ACCOUNT_NOT_EXIST);
+//        }
+        int stuId = sts.getStudentId();
 
         try{
             moduleOneService.inseretScore(sts);
@@ -101,15 +102,23 @@ public class StudentTestpaperController {
 
     @RequestMapping("/queryScore")
     @ResponseBody
-    public String queryScore(int stuId, int classId)
+    public  List<Map<String,Object>> queryScore(int stuId, int classId)
     {
+        List<Map<String,Object>> lst = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
         try
         {
-            List<Map<String,Object>> lst = studentTestpaperDao.QueryScore(stuId, classId);
-            return JSON.toJSONString(lst);
+            map.put("stuteCode","200");
+            map.put("data",studentTestpaperDao.QueryScore(stuId, classId));
+            lst.add(map);
+            return lst;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "{\"result\":false,\"data\":null,\"msg\":\"��ѯʧ��\"}";
+
+        map.put("msg","查询失败");
+        map.put("stateCode","500");
+        lst.add(map);
+        return lst;
     }
 }
