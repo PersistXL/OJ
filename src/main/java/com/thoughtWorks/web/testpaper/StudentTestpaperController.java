@@ -11,6 +11,7 @@ import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -67,8 +68,8 @@ public class StudentTestpaperController {
     @ResponseBody
     public Result studentTestpaperTitle(String testpaperjson)
     {
-        //String jstr = "{\"uuid\":\"96FBBA30-A1BC-4BD3-A463-B82DC967FD70\",\"testpaperId\":\"22\",\"testpaperStudentScore\":99.5,\"data\":[{\"id\":\"40\",\"option\":\"D\"}]}";
-
+        //String jstr = "{\"studentId\":\"1\",\"testpaperId\":\"22\",\"testpaperStudentScore\":99.5,\"data\":[{\"id\":\"40\",\"option\":\"D\"}]}";
+        //String jstr = "{studentId:1,testpaperId:22,testpaperStudentScore:99.5,data:[{id:40,option:D}]}";
         StudentTestpaper sts = JSON.parseObject(testpaperjson, StudentTestpaper.class);
         //uuid参数改为studentId
 //        sts.setStudentId(stuId);
@@ -79,7 +80,11 @@ public class StudentTestpaperController {
 //            return Result.failure(null,Constant.ACCOUNT_NOT_EXIST);
 //        }
         int stuId = sts.getStudentId();
-
+        int count = moduleOneDao.duplicateChecking(sts);
+        System.out.println(count);
+        if(count > 0){
+            return null;
+        }
         try{
             moduleOneService.inseretScore(sts);
             ArrayList<wrongAnswer> wrong_answers = sts.getData();
@@ -100,25 +105,22 @@ public class StudentTestpaperController {
         return Result.failure(null,Constant.ADD_FAILURE);
     }
 
-    @RequestMapping("/queryScore")
+    @RequestMapping(value = "/queryScore")
     @ResponseBody
-    public  List<Map<String,Object>> queryScore(int stuId, int classId)
+    public  Map<String,Object> queryScore(int stuId, int classId)
     {
-        List<Map<String,Object>> lst = new ArrayList<>();
         Map<String,Object> map = new HashMap<>();
         try
         {
-            map.put("stuteCode","200");
+            map.put("stateCode","200");
             map.put("data",studentTestpaperDao.QueryScore(stuId, classId));
-            lst.add(map);
-            return lst;
+            return map;
         }catch (Exception e){
             e.printStackTrace();
         }
 
         map.put("msg","查询失败");
         map.put("stateCode","500");
-        lst.add(map);
-        return lst;
+        return map;
     }
 }

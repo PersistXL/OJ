@@ -53,6 +53,9 @@
         VALUES (#{testpaperStudentScore}, #{testpaperId}, (select id from o_student where o_student.no=#{no}), NOW())
     </update>
 
+    <select id="duplicateChecking" parameterType="com.thoughtWorks.entity.StudentTestpaper" resultType="int">
+        SELECT COUNT(1) FROM o_student_testpaper WHERE testpaper_id = #{testpaperId} AND student_id = #{studentId}
+    </select>
     <select id="selectStudentTestpapte" resultType="String">
         SELECT o_student_testpaper.testpaper_student_score,o_student.id
         FROM o_student_testpaper,o_student

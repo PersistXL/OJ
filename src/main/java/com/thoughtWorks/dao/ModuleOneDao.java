@@ -64,4 +64,6 @@ public interface ModuleOneDao {
 
     //gj
     int selectStuIdbyStUuid(String uuid);
+
+    int duplicateChecking(StudentTestpaper sts);
 }
