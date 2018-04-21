@@ -63,7 +63,7 @@
                 var _html = ""
                 $.post("${baseurl}/jobList/selectSubject", function (data1) {
                     for (var i = 0; i < data.data.length; i++) {
-                        teacherId = data.data[0].teacher_id
+                        teacherId = data1.data[0].teacher_id
                         classId = data.data[i].clID
                         _html += `<div class="layui-colla-item">
                         <h2 class="layui-colla-title" style="margin-bottom: 10px">班课：` + data.data[i].ClassesName + `</h2>
@@ -86,15 +86,15 @@
                                   <tbody id="studentMessage">`
                         for (var j = data1.data.length-1; j >=0 ; j--) {
                             var s = data1.data[j].subject_id
-                            var id = data1.data[j].classes_id
-                            var name = data1.data[j].name
+                            var classesId = data1.data[j].classes_id
+                            testPaperId = data1.data[j].testPaperId
                             if (classId === data1.data[j].classes_id) {
                                 _html += (`<tr>
                                       <td style="text-align: center">` + data1.data[j].name + `</td>
                                       <td style="text-align: center">` + s.split("_").length + `</td>
                                       <td style="text-align: center">` + data1.data[j].score + `</td>
                                       <td style="text-align: center">
-                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + id + `,'` + name + `')">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + classesId + `,'` + testPaperId + `')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
                                       </td>
                                     </tr>
@@ -114,12 +114,12 @@
         });
     });
 
-    function preview(classesId, name) {
+    function preview(classesId, testPaperId) {
         $.post("${baseurl}/jobList/selectStudentTestpaper",
             {
-                classesId,
-                name,
-                teacherId
+                classesId : classesId,
+                testPaperId : testPaperId,
+                teacherId : teacherId
             },
             function (data) {
                 var _html = "";
@@ -150,7 +150,7 @@
                 }
                 _html += (`</table>`)
                 $("#previewAdd").html(_html);
-            })
+            });
         layer.open({
             type: 1
             , title: "预览作业情况"

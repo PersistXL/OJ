@@ -2,6 +2,7 @@ package com.thoughtWorks.entity;
 
 public class Testpaper {
     private String subjectId;
+    private int testPaperId;
     private int classesId;
     private int teacherId;
     private String startTime;
@@ -9,6 +10,14 @@ public class Testpaper {
     private double score;
     private String closeTime;
     private int day;
+
+    public int getTestPaperId() {
+        return testPaperId;
+    }
+
+    public void setTestPaperId(int testPaperId) {
+        this.testPaperId = testPaperId;
+    }
 
     public String getCloseTime() {
         return closeTime;
