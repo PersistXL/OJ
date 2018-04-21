@@ -1,7 +1,12 @@
 package com.thoughtWorks.web.testpaper;
-
+import com.thoughtWorks.entity.wrongAnswer;
+import com.alibaba.fastjson.JSON;
+import com.thoughtWorks.dao.ModuleOneDao;
+import com.thoughtWorks.dao.WrongTitleDao;
+import com.thoughtWorks.entity.WrongTitle;
 import com.thoughtWorks.dao.StudentTestpaperDao;
 import com.thoughtWorks.dto.Result;
+import com.thoughtWorks.entity.StudentTestpaper;
 import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
+
 /**
  * @author persistXL
  * @data 2018/4/17 16:37
@@ -18,6 +24,11 @@ import java.util.*;
 @RestController
 @RequestMapping("/studentTestpaper")
 public class StudentTestpaperController {
+    @Autowired
+    ModuleOneDao moduleOneDao;
+    @Autowired
+    WrongTitleDao wrongTitleDao;
+
     @Autowired
     private StudentTestpaperDao studentTestpaperDao;
     @Autowired
@@ -49,5 +60,56 @@ public class StudentTestpaperController {
             e.printStackTrace();
         }
         return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
+
+    @RequestMapping("/commitScore")
+    @ResponseBody
+    public Result studentTestpaperTitle(String testpaperjson)
+    {
+        int stuId = 0;
+        //String jstr = "{\"uuid\":\"96FBBA30-A1BC-4BD3-A463-B82DC967FD70\",\"testpaperId\":\"22\",\"testpaperStudentScore\":99.5,\"data\":[{\"id\":\"40\",\"option\":\"D\"}]}";
+
+        StudentTestpaper sts = JSON.parseObject(testpaperjson, StudentTestpaper.class);
+        sts.setStudentId(stuId);
+        try{
+            stuId = moduleOneDao.selectStuIdbyStUuid(sts.getUuid());
+        }catch(Exception e){
+            e.printStackTrace();
+            return Result.failure(null,Constant.ACCOUNT_NOT_EXIST);
+        }
+
+        try{
+            moduleOneService.inseretScore(sts);
+            ArrayList<wrongAnswer> wrong_answers = sts.getData();
+            for (int i = 0; i < wrong_answers.size(); i++)
+            {
+                WrongTitle wrtt = new WrongTitle();
+                wrtt.setStudentId("" + stuId);
+                wrtt.setSubjectId(wrong_answers.get(i).getId());
+                String s = "" + wrong_answers.get(i).getOption();
+                wrtt.setWrongOptions(s);
+                wrongTitleDao.wrongTitleId(wrtt);
+            }
+
+            return Result.success(null, Constant.ADD_SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.failure(null,Constant.ADD_FAILURE);
+    }
+
+    @RequestMapping("/queryScore")
+    @ResponseBody
+    public String queryScore(int stuId, int classId)
+    {
+        try
+        {
+            List<Map<String,Object>> lst = studentTestpaperDao.QueryScore(stuId, classId);
+            return JSON.toJSONString(lst);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "{\"result\":false,\"data\":null,\"msg\":\"≤È—Ø ß∞‹\"}";
     }
 }

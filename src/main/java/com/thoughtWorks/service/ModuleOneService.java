@@ -29,6 +29,13 @@ public interface ModuleOneService {
     StudentTestpaper inseretScore(StudentTestpaper studentTestpaper);
 
     /**
+     * 插入学生的成绩`手机
+     * @param studentTestpaper
+     * @return
+     */
+    StudentTestpaper inseretScore_mobile(StudentTestpaper studentTestpaper);
+
+    /**
      * 根据学生的username查询学生对应的班课
      * @param userName
      * @return

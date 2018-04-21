@@ -8,4 +8,10 @@
         FROM oj.o_testpaper,oj.o_teacher
         WHERE o_testpaper.classes_id = #{classesId} and o_teacher.id = o_testpaper.teacher_id
     </select>
+
+    <select id="QueryScore" parameterType="int" resultType="map">
+        select a.submission_time, b.name, a.testpaper_student_score from o_student_testpaper a join
+        o_testpaper b on a.testpaper_id = b.id where a.student_id = #{stuId} and b.classes_id = #{classId}
+        order by a.submission_time desc;
+    </select>
 </mapper>
