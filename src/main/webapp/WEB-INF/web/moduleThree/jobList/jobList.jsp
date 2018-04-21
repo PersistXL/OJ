@@ -84,7 +84,7 @@
                                     </tr>
                                   </thead>
                                   <tbody id="studentMessage">`
-                        for (var j = 0; j < data1.data.length; j++) {
+                        for (var j = data1.data.length-1; j >=0 ; j--) {
                             var s = data1.data[j].subject_id
                             var id = data1.data[j].classes_id
                             var name = data1.data[j].name
