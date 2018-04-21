@@ -69,7 +69,6 @@ public class StudentTestpaperController {
     public Result studentTestpaperTitle(String testpaperjson)
     {
         //String jstr = "{\"studentId\":\"1\",\"testpaperId\":\"22\",\"testpaperStudentScore\":99.5,\"data\":[{\"id\":\"40\",\"option\":\"D\"}]}";
-        //String jstr = "{studentId:1,testpaperId:22,testpaperStudentScore:99.5,data:[{id:40,option:D}]}";
         StudentTestpaper sts = JSON.parseObject(testpaperjson, StudentTestpaper.class);
         //uuid参数改为studentId
 //        sts.setStudentId(stuId);

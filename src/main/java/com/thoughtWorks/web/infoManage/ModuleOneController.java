@@ -109,7 +109,6 @@ public class ModuleOneController {
     @RequestMapping("/inseretScore")
     @ResponseBody
     public Result inseretScore(StudentTestpaper studentTestpaper){
-        System.out.println(studentTestpaper.getTestpaperId());
         try{
             moduleOneService.inseretScore(studentTestpaper);
             return Result.success(null, Constant.ADD_SUCCESS);
