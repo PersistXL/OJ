@@ -109,9 +109,11 @@
                 userName = data.data.user.userName
                 dataList1 = dataList;
                 let _html = "";
+                var number = 0;
                 for (let i = dataList.length-1; i >= 0 ; i--) {
+                    number = number+1;
                     _html += `<tr>
-                            <td>` + (i + 1) + `</td>
+                            <td>` + number + `</td>
                             <td ><span class = "hide_title">` + dataList[i].subject + `</span></td>
                             <td><span class = "hide_title">` + dataList[i].option_a + `</span></td>
                             <td><span class = "hide_title">` + dataList[i].option_b + `</span></td>
