@@ -135,7 +135,7 @@
                 <div class="layui-input-inline">
                     <input type="text" id="idInfo" hidden/>
                     <input class="layui-input"  id="updateTime" placeholder="选择时间" required
-                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                           onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
                 </div>
             </div>
             <div class="layui-form-item">
