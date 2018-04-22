@@ -112,7 +112,7 @@
                 <label class="layui-form-label">口令有效时长</label>
                 <div class="layui-input-inline">
                     <input class="layui-input" name="time" id="time" placeholder="选择时间" required
-                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                           onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
                 </div>
             </div>
             <div class="layui-form-item">
