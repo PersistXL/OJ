@@ -2,6 +2,8 @@ import urllib2
 import json
 import random
 import string
+import thread
+import time
 
 def ASSERT_NONE(a, name):
     if a == None:
@@ -17,7 +19,7 @@ def ASSERT_TRUE(a, name):
 
 
 def get_baseurl():
-    return 'http://10.53.0.34:8080/oj'
+    return 'http://47.105.38.68/oj'
 
 def get_response(url):
     try:
@@ -59,3 +61,13 @@ ASSERT_TRUE(ret, 'select from exam_test')
 
 ret = test_add_studentScore("%7B'studentId':'2166','testpaperId':'22','testpaperStudentScore':99.5,'data':[%7B'id':'40','option':'D'%7D]%7D")
 ASSERT_TRUE(ret,'Store student stest scores and errors')
+
+def test_func(name):
+    print 'thread %s start!' % name
+    ret = test_student_testpaper(1)
+    ASSERT_TRUE(ret, 'select from exam_test')
+
+for num in range(0, 300):
+    thread.start_new_thread(test_func, ('test' + str(num), ) )
+
+time.sleep(1111)
