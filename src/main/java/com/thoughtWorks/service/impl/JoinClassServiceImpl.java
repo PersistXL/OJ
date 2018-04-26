@@ -109,7 +109,7 @@ public class JoinClassServiceImpl implements JoinClassService {
                 }
             }else{
                 result.put("msg", "学号已存在");
-                result.put("state", "409");
+                result.put("state", "500");
                 return result;
             }
 
