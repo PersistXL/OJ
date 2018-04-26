@@ -3,7 +3,7 @@
 
 <html lang="en">
 <head>
-    <title>高职学生信息管理系统</title>
+    <title>在线测评系统</title>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -18,34 +18,9 @@
 </head>
 <body>
 <div class="larry-grid larry-wrapper">
-    <div class="row" id="infoSwitch">
-    </div>
-    <div class="row shortcut" id="shortcut">
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 ">
-            <section class="panel clearfix">
-                <div class="symbol shortcut-bg1"><i class="larry-icon larry-daishenhe1"
-                                                    data-icon="larry-daishenhe1"></i></div>
-                <div class="value">
-                    <a data-href="html/temp.html">
-                        <h1 id="count1">10</h1>
-                    </a>
-                    <p>待审的文章</p>
-                </div>
-            </section>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2 ">
-            <section class="panel">
-                <div class="symbol shortcut-bg2"><i class="larry-icon larry-fabu2" data-icon="larry-fabu2"></i></div>
-                <div class="value">
-                    <a data-href="html/temp.html">
-                        <h1 id="count2">26</h1>
-                    </a>
-                    <p>我发布的文章</p>
-                </div>
-            </section>
-        </div>
-    </div>
+
     <!-- 首页信息 -->
+    <blockquote class="layui-elem-quote" style="background-color: white">欢迎使用在线测评系统</blockquote>
 
 </div>
 <script type="text/javascript" src="${baseurl}/public/common/layui/layui.js"></script>
