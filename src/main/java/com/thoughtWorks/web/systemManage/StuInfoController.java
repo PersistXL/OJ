@@ -1,8 +1,8 @@
 package com.thoughtWorks.web.systemManage;
 
 import com.thoughtWorks.dto.Result;
-import com.thoughtWorks.entity.Teacher;
-import com.thoughtWorks.service.SysUserService;
+import com.thoughtWorks.entity.Student;
+import com.thoughtWorks.service.StuService;
 import com.thoughtWorks.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,22 +12,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/sysUser")
-public class SysUserController {
+@RequestMapping("/stuinfo")
+public class StuInfoController {
+
+    // 去 StuServiceImpl.java 中看实现代码
 
     @Autowired
-    private SysUserService sysUserService;
+    private StuService stuService;
 
     @RequestMapping()
     public String index() {
-        return "systemManage/user/list";
+        return "systemManage/stuinfo_page/stuinfo_page";
     }
 
     @RequestMapping("/list")
     @ResponseBody
     public ResponseEntity<Object> list(PageUtil pageUtil) {
         try {
-            sysUserService.getList(pageUtil);
+            stuService.getList(pageUtil);
 
             return new ResponseEntity<Object>(pageUtil, HttpStatus.OK);
         } catch (Exception e) {
@@ -36,11 +38,12 @@ public class SysUserController {
         return new ResponseEntity<Object>("", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /*
     @RequestMapping("/add")
     @ResponseBody
-    public Result add(Teacher teacher) {
+    public Result add(Student teacher) {
         try {
-            String result = sysUserService.add(teacher);
+            String result = stuService.add(teacher);
 
             return Result.success("",result);
         } catch (Exception e) {
@@ -48,13 +51,14 @@ public class SysUserController {
         }
         return Result.failure("", "添加失败");
     }
+    */
 
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(String phone) {
+    public Result delete(String number) {
         try {
-            sysUserService.delete(phone);
+            stuService.delete(number);
             return Result.success("","删除成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,12 +68,10 @@ public class SysUserController {
 
     @RequestMapping("/update")
     @ResponseBody
-    public Result update(Teacher teacher) {
+    public Result update(Student student) {
         try {
 
-            System.out.println("00000000000000" + teacher);
-
-            String result = sysUserService.update(teacher);
+            String result = stuService.update(student);
 
             return Result.success("",result);
         } catch (Exception e) {
