@@ -80,7 +80,8 @@
                         class="larry-icon larry-weibiaoti6-copy"></i></div>
                 <ul class="layui-tab-title" lay-allowClose="true" id="layui-tab-title" lay-filter="subadd">
                     <li class="layui-this" id="admin-home" lay-id="0" fresh=1>
-                        <i class="larry-icon larry-houtaishouye"></i><em>后台首页</em>
+                        <%--<i class="larry-icon larry-houtaishouye"></i>--%>
+                        <em>后台首页</em>
                     </li>
                 </ul>
                 <div class="title-right" id="titleRbox">

@@ -63,7 +63,7 @@ layui.use(['elements', 'jquery', 'layer', 'larry', 'navtab', 'form', 'common'], 
                     isLoad = false;
                     result.unshift({
                         title: '后台首页',
-                        icon: 'larry-wangzhanshouye',
+                        icon: '',
                         href: baseUrl + 'main'
                     });
                 }
