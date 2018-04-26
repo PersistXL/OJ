@@ -2,7 +2,7 @@
 <%@ include file="../public/tag.jsp" %>
 <html lang="en">
 <head>
-    <title>OJ系统</title>
+    <title>在线测评系统</title>
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
@@ -20,7 +20,9 @@
 <div class="layui-layout layui-layout-admin impaa" id="layui_layout">
     <!-- 顶部区域 -->
     <div class="layui-header header-menu">
-        <div class="logo posb" id="log"><img src="${baseurl}/public/common/images/logo.png"></div>
+        <div class="logo posb" id="log" style="display: flex;justify-content: center;align-items: center">
+            <span style="color: white;font-size: 24px;font-weight: bold">在线测评系统</span>
+        </div>
 
         <div class="layui-main posb">
             <!-- 左侧导航收缩开关 -->
