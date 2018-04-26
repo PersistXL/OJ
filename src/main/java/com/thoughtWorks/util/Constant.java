@@ -37,6 +37,7 @@ public class Constant {
     public static final String ACCOUNT_IS_EXIST = "帐号已存在";
     public static final String TESTPAPER_IS_FALSE = "试卷名称已存在";
     public static final String TESTPAPER_IS_TRUE = "试卷名称不存在";
+    public static final String TESTPAPER_IS_CLOSED = "试卷提交期限已过";
     public static int ADMIN_ROLE_ID = 1;
 
 }
