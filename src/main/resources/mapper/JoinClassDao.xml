@@ -42,6 +42,9 @@
     <select id="isStudentExists" parameterType="string" resultType="com.thoughtWorks.entity.Student">
         select * from o_student WHERE uuid = #{uuid};
     </select>
+    <select id="selectSchool"  resultType="map">
+        select * from o_school
+    </select>
 
     <select id="checkClass" parameterType="map" resultType="int">
         select COUNT(1) from o_student_classes
@@ -50,5 +53,8 @@
 
     <select id="isClassesExists" parameterType="string" resultType="com.thoughtWorks.entity.Classes">
         select o_classes.*,o_teacher.name teaName from o_classes,o_teacher  WHERE code = #{code} and o_teacher.id=o_classes.teacher_id
+    </select>
+    <select id="selectUserInfoEqual" parameterType="com.thoughtWorks.entity.Student" resultType="map">
+        select * from o_student where no =#{no}
     </select>
 </mapper>

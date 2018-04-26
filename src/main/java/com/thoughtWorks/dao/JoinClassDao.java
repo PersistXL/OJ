@@ -24,10 +24,13 @@ public interface JoinClassDao {
     void addStuAndClassesContact(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
 
     List<Student> isStudentExists(String uuid);
+    List<Map<String,Object>> selectSchool();
 
     void studentRegister(Student student);
 
     int checkClass(@Param("classId") Integer classId, @Param("studentId") Integer studentId);
 
     List<Classes> isClassesExists(String code);
+
+    List<Map<String,Object>> selectUserInfoEqual(Student student);
 }

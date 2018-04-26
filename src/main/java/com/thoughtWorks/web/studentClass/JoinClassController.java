@@ -1,5 +1,6 @@
 package com.thoughtWorks.web.studentClass;
 
+import com.thoughtWorks.dao.JoinClassDao;
 import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Student;
 import com.thoughtWorks.service.JoinClassService;
@@ -22,6 +23,9 @@ public class JoinClassController {
 
     @Autowired
     private JoinClassService joinClassService;
+    @Autowired
+    private JoinClassDao joinClassDao;
+
 
     @RequestMapping("/joinClass")
     @ResponseBody
@@ -67,15 +71,18 @@ public class JoinClassController {
         Map<String, Object> classes = new HashMap<>();
         try {
             List<Student> stuInfo = joinClassService.isStudentExists(uuid);
+            List<Map<String,Object>> school = joinClassDao.selectSchool();
             if (stuInfo.size() != 0) {
                 classes.put("result", true);
                 classes.put("stuInfo", stuInfo);
                 classes.put("stateCode", SUCCESS_CODE);
+                classes.put("school",school);
                 return new ResponseEntity<>(classes, HttpStatus.OK);
             } else {
                 classes.put("result", false);
                 classes.put("stuInfo", "");
                 classes.put("stateCode", FAILURE_409);
+                classes.put("school",school);
                 return new ResponseEntity<>(classes, HttpStatus.CONFLICT);
             }
         } catch (Exception e) {
