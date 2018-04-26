@@ -111,10 +111,10 @@ public class ModuleOneController {
     public Result inseretScore(StudentTestpaper studentTestpaper){
         try{
             moduleOneService.inseretScore(studentTestpaper);
-            return Result.success(null, Constant.ADD_SUCCESS);
+            return Result.success(null, Constant.ADD_TESTPAPER_SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.ADD_FAILURE);
+        return Result.failure(null,Constant.ADD_TESTPAPER_FAILURE);
     }
 }
