@@ -1,11 +1,12 @@
 package com.thoughtWorks.web.testpaper;
-import com.thoughtWorks.entity.wrongAnswer;
 import com.alibaba.fastjson.JSON;
+import com.thoughtWorks.dao.TestpaperDao;
 import com.thoughtWorks.dao.ModuleOneDao;
 import com.thoughtWorks.dao.WrongTitleDao;
-import com.thoughtWorks.entity.WrongTitle;
 import com.thoughtWorks.dao.StudentTestpaperDao;
 import com.thoughtWorks.dto.Result;
+import com.thoughtWorks.entity.WrongTitle;
+import com.thoughtWorks.entity.wrongAnswer;
 import com.thoughtWorks.entity.StudentTestpaper;
 import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
@@ -29,6 +30,8 @@ public class StudentTestpaperController {
     ModuleOneDao moduleOneDao;
     @Autowired
     WrongTitleDao wrongTitleDao;
+    @Autowired
+    TestpaperDao testpaperDao;
 
     @Autowired
     private StudentTestpaperDao studentTestpaperDao;
@@ -69,17 +72,25 @@ public class StudentTestpaperController {
     public Result studentTestpaperTitle(String testpaperjson)
     {
         //String jstr = "{\"studentId\":\"1\",\"testpaperId\":\"22\",\"testpaperStudentScore\":99.5,\"data\":[{\"id\":\"40\",\"option\":\"D\"}]}";
-        StudentTestpaper sts = JSON.parseObject(testpaperjson, StudentTestpaper.class);
-        //uuid参数改为studentId
-//        sts.setStudentId(stuId);
-//        try{
-//            stuId = moduleOneDao.selectStuIdbyStUuid(sts.getUuid());
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            return Result.failure(null,Constant.ACCOUNT_NOT_EXIST);
-//        }
+        StudentTestpaper sts = null;
+        try
+        {
+            sts = JSON.parseObject(testpaperjson, StudentTestpaper.class);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return Result.failure(null,Constant.OPERATION_FAILURE);
+        }
+
+        int count = testpaperDao.judgeTestperOpened(sts.getTestpaperId());
+        if (count == 0)
+        {
+            return Result.failure(null,Constant.TESTPAPER_IS_CLOSED);
+        }
+
         int stuId = sts.getStudentId();
-        int count = moduleOneDao.duplicateChecking(sts);
+        count = moduleOneDao.duplicateChecking(sts);
         System.out.println(count);
         if(count > 0){
             return null;

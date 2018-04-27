@@ -150,6 +150,9 @@
         </form>
     </div>
 </div>
+<div id="generateClassCode" style="display: none">
+    <img alt="img" id="showGenerateClassCode"  src="#">
+</div>
 <div id="previewClassesInfo" style="display: none;width: auto; margin-top: 20px;">
     <div class="layui-form">
         <table class="layui-table">
@@ -212,6 +215,11 @@
                                     <a class="layui-btn layui-btn-mini" onclick="_subject.selectClassesByIdToStudents(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
                                         学生信息
+                                    </a>
+
+                                    <a class="layui-btn layui-btn-mini" onclick="_subject.generateClassCode(` + data.data[i].code + `)">
+                                        <i class="layui-icon">&#xe602;</i>
+                                        生成二维码
                                     </a>
 
                                 </div>
@@ -312,6 +320,18 @@
                         content: $('#previewClassesInfo')
                     });
                 });
+            },
+            generateClassCode: function (classCode) {
+                let time = new Date();
+                $("#showGenerateClassCode").attr("src","${baseurl}/sqcc/getErWeiCode?classCode="+classCode+"&&d="+time)
+                layer.open({
+                    type: 1,
+                    title: '班课二维码',
+                    area: ['30%', '80%'],
+                    skin: 'yourclass',
+                    content: $('#generateClassCode')
+                });
+                form.render();
             },
             addClassInfo: function () {
                 let name = $("input[name='className']").val();

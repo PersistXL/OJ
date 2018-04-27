@@ -215,7 +215,6 @@
       <artifactId>mockito-all</artifactId>
       <version>RELEASE</version>
     </dependency>
-
   </dependencies>
 
   <build>

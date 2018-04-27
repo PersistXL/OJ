@@ -15,6 +15,10 @@ public class Constant {
 
     public static final String ADD_SUCCESS = "添加成功";
     public static final String ADD_FAILURE = "添加失败";
+
+    public static final String ADD_TESTPAPER_SUCCESS = "交卷成功";
+    public static final String ADD_TESTPAPER_FAILURE = "交卷失败";
+
     public static final String UPDATE_SUCCESS = "修改成功";
     public static final String UPDATE_FAILURE = "修改失败";
     public static final String ACCOUNT_IS_LOCK = "当前帐号或角色被禁止";
@@ -33,6 +37,7 @@ public class Constant {
     public static final String ACCOUNT_IS_EXIST = "帐号已存在";
     public static final String TESTPAPER_IS_FALSE = "试卷名称已存在";
     public static final String TESTPAPER_IS_TRUE = "试卷名称不存在";
+    public static final String TESTPAPER_IS_CLOSED = "试卷提交期限已过";
     public static int ADMIN_ROLE_ID = 1;
 
 }

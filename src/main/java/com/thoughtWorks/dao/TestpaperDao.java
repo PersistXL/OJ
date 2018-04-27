@@ -55,4 +55,6 @@ public interface TestpaperDao {
     int findClassesId(String code);
 
     void insertTeacherClasses(@Param("classes_id") int classes_id,@Param("teacherId") int teacherId);
+	
+	int judgeTestperOpened(int testpaperId);
 }

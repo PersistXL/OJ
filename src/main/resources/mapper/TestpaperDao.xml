@@ -61,4 +61,7 @@
     <delete id="deleteClassesOfStudentInfo" parameterType="int">
         DELETE FROM o_student_classes WHERE id = #{id}
     </delete>
+    <select id="judgeTestperOpened" resultType="int" parameterType="int">
+        select COUNT(*) from o_testpaper where id = #{testpaperId} and NOW() &lt;= close_time
+    </select>
 </mapper>
