@@ -179,7 +179,7 @@
 }
                     _html += (`</fieldset>`);
                 }
-            _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" onclick="examination_paper()">`
+            _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" id="crop" onclick="examination_paper()">`
             $("#view").html(_html);
         });
         layer.open({
@@ -193,13 +193,17 @@
 
     function examination_paper() {
         // $(this).attr("disabled",true)
+        document.getElementById("crop").setAttribute("disabled", true);
         let score = 0;  //未答题前成绩为0
         let checkBoxs = []; //自定义选项的数组
         var userName = dataListObject;
         for (var i = 0; i < testQuestions.data.length; i++) {
             checkBoxs.push($("input[name='" + testQuestions.data[i].id + "']:checked").val());
             if (testQuestions.data[i].correct == checkBoxs[i]) {
-                score = score + (totalScore / testQuestions.data.length);
+                score = score + Math.round(totalScore / testQuestions.data.length);
+                if(score >= 99){
+                    score = 100
+                }
             } else {
                 var falseid = testQuestions.data[i].id;
                 //存储错题的id
