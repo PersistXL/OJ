@@ -327,7 +327,6 @@
 
                                 <div class="layui-btn-group">`
 
-                            console.log(data.data[i].chapter,"1235645");
                             if (!isHave) {
                                 _html += `<a class="layui-btn layui-btn-mini" onclick="_subject.addTestpaperCursor(` + data.data[i].id + `)" >
                                             <i class="layui-icon">&#xe642;</i>
