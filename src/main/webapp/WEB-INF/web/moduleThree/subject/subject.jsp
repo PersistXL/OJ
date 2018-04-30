@@ -75,14 +75,24 @@
                         </div>
                     </div>
                     <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="text" name="select_chapter"
-                                       autocomplete="off"
-                                       placeholder="请输入知识点" class="layui-input">
+                        <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
+                        <%--<div class="layui-inline">--%>
+                            <%--<div class="layui-input-inline">--%>
+                                <%--<input type="text" name="select_chapter"--%>
+                                       <%--autocomplete="off"--%>
+                                       <%--placeholder="请输入知识点" class="layui-input">--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <select name="chapter" id="chapter" lay-filter="modules_1"
+                                            lay-verify="required"
+                                            lay-search="">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
                     </div>
                     <div class="layui-input-inline">
                         <div class="layui-inline">
@@ -232,6 +242,7 @@
                         <option value="一般">一般</option>
                         <option value="较难">较难</option>
                         <option value="困难">困难</option>
+                        <option value="未指定">未指定</option>
                     </select>
                 </div>
             </div>
@@ -287,7 +298,7 @@
             page: function () {
                 var select_questions = $("select[name='select_questions']").val();
                 var select_facility = $("select[name='select_facility']").val();
-                var select_chapter = $("input[name='select_chapter']").val();
+                var select_chapter = $("#chapter option:selected").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
                     let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
@@ -296,6 +307,15 @@
                     $("#questions_id").html(_html);
                     $("#select_questions").html(_html);
                     form.render();
+                });
+
+                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", function (data) {
+                    let _chapterHtml = `<option value="">请选择</option>`;
+
+                    for (let item of data.data) {
+                        _chapterHtml += `<option value="`+item.chapter+`">`+item.chapter+`</option>`
+                    }
+                    $("#chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);
                 });
 
                 $.post("${baseurl}/subject/selectSubject", {
