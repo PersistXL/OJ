@@ -28,137 +28,161 @@ import java.util.*;
 public class TestpaperController {
 
     @Autowired
-    TestpaperDao testpaperDao ;
+    TestpaperDao testpaperDao;
+
     @RequestMapping("selectTestpaperCursor")
-    public Result selectTestpaperCursor(){
-        try{
-            String username = ((ActiveUser)SecurityUtils.getSubject().getPrincipal()).getUserName();
-            return Result.success(testpaperDao.selectTestpaperCursor(testpaperDao.selectIdByName(username)),Constant.SEARCH_SUCCESS);
-        }catch(Exception e){
+    public Result selectTestpaperCursor() {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            return Result.success(testpaperDao.selectTestpaperCursor(testpaperDao.selectIdByName(username)), Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return  Result.failure(null,Constant.SEARCH_FAILURE);
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+
+    @RequestMapping("selectTestpaperCursorOfChapter")
+    public Result selectTestpaperCursorOfChapter() {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            List<String> data = testpaperDao.selectTestpaperCursorOfChapter(testpaperDao.selectIdByName(username));
+            System.out.println(data);
+
+            return Result.success(data, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
     @RequestMapping("deleteTestpaperCursor")
-    public Result deleteTestpaperCursor(int id){
-        try{
+    public Result deleteTestpaperCursor(int id) {
+        try {
             testpaperDao.deleteTestpaperCursor(id);
-            return Result.success(null,Constant.DELETE_SUCCESS);
-        }catch(Exception e){
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.DELETE_FAILURE);
+        return Result.failure(null, Constant.DELETE_FAILURE);
     }
+
     @RequestMapping("addTestpaperCursor")
-    public Result addTestpaperCursor(TestpaperCursor testpaperCursor){
-        try{
-            String username = ((ActiveUser)SecurityUtils.getSubject().getPrincipal()).getUserName();
+    public Result addTestpaperCursor(TestpaperCursor testpaperCursor) {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
             testpaperCursor.setTeacherId(testpaperDao.selectIdByName(username));
             testpaperDao.addTestpaperCursor(testpaperCursor);
-            return Result.success(null,Constant.ADD_SUCCESS);
-        }catch(Exception e){
+            return Result.success(null, Constant.ADD_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.ADD_FAILURE);
+        return Result.failure(null, Constant.ADD_FAILURE);
     }
+
     @RequestMapping("addTestpaperCursorToTestpaper")
-    public Result addTestpaperCursorToTestpaper(Testpaper testpaper){
-        try{
-            String username = ((ActiveUser)SecurityUtils.getSubject().getPrincipal()).getUserName();
+    public Result addTestpaperCursorToTestpaper(Testpaper testpaper) {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
             int id = testpaperDao.selectIdByName(username);
-           testpaper.setTeacherId(id);
+            testpaper.setTeacherId(id);
 
             String start_time = DataUtil.outDate();
             testpaper.setStartTime(start_time);
             testpaperDao.addTestpaperCursorToTestpaper(testpaper);
             testpaperDao.deleteTestpaperCursorByName(id);
-            return Result.success(null,Constant.ADD_SUCCESS);
-        }catch(Exception e){
+            return Result.success(null, Constant.ADD_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.ADD_FAILURE);
+        return Result.failure(null, Constant.ADD_FAILURE);
     }
+
     @RequestMapping("selectClasses")
-    public Result selectClasses(){
-        try{
-            String username = ((ActiveUser)SecurityUtils.getSubject().getPrincipal()).getUserName();
+    public Result selectClasses() {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
             int id = testpaperDao.selectIdByName(username);
-            return Result.success(testpaperDao.selectClasses(id),Constant.DELETE_SUCCESS);
-        }catch(Exception e){
+            return Result.success(testpaperDao.selectClasses(id), Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.DELETE_FAILURE);
+        return Result.failure(null, Constant.DELETE_FAILURE);
     }
+
     @RequestMapping("addClasses")
-    public Result addClasses(Classes classes){
-        try{
-            String username = ((ActiveUser)SecurityUtils.getSubject().getPrincipal()).getUserName();
+    public Result addClasses(Classes classes) {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
             int id = testpaperDao.selectIdByName(username);
             classes.setTeacherId(String.valueOf(id));
             testpaperDao.addClasses(classes);
             int classes_id = testpaperDao.findClassesId(classes.getCode());
-            int s=Integer.parseInt(classes.getTeacherId());
-            testpaperDao.insertTeacherClasses(classes_id,Integer.parseInt(classes.getTeacherId()));
-            return Result.success(null,Constant.ADD_SUCCESS);
-        }catch(Exception e){
+            int s = Integer.parseInt(classes.getTeacherId());
+            testpaperDao.insertTeacherClasses(classes_id, Integer.parseInt(classes.getTeacherId()));
+            return Result.success(null, Constant.ADD_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.ADD_FAILURE);
+        return Result.failure(null, Constant.ADD_FAILURE);
     }
+
     @RequestMapping("addcodeEndTime")
-    public Result addcodeEndTime(Classes classes){
-        try{
+    public Result addcodeEndTime(Classes classes) {
+        try {
             testpaperDao.addcodeEndTime(classes);
-            return Result.success(null,Constant.ADD_SUCCESS);
-        }catch(Exception e){
+            return Result.success(null, Constant.ADD_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.ADD_FAILURE);
+        return Result.failure(null, Constant.ADD_FAILURE);
     }
+
     @RequestMapping("deleteClassByTeacherId")
-    public Result deleteClassByTeacherId(int id){
-        try{
+    public Result deleteClassByTeacherId(int id) {
+        try {
             testpaperDao.deleteClassByTeacherId(id);
             testpaperDao.deleteStudentByClassByTeacherId(id);
-            return Result.success(null,Constant.DELETE_SUCCESS);
-        }catch(Exception e){
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.DELETE_FAILURE);
+        return Result.failure(null, Constant.DELETE_FAILURE);
     }
 
     @RequestMapping("deleteClassesOfStudentInfo")
-    public Result deleteClassesOfStudentInfo(int id){
-        try{
+    public Result deleteClassesOfStudentInfo(int id) {
+        try {
             testpaperDao.deleteClassesOfStudentInfo(id);
-            return Result.success(null,Constant.DELETE_SUCCESS);
-        }catch(Exception e){
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.DELETE_FAILURE);
+        return Result.failure(null, Constant.DELETE_FAILURE);
     }
+
     @RequestMapping("selectClassesByIdToStudents")
-    public Result selectClassesByIdToStudents(int id){
-        try{
-            return Result.success(testpaperDao.selectClassesByIdToStudents(id),Constant.SEARCH_SUCCESS);
-        }catch(Exception e){
+    public Result selectClassesByIdToStudents(int id) {
+        try {
+            return Result.success(testpaperDao.selectClassesByIdToStudents(id), Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.SEARCH_FAILURE);
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+
     @RequestMapping("selectTestpaperNameIs")
-    public Result selectTestpaperNameIs(Testpaper testpaper){
-        try{
+    public Result selectTestpaperNameIs(Testpaper testpaper) {
+        try {
             boolean isHave = true;
             long count = testpaperDao.selectTestpaperNameIs(testpaper);
-            if(count>0){
+            if (count > 0) {
                 isHave = false;
             }
-            return Result.success(isHave,Constant.TESTPAPER_IS_FALSE);
-        }catch(Exception e){
+            return Result.success(isHave, Constant.TESTPAPER_IS_FALSE);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.TESTPAPER_IS_TRUE);
+        return Result.failure(null, Constant.TESTPAPER_IS_TRUE);
     }
 
 }

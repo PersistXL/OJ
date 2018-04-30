@@ -154,20 +154,38 @@
                                         <option value="一般">一般</option>
                                         <option value="较难">较难</option>
                                         <option value="困难">困难</option>
+                                        <option value="未指定">未指定</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <div class="layui-input-inline">
+
                             <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <input type="text" name="select_chapter"
-                                           autocomplete="off"
-                                           placeholder="请输入知识点" class="layui-input">
+                                    <select name="select_chapter" id="select_chapter" lay-filter="modules_1"
+                                            lay-verify="required"
+                                            lay-search="">
+                                        <option value="">请选择</option>
+                                    </select>
                                 </div>
                             </div>
+
+                            <%--<select name="city" lay-verify="" lay-search>--%>
+                            <%--<option value="010">layer</option>--%>
+                            <%--<option value="021">form</option>--%>
+                            <%--<option value="0571" selected>layim</option>--%>
+                            <%--</select>--%>
+                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
+                            <%--<div class="layui-inline">--%>
+                            <%--<div class="layui-input-inline">--%>
+                            <%--<input type="text" name="select_chapter"--%>
+                            <%--autocomplete="off"--%>
+                            <%--placeholder="请输入知识点" class="layui-input">--%>
+                            <%--</div>--%>
+                            <%--</div>--%>
                         </div>
                         <div class="layui-input-inline">
                             <div class="layui-inline">
@@ -217,6 +235,7 @@
     let totalSize = 5;
     let currentIndex = 1;
     let pageSize = 10;
+    let chapterLists = [];
     layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree'], function () {
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
@@ -227,7 +246,7 @@
             page: function () {
                 var select_questions = $("select[name='select_questions']").val();
                 var select_facility = $("select[name='select_facility']").val();
-                var select_chapter = $("input[name='select_chapter']").val();
+                var select_chapter = $("#select_chapter option:selected").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
                     let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
                     for (let i = 0; i < data.data.length; i++) {
@@ -244,11 +263,19 @@
                     $("#classes_id").html(_html);
                     form.render();
                 });
+                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", function (data) {
+                    let _chapterHtml = `<option value="">请选择</option>`;
+
+                    for (let item of data.data) {
+                        _chapterHtml += `<option value="`+item.chapter+`">`+item.chapter+`</option>`
+                    }
+                    $("#select_chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);
+                });
                 $.post("${baseurl}/Testpaper/selectTestpaperCursor", function (data) {
                     let _html = ""
                     let idAll = [];
                     for (let i = 0; i < data.data.length; i++) {
-                        idAll.push(data.data[i].id)
+                        idAll.push(data.data[i].id);
                         let count = i + 1;
                         _html += `<tr>
                         <th>` + count + `</th>
@@ -263,6 +290,7 @@
                             </a>
                         </th></tr>`;
                     }
+
                     $("#cursorTaskQuestions").html(_html);
                     $("#idAll").val(idAll.join("_"));
                 });
@@ -284,10 +312,10 @@
                         for (let i = 0; i < data.data.length; i++) {
                             let isHave = false;
                             value.data.map(item => {
-                                if(data.data[i].id === item.subject_id){
+                                if (data.data[i].id === item.subject_id) {
                                     isHave = true;
                                 }
-                            })
+                            });
 
                             _html += `<tr>
                             <td>` + (i + 1) + `</td>
@@ -298,17 +326,18 @@
                             <td>
 
                                 <div class="layui-btn-group">`
-                            if(!isHave){
-                                _html+=`<a class="layui-btn layui-btn-mini" onclick="_subject.addTestpaperCursor(` + data.data[i].id + `)" >
+
+                            console.log(data.data[i].chapter,"1235645");
+                            if (!isHave) {
+                                _html += `<a class="layui-btn layui-btn-mini" onclick="_subject.addTestpaperCursor(` + data.data[i].id + `)" >
                                             <i class="layui-icon">&#xe642;</i>
                                             选择
                                         </a>`
-                            }else{
+                            } else {
 
                             }
 
-
-                                    _html+=`<a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
+                            _html += `<a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
@@ -318,7 +347,7 @@
                         }
                         $("#subject_info").html(_html);
                         form.render();
-                });
+                    });
                 })
             },
             paging: function () {
