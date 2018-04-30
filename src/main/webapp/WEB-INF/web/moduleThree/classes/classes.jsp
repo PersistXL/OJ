@@ -150,7 +150,7 @@
         </form>
     </div>
 </div>
-<div id="generateClassCode" style="display: none">
+<div id="generateClassCode" style="display: none;text-align: center">
     <img alt="img" id="showGenerateClassCode"  src="#">
 </div>
 <div id="previewClassesInfo" style="display: none;width: auto; margin-top: 20px;">
@@ -327,7 +327,7 @@
                 layer.open({
                     type: 1,
                     title: '班课二维码',
-                    area: ['30%', '80%'],
+                    area: ['500px', '500px'],
                     skin: 'yourclass',
                     content: $('#generateClassCode')
                 });

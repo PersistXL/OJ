@@ -110,9 +110,9 @@ public class SimpleQrCodeUtil {
 				// 开始绘制图片
 
 				g.drawImage(logo, x, y, widthLogo, heightLogo, null);
-				g.setColor(Color.BLUE);
+//				g.setColor(Color.BLUE);
 				g.setStroke(new BasicStroke(2));
-				g.drawRoundRect(x, y, widthLogo, heightLogo, 15, 15);
+//				g.drawRoundRect(x, y, widthLogo, heightLogo, 15, 15);
 				g.dispose();
 				result.flush();
 				image = result;
@@ -127,7 +127,7 @@ public class SimpleQrCodeUtil {
 				outg.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
 				// 画文字到新的面板
 				outg.setColor(Color.BLUE);
-				outg.setFont(new Font("华文行楷", Font.BOLD, 22)); // 字体、字型、字号
+				outg.setFont(new Font("宋体", Font.BOLD, 22)); // 字体、字型、字号
 				int strWidth = outg.getFontMetrics().stringWidth(text);
 
 				outg.drawString(text, (WIDTH - strWidth) / 2, HEIGHT - 5); // 画文字

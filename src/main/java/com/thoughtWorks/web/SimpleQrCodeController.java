@@ -34,7 +34,7 @@ public class SimpleQrCodeController {
 
         try {
             File file = new File(iconPath);
-            ImageIO.write(Objects.requireNonNull(SimpleQrCodeUtil.createQRCode(file, content, "班课码：" + content)), "png", response.getOutputStream());
+            ImageIO.write(Objects.requireNonNull(SimpleQrCodeUtil.createQRCode(file, content, "ClassCode:" + content)), "png", response.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
