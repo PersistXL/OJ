@@ -4,6 +4,8 @@ import com.thoughtWorks.entity.Questions;
 import com.thoughtWorks.entity.Subject;
 import com.thoughtWorks.util.PageUtil;
 import com.thoughtWorks.entity.QuestionBankParameter;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.*;
 
 /**
@@ -81,12 +83,12 @@ public interface SubjectDao {
      * excel倒入数据
      * @param list
      */
-    void insertSubjectByExcel( List<Map<String,String>> list);
+    void insertSubjectByExcel(@Param("list") List<Map<String,String>> list,@Param("questionsId") int questionsId);
     /**
      * excel倒入数据
      * @param list
      */
-    void insertSubjectByExcelThree( List<Map<String,String>> list);
+    void insertSubjectByExcelThree( @Param("list") List<Map<String,String>> list,@Param("questionsId") int questionsId);
 
     /**
      * 移动端查询题库
