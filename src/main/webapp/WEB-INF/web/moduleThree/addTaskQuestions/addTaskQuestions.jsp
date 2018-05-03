@@ -486,6 +486,7 @@
                     _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                 }
                 $("#classes_id").html(_html);
+                form.render();
             });
         }
 
