@@ -133,9 +133,10 @@
                         <div class="layui-input-inline">
                             <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
                             <div class="layui-inline">
-                                <div class="layui-input-inline">
-                                    <select name="select_questions" id="select_questions" lay-filter="modules_1"
-                                            lay-verify="required" lay-search="">
+                                <div class="layui-input-inline" id="tiku">
+                                    <select name="select_questionss" id="select_questionss"
+                                            lay-verify="required" lay-filter="questionBankToKnowledgePoint"
+                                            lay-search="">
                                         <option value="">请选择</option>
                                     </select>
                                 </div>
@@ -145,7 +146,8 @@
                             <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <select name="select_facility" lay-filter="modules_1" lay-verify="required"
+                                    <select name="select_facility" id="select_facility" lay-filter="modules_1"
+                                            lay-verify="required"
                                             lay-search="">
                                         <option value="">请选择</option>
                                         <option value="">请选择</option>
@@ -165,11 +167,11 @@
                             <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <select name="select_chapter" id="select_chapter" lay-filter="modules_1"
-                                            lay-verify="required"
+                                    <select name="select_chapter" id="select_chapter" lay-verify="required"
                                             lay-search="">
                                         <option value="">请选择</option>
                                     </select>
+
                                 </div>
                             </div>
 
@@ -239,64 +241,19 @@
     layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree'], function () {
         window.jQuery = window.$ = layui.jquery;
         window.layer = layui.layer;
-        let element = layui.element(),
+        var element = layui.element(),
             form = layui.form(),
             laytpl = layui.laytpl;
+
         _subject = {
             page: function () {
-                var select_questions = $("select[name='select_questions']").val();
+                var select_questionss = $("select[name='select_questionss']").val();
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("#select_chapter option:selected").val();
-                $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
-                    for (let i = 0; i < data.data.length; i++) {
-                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                    }
-                    $("#select_questions").html(_html);
-                    form.render();
-                });
-                $.post("${baseurl}/Testpaper/selectClasses", function (data) {
-                    let _html = "";
-                    for (let i = 0; i < data.data.length; i++) {
-                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                    }
-                    $("#classes_id").html(_html);
-                    form.render();
-                });
-                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", function (data) {
-                    let _chapterHtml = `<option value="">请选择</option>`;
-
-                    for (let item of data.data) {
-                        _chapterHtml += `<option value="`+item.chapter+`">`+item.chapter+`</option>`
-                    }
-                    $("#select_chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);
-                });
-                $.post("${baseurl}/Testpaper/selectTestpaperCursor", function (data) {
-                    let _html = ""
-                    let idAll = [];
-                    for (let i = 0; i < data.data.length; i++) {
-                        idAll.push(data.data[i].id);
-                        let count = i + 1;
-                        _html += `<tr>
-                        <th>` + count + `</th>
-                        <th>` + data.data[i].subject + `</th>
-                        <th>` + data.data[i].questionsName + `</th>
-                        <th>` + data.data[i].chapter + `</th>
-                        <th>` + (data.data[i].facility === undefined ? "未指定" : data.data[i].facility) + `</th>
-                        <th>
-                            <a class="layui-btn layui-btn-mini" onclick="_subject.removeTestpaperCursor(` + data.data[i].id + `)">
-                                <i class="layui-icon">&#xe602;</i>
-                                移除
-                            </a>
-                        </th></tr>`;
-                    }
-
-                    $("#cursorTaskQuestions").html(_html);
-                    $("#idAll").val(idAll.join("_"));
-                });
+                // var select_chapter = 1;
 
                 $.post("${baseurl}/subject/selectSubject", {
-                    questionsId: select_questions,
+                    questionsId: select_questionss,
                     chapter: select_chapter,
                     facility: select_facility,
                     currentIndex: currentIndex,
@@ -345,9 +302,10 @@
                         </tr>`;
                         }
                         $("#subject_info").html(_html);
-                        form.render();
                     });
                 })
+
+
             },
             paging: function () {
                 layui.laypage({
@@ -492,8 +450,86 @@
 
             }
         }
+
+        function loadOptionsHtml(data) {
+            let _html = "<option value=''>请选择</option>";
+            for (let i = 0; i < data.length; ++i) {
+                _html += `<option value="` + data[i].chapter + `">` + data[i].chapter + `</option>`;
+            }
+            return _html;
+        }
+
+        function selectQuestions() {
+            $.post("${baseurl}/subject/selectQuestions", function (data) {
+                let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                for (let i = 0; i < data.data.length; i++) {
+                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                }
+                $("#select_questionss").html(_html);
+                form.render();
+
+
+            });
+            // form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
+                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: 1}, function (data) {
+                    let _html = `<option value=''>请选择</option>`
+
+                    $("#select_chapter").html(_html + loadOptionsHtml(data.data));
+                    form.render();
+                });
+            // });
+        }
+
+        function selectClasses() {
+            $.post("${baseurl}/Testpaper/selectClasses", function (data) {
+                let _html = "";
+                for (let i = 0; i < data.data.length; i++) {
+                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                }
+                $("#classes_id").html(_html);
+            });
+        }
+
+        function selectTestpaperCursor() {
+            $.post("${baseurl}/Testpaper/selectTestpaperCursor", function (data) {
+                let _html = ""
+                let idAll = [];
+                for (let i = 0; i < data.data.length; i++) {
+                    idAll.push(data.data[i].id);
+                    let count = i + 1;
+                    _html += `<tr>
+                        <th>` + count + `</th>
+                        <th>` + data.data[i].subject + `</th>
+                        <th>` + data.data[i].questionsName + `</th>
+                        <th>` + data.data[i].chapter + `</th>
+                        <th>` + (data.data[i].facility === undefined ? "未指定" : data.data[i].facility) + `</th>
+                        <th>
+                            <a class="layui-btn layui-btn-mini" onclick="_subject.removeTestpaperCursor(` + data.data[i].id + `)">
+                                <i class="layui-icon">&#xe602;</i>
+                                移除
+                            </a>
+                        </th></tr>`;
+                }
+
+                $("#cursorTaskQuestions").html(_html);
+                $("#idAll").val(idAll.join("_"));
+
+
+
+            });
+        }
+
+
+        // $("document").on('change','select#select_facility',function () {
+        //     alert(12);
+        // });
+
+
         $(function () {
             _subject.page();
+            selectQuestions();
+            selectClasses();
+            selectTestpaperCursor();
             //图片上传
             layui.use('upload', function () {
                 layui.upload({
@@ -535,14 +571,14 @@
             }
         };
 
-        document.getElementById('LAY_demorange_s').onclick = function () {
-            start.elem = this;
-            laydate(start);
-        }
-        document.getElementById('LAY_demorange_e').onclick = function () {
-            end.elem = this
-            laydate(end);
-        }
+        // document.getElementById('LAY_demorange_s').onclick = function () {
+        //     start.elem = this;
+        //     laydate(start);
+        // }
+        // document.getElementById('LAY_demorange_e').onclick = function () {
+        //     end.elem = this
+        //     laydate(end);
+        // }
 
     });
 </script>

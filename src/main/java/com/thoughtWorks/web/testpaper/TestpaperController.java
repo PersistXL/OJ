@@ -42,10 +42,10 @@ public class TestpaperController {
     }
 
     @RequestMapping("selectTestpaperCursorOfChapter")
-    public Result selectTestpaperCursorOfChapter() {
+    public Result selectTestpaperCursorOfChapter(int questionBankId) {
         try {
-            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
-            List<String> data = testpaperDao.selectTestpaperCursorOfChapter(testpaperDao.selectIdByName(username));
+
+            List<String> data = testpaperDao.selectTestpaperCursorOfChapter(questionBankId);
             System.out.println(data);
 
             return Result.success(data, Constant.SEARCH_SUCCESS);
