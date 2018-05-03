@@ -12,8 +12,8 @@
 
     <insert id="wrongTitleId" parameterType="com.thoughtWorks.entity.WrongTitle">
         INSERT
-        INTO o_wrong_title (subject_id, student_id,wrong_options)
-        VALUES (#{subjectId},#{studentId},#{wrongOptions})
+        INTO o_wrong_title (subject_id, student_id,wrong_options,classes_id)
+        VALUES (#{subjectId},#{studentId},#{wrongOptions},#{classesId})
     </insert>
 
     <select id="selectWrongTitleNo" parameterType="int" resultType="map">

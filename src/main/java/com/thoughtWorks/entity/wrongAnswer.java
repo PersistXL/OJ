@@ -4,6 +4,15 @@ public class wrongAnswer
 {
     private String id;
     private String option;
+    private int classesId;
+
+    public int getClassesId() {
+        return classesId;
+    }
+
+    public void setClassesId(int classesId) {
+        this.classesId = classesId;
+    }
 
     public String getId() {
         return id;

@@ -7,6 +7,15 @@ public class WrongTitle {
     private String subjectId;
     private String studentId;
     private String wrongOptions;
+    private int classesId;
+
+    public int getClassesId() {
+        return classesId;
+    }
+
+    public void setClassesId(int classesId) {
+        this.classesId = classesId;
+    }
 
     public String getSubjectId() {
         return subjectId;
@@ -38,6 +47,7 @@ public class WrongTitle {
                 "subjectId='" + subjectId + '\'' +
                 ", studentId='" + studentId + '\'' +
                 ", wrongOptions='" + wrongOptions + '\'' +
+                ", classesId=" + classesId +
                 '}';
     }
 }
