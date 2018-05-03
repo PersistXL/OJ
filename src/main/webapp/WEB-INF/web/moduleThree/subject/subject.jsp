@@ -77,22 +77,22 @@
                     <div class="layui-input-inline">
                         <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
                         <%--<div class="layui-inline">--%>
-                            <%--<div class="layui-input-inline">--%>
-                                <%--<input type="text" name="select_chapter"--%>
-                                       <%--autocomplete="off"--%>
-                                       <%--placeholder="请输入知识点" class="layui-input">--%>
-                            <%--</div>--%>
+                        <%--<div class="layui-input-inline">--%>
+                        <%--<input type="text" name="select_chapter"--%>
+                        <%--autocomplete="off"--%>
+                        <%--placeholder="请输入知识点" class="layui-input">--%>
                         <%--</div>--%>
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
-                            <div class="layui-inline">
-                                <div class="layui-input-inline">
-                                    <select name="chapter" id="chapter" lay-filter="modules_1"
-                                            lay-verify="required"
-                                            lay-search="">
-                                        <option value="">请选择</option>
-                                    </select>
-                                </div>
+                        <%--</div>--%>
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <select name="chapter" id="chapter" lay-filter="modules_1"
+                                        lay-verify="required"
+                                        lay-search="">
+                                    <option value="">请选择</option>
+                                </select>
                             </div>
+                        </div>
                     </div>
                     <div class="layui-input-inline">
                         <div class="layui-inline">
@@ -271,10 +271,29 @@
     </div>
 </div>
 <div id="addＥxcel" style="display: none;width: auto; margin-top: 20px;">
-    <div class="layui-form-item layui-form-text">
+    <div class="layui-form layui-form-item layui-form-text">
         <form id='formSumbit' action="${baseurl}/subject/uploadFile" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" lay-type="file" ><br/>
-            <input type="submit" value="上传" class="layui-btn"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">题库：</label>
+                <div class="layui-input-inline">
+                    <select name="questions_id" lay-verify="required" lay-search="" id="questions_id_excel">
+                        <option value="0">试题</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Excel文件：</label>
+                <div class="layui-input-inline">
+                    <input class="button" type="file" name="file" lay-type="file"><br/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="submit" value="上传Excel" class="layui-btn"/>
+                </div>
+            </div>
         </form>
         <br>
         <h3 style="color:green" id="msg"></h3>
@@ -301,10 +320,13 @@
                 var select_chapter = $("#chapter option:selected").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
                     let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                    let _html_excel = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                        _html_excel += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
                     $("#questions_id").html(_html);
+                    $("#questions_id_excel").html(_html_excel);
                     $("#select_questions").html(_html);
                     form.render();
                 });
@@ -313,7 +335,7 @@
                     let _chapterHtml = `<option value="">请选择</option>`;
 
                     for (let item of data.data) {
-                        _chapterHtml += `<option value="`+item.chapter+`">`+item.chapter+`</option>`
+                        _chapterHtml += `<option value="` + item.chapter + `">` + item.chapter + `</option>`
                     }
                     $("#chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);
                 });
@@ -343,7 +365,7 @@
                             <td>` + data.data[i].correct + `</td>
                             <td><span class = "hide_title">` + data.data[i].questionsName + `</span></td>
                             <td ><span class = "hide_title">` + data.data[i].chapter + `</span></td>
-                            <td>` +(data.data[i].facility===undefined ?"暂无":data.data[i].facility) + `</td>
+                            <td>` + (data.data[i].facility === undefined ? "暂无" : data.data[i].facility) + `</td>
                             <td>
 
                                 <div class="layui-btn-group">
@@ -431,23 +453,23 @@
                         $("input[name='option_d']").val(data.data.option_d);
                         $("input[name='option_e']").val(data.data.option_e);
                         // $("select[name='correct']").val(data.data.correct);
-                        let _html_correct =`<option value="A" `+(data.data.correct === "A"?"selected='selected'":"")+`>选项A</option>
-                        <option value="B"`+(data.data.correct === "B"?"selected='selected'":"")+`>选项B</option>
-                        <option value="C"`+(data.data.correct === "C"?"selected='selected'":"")+`>选项C</option>
-                        <option value="D"`+(data.data.correct === "D"?"selected='selected'":"")+`>选项D</option>
-                        <option value="E"`+(data.data.correct === "E"?"selected='selected'":"")+`>选项E</option>`;
+                        let _html_correct = `<option value="A" ` + (data.data.correct === "A" ? "selected='selected'" : "") + `>选项A</option>
+                        <option value="B"` + (data.data.correct === "B" ? "selected='selected'" : "") + `>选项B</option>
+                        <option value="C"` + (data.data.correct === "C" ? "selected='selected'" : "") + `>选项C</option>
+                        <option value="D"` + (data.data.correct === "D" ? "selected='selected'" : "") + `>选项D</option>
+                        <option value="E"` + (data.data.correct === "E" ? "selected='selected'" : "") + `>选项E</option>`;
                         $("#correct").html(_html_correct);
-                        let _html_facility =`<option value="简单" `+(data.data.facility === "简单"?"selected='selected'":"")+`>简单</option>
-                        <option value="较易"`+(data.data.facility === "较易"?"selected='selected'":"")+`>较易</option>
-                        <option value="一般"`+(data.data.facility === "一般"?"selected='selected'":"")+`>一般</option>
-                        <option value="较难"`+(data.data.facility === "较难"?"selected='selected'":"")+`>较难</option>
-                        <option value="困难"`+(data.data.facility === "困难"?"selected='selected'":"")+`>困难</option>`;
+                        let _html_facility = `<option value="简单" ` + (data.data.facility === "简单" ? "selected='selected'" : "") + `>简单</option>
+                        <option value="较易"` + (data.data.facility === "较易" ? "selected='selected'" : "") + `>较易</option>
+                        <option value="一般"` + (data.data.facility === "一般" ? "selected='selected'" : "") + `>一般</option>
+                        <option value="较难"` + (data.data.facility === "较难" ? "selected='selected'" : "") + `>较难</option>
+                        <option value="困难"` + (data.data.facility === "困难" ? "selected='selected'" : "") + `>困难</option>`;
                         $("#facility").html(_html_facility);
-                        let questionsName= data.data.questionsName;
+                        let questionsName = data.data.questionsName;
                         $.post("${baseurl}/subject/selectQuestions", function (data) {
                             let _html = "";
                             for (let i = 0; i < data.data.length; i++) {
-                                _html += `<option value='` + data.data[i].id + `' `+( questionsName=== data.data[i].name?"selected='selected'":"")+`>` + data.data[i].name + `</option>`;
+                                _html += `<option value='` + data.data[i].id + `' ` + (questionsName === data.data[i].name ? "selected='selected'" : "") + `>` + data.data[i].name + `</option>`;
                             }
                             $("#questions_id").html(_html);
                             form.render();
@@ -562,8 +584,8 @@
             <tr>
                 <td>` + data.data.questionsName + `</td>
                 <td>` + data.data.chapter + `</td>
-                <td>` + (data.data.facility === undefined?"暂无": data.data.facility)  + `</td>
-                <td>` + (data.data.type=== undefined?"暂无": data.data.type )+ `</td>
+                <td>` + (data.data.facility === undefined ? "暂无" : data.data.facility) + `</td>
+                <td>` + (data.data.type === undefined ? "暂无" : data.data.type) + `</td>
             </tr>
             </tbody>
         </table>
@@ -634,11 +656,9 @@
                 var form = $(this);
                 if (fileName === '') {
                     layer.msg('请选择文件');
-                }else
-                if (fileType !== 'xls' && fileType !== 'xlsx') {
+                } else if (fileType !== 'xls' && fileType !== 'xlsx') {
                     layer.msg('文件格式不正确，excel文件！');
-                }else
-                if (form.hasClass('upload')) {
+                } else if (form.hasClass('upload')) {
                     //普通表单
                     $.ajax({
                         type: form.attr('method'),
@@ -646,7 +666,7 @@
                         data: form.serialize(),
                         dataType: "JSON"
                     }).success(function (data) {
-                       layer.msg(data.msg)
+                        layer.msg(data.msg)
                         //成功提交
                     });
                 }
@@ -662,12 +682,12 @@
                         contentType: false,
                         cache: false,
                         processData: false,
-                        error : function(XHR, textStatus, errorThrown) {
+                        error: function (XHR, textStatus, errorThrown) {
                             layer.msg("网络错误！XHR=" + XHR + "\ntextStatus=" + textStatus
                                 + "\nerrorThrown=" + errorThrown);
                         },
-                        success : function(data) {
-                            layer.confirm(data.msg, function(index){
+                        success: function (data) {
+                            layer.confirm(data.msg, function (index) {
                                 //do something
                                 $("#msg").html(data.msg)
                                 layer.close(index);

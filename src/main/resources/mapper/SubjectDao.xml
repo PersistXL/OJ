@@ -88,10 +88,10 @@
         WHERE id = #{id}
     </update>
     <insert id="insertSubjectByExcel" parameterType="list">
-        INSERT INTO o_subject (subject,option_a,option_b,option_c,option_d,option_e,chapter,correct)
+        INSERT INTO o_subject (subject,option_a,option_b,option_c,option_d,option_e,chapter,correct,questions_id)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.subject},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d},#{item.option_e},#{item.chapter},#{item.correct})
+            (#{item.subject},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d},#{item.option_e},#{item.chapter},#{item.correct},#{questionsId})
         </foreach>
     </insert>
 
@@ -104,10 +104,10 @@
     </select>
 
     <insert id="insertSubjectByExcelThree" parameterType="list">
-        INSERT INTO o_subject_model (chapter,chapter_no,subject,facility,chapter_type,assetbundle,modelName,model_tip,correct,option_a,option_b,option_c,option_d)
+        INSERT INTO o_subject_model (chapter,chapter_no,subject,facility,chapter_type,assetbundle,modelName,model_tip,correct,option_a,option_b,option_c,option_d,questions_id)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.chapter},#{item.chapter_no},#{item.subject},#{item.facility},#{item.chapter_type},#{item.assetbundle},#{item.modelName},#{item.model_tip},#{item.correct},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d})
+            (#{item.chapter},#{item.chapter_no},#{item.subject},#{item.facility},#{item.chapter_type},#{item.assetbundle},#{item.modelName},#{item.model_tip},#{item.correct},#{item.option_a},#{item.option_b},#{item.option_c},#{item.option_d},#{questionsId})
         </foreach>
     </insert>
 

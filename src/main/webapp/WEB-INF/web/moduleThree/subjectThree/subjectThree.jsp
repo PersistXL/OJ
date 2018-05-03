@@ -264,10 +264,30 @@
     <%--</div>--%>
 <%--</div>--%>
 <div id="addＥxcel" style="display: none;width: auto; margin-top: 20px;">
-    <div class="layui-form-item layui-form-text">
+    <div class="layui-form  layui-form-item layui-form-text">
         <form id='formSumbit' action="${baseurl}/subject/uploadFileThree" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" lay-type="file" ><br/>
-            <input type="submit" value="上传" class="layui-btn"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">题库：</label>
+                <div class="layui-input-inline">
+                    <select name="questions_id" lay-verify="required" lay-search="" id="questions_id_excel">
+                        <option value="0">试题</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Excel文件：</label>
+                <div class="layui-input-inline">
+                    <input class="button" type="file" name="file" lay-type="file"><br/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="submit" value="上传Excel" class="layui-btn"/>
+                </div>
+            </div>
+
         </form>
         <br>
         <h3 style="color:green" id="msg"></h3>
@@ -293,11 +313,14 @@
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("input[name='select_chapter']").val();
                 $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "";
+                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                    let _html_excel = "";
                     for (let i = 0; i < data.data.length; i++) {
                         _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                        _html_excel += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                     }
                     $("#questions_id").html(_html);
+                    $("#questions_id_excel").html(_html_excel);
                     $("#select_questions").html(_html);
                     form.render();
                 });

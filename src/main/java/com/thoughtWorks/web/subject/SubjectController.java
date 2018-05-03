@@ -48,6 +48,7 @@ public class SubjectController {
     @ResponseBody
     public Result upLoadFile(HttpServletRequest request) {
         String path = "";
+       int questionsId = Integer.parseInt(request.getParameter("questions_id"));
         try {
             // @RequestParam("file") MultipartFile file,
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
@@ -86,7 +87,7 @@ public class SubjectController {
                 }
                 System.out.println();
             }
-            subjectDao.insertSubjectByExcel(list);
+            subjectDao.insertSubjectByExcel(list,questionsId);
             return Result.failure(path, Constant.UPLOAD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,6 +99,7 @@ public class SubjectController {
     @ResponseBody
     public Result uploadFileThree(HttpServletRequest request) {
         String path = "";
+        int questionsId = Integer.parseInt(request.getParameter("questions_id"));
         try {
             // @RequestParam("file") MultipartFile file,
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
@@ -136,7 +138,7 @@ public class SubjectController {
                 }
                 System.out.println();
             }
-            subjectDao.insertSubjectByExcelThree(list);
+            subjectDao.insertSubjectByExcelThree(list,questionsId);
             return Result.failure(path, Constant.UPLOAD_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
