@@ -28,7 +28,7 @@
         AND o_student_classes.classes_id = o_testpaper.classes_id
 
     </select>
-    <select id="selectTestpaperById" resultType="Testpaper" parameterType="int">
+    <select id="selectTestpaperById" resultType="com.thoughtWorks.entity.Testpaper" parameterType="int">
         SELECT *
         FROM o_testpaper WHERE id=#{id}
     </select>
