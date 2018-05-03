@@ -112,7 +112,7 @@
                             <td style="text-align: center">` + status + `</td>
                             <td style="text-align: center">`)
                                     if (data.data[j].studentScore == null && d1 >= d2) {
-                                        _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + data.data[j].testpaperId + `)">
+                                        _html += (`<a class="layui-btn  layui-btn-small layui-btn-normal " onclick="work(` + data.data[j].testpaperId + `,'` + data.data[j].classes_id + `')">
                             <i class="layui-icon">&#xe642;</i>答题</a>`)
                                     } else {
                                         _html += (`<a class="layui-btn  layui-btn-small" onclick="watch(` + data.data[j].testpaperId + `)">
@@ -135,7 +135,7 @@
             });
         });
 
-    function work(id) {
+    function work(id,classes_id) {
         $.post("${baseurl}/moduleOne/selectTestpaperById", {id: id}, function (data) {
             ID = id;
             testQuestions = data;
@@ -179,7 +179,7 @@
 }
                     _html += (`</fieldset>`);
                 }
-            _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" id="crop" onclick="examination_paper()">`
+            _html += `<input type="button" style="margin-left: 50%;margin-bottom: 25px;margin-top: 10px" value="交卷" class="layui-btn layui-btn-radius" id="crop" onclick="examination_paper(`+classes_id+`)">`
             $("#view").html(_html);
         });
         layer.open({
@@ -191,7 +191,7 @@
         });
     }
 
-    function examination_paper() {
+    function examination_paper(classes_id) {
         // $(this).attr("disabled",true)
         document.getElementById("crop").setAttribute("disabled", true);
         let score = 0;  //未答题前成绩为0
@@ -207,7 +207,7 @@
             } else {
                 var falseid = testQuestions.data[i].id;
                 //存储错题的id
-                $.post("${baseurl}/wrongTitle/wrongTitleId",{subjectId : falseid,studentId : studentId,wrongOptions : checkBoxs[i]},function (data) {
+                $.post("${baseurl}/wrongTitle/wrongTitleId",{subjectId : falseid,studentId : studentId,wrongOptions : checkBoxs[i],classesId : classes_id},function (data) {
 
                 });
             }
