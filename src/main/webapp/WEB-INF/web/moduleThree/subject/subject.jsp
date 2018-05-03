@@ -75,14 +75,6 @@
                         </div>
                     </div>
                     <div class="layui-input-inline">
-                        <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
-                        <%--<div class="layui-inline">--%>
-                        <%--<div class="layui-input-inline">--%>
-                        <%--<input type="text" name="select_chapter"--%>
-                        <%--autocomplete="off"--%>
-                        <%--placeholder="请输入知识点" class="layui-input">--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">

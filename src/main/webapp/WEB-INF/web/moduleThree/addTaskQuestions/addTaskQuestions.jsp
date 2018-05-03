@@ -252,6 +252,15 @@
                 var select_chapter = $("#select_chapter option:selected").val();
                 // var select_chapter = 1;
 
+                $.post("${baseurl}/subject/selectQuestions", function (data) {
+                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                    for (let i = 0; i < data.data.length; i++) {
+                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                    }
+                    $("#select_questions").html(_html);
+                    form.render();
+                });
+
                 $.post("${baseurl}/subject/selectSubject", {
                     questionsId: select_questions,
                     chapter: select_chapter,
@@ -459,17 +468,6 @@
             return _html;
         }
 
-        function selectQuestions() {
-            $.post("${baseurl}/subject/selectQuestions", function (data) {
-                let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
-                for (let i = 0; i < data.data.length; i++) {
-                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                }
-                $("#select_questions").html(_html);
-                form.render();
-            });
-
-        }
 
         form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
             $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
@@ -526,7 +524,6 @@
 
         $(function () {
             _subject.page();
-            selectQuestions();
             selectClasses();
             selectTestpaperCursor();
             //图片上传
