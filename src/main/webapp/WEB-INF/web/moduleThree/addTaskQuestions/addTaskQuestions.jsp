@@ -458,6 +458,17 @@
                 });
 
             }
+        };
+
+        if (document.getElementById('select_chapter') != null) {
+            form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
+                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
+                    let _html = `<option value=''>请选择</option>`
+
+                    $("#select_chapter").html(_html).append(loadOptionsHtml(data.data));
+                    form.render();
+                });
+            });
         }
 
         function loadOptionsHtml(data) {
@@ -467,16 +478,6 @@
             }
             return _html;
         }
-
-
-        form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
-            $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
-                let _html = `<option value=''>请选择</option>`
-
-                $("#select_chapter").html(_html).append(loadOptionsHtml(data.data));
-                form.render();
-            });
-        });
 
         function selectClasses() {
             $.post("${baseurl}/Testpaper/selectClasses", function (data) {
@@ -515,11 +516,6 @@
 
             });
         }
-
-
-        // $("document").on('change','select#select_facility',function () {
-        //     alert(12);
-        // });
 
 
         $(function () {
