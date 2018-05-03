@@ -64,7 +64,7 @@
                         <div class="layui-inline">
                             <div class="layui-input-inline">
                                 <input class="layui-input" id="time" placeholder="选择时间"
-                                       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                       onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
                             </div>
                         </div>
                     </div>
@@ -372,7 +372,8 @@
                 layer.confirm('是否移除试题？', function (index) {
                     $.post("${baseurl}/Testpaper/deleteTestpaperCursor", {id: id}, function (data) {
                         layer.msg(data.msg);
-                        location.reload();
+                        _subject.page();
+                        selectTestpaperCursor();
                     });
                     layer.close(index);
                 });
@@ -454,7 +455,8 @@
                     subjectId: id
                 }, function (data) {
                     layer.msg(data.msg);
-                    location.reload();
+                    _subject.page();
+                    selectTestpaperCursor();
                 });
 
             }
