@@ -49,7 +49,7 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <select name="select_questions" id="select_questions" lay-filter="modules_1"
+                                <select name="select_questions" id="select_questions" lay-filter="questionBankToKnowledgePointOfSubject"
                                         lay-verify="required" lay-search=""
                                 >
                                     <option value="">请选择</option>
@@ -331,14 +331,14 @@
                     form.render();
                 });
 
-                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", function (data) {
-                    let _chapterHtml = `<option value="">请选择</option>`;
+                <%--$.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", function (data) {--%>
+                    <%--let _chapterHtml = `<option value="">请选择</option>`;--%>
 
-                    for (let item of data.data) {
-                        _chapterHtml += `<option value="` + item.chapter + `">` + item.chapter + `</option>`
-                    }
-                    $("#chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);
-                });
+                    <%--for (let item of data.data) {--%>
+                        <%--_chapterHtml += `<option value="` + item.chapter + `">` + item.chapter + `</option>`--%>
+                    <%--}--%>
+                    <%--$("#chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);--%>
+                <%--});--%>
 
                 $.post("${baseurl}/subject/selectSubject", {
                     questionsId: select_questions,
@@ -630,8 +630,28 @@
                     layer.msg(data.msg);
                 });
 
-            }
+            },
+
         }
+
+        function loadOptionsHtml(data) {
+            let _html = "<option value=''>请选择</option>";
+            for (let i = 0; i < data.length; ++i) {
+                _html += `<option value="` + data[i].chapter + `">` + data[i].chapter + `</option>`;
+            }
+            return _html;
+        }
+
+
+        form.on('select(questionBankToKnowledgePointOfSubject)', function (dataOfSelect) {
+            $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
+                let _html = `<option value=''>请选择</option>`
+
+                $("#chapter").html(_html).append(loadOptionsHtml(data.data));
+                form.render();
+            });
+        });
+
         $(function () {
             _subject.page();
             //图片上传

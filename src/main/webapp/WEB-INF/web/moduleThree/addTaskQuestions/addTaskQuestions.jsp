@@ -134,7 +134,7 @@
                             <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
                             <div class="layui-inline">
                                 <div class="layui-input-inline" id="tiku">
-                                    <select name="select_questionss" id="select_questionss"
+                                    <select name="select_questions" id="select_questions"
                                             lay-verify="required" lay-filter="questionBankToKnowledgePoint"
                                             lay-search="">
                                         <option value="">请选择</option>
@@ -247,13 +247,13 @@
 
         _subject = {
             page: function () {
-                var select_questionss = $("select[name='select_questionss']").val();
+                var select_questions = $("select[name='select_questions']").val();
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("#select_chapter option:selected").val();
                 // var select_chapter = 1;
 
                 $.post("${baseurl}/subject/selectSubject", {
-                    questionsId: select_questionss,
+                    questionsId: select_questions,
                     chapter: select_chapter,
                     facility: select_facility,
                     currentIndex: currentIndex,
@@ -465,20 +465,20 @@
                 for (let i = 0; i < data.data.length; i++) {
                     _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                 }
-                $("#select_questionss").html(_html);
+                $("#select_questions").html(_html);
                 form.render();
-
-
             });
-            // form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
-                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: 1}, function (data) {
-                    let _html = `<option value=''>请选择</option>`
 
-                    $("#select_chapter").html(_html + loadOptionsHtml(data.data));
-                    form.render();
-                });
-            // });
         }
+
+        form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
+            $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
+                let _html = `<option value=''>请选择</option>`
+
+                $("#select_chapter").html(_html).append(loadOptionsHtml(data.data));
+                form.render();
+            });
+        });
 
         function selectClasses() {
             $.post("${baseurl}/Testpaper/selectClasses", function (data) {
@@ -513,7 +513,6 @@
 
                 $("#cursorTaskQuestions").html(_html);
                 $("#idAll").val(idAll.join("_"));
-
 
 
             });
