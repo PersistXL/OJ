@@ -5,7 +5,7 @@
 <mapper namespace="com.thoughtWorks.dao.StudentTestpaperDao">
     <select id="studentTestpaperTitle" parameterType="int" resultType="map">
         SELECT o_testpaper.*,o_teacher.name teacherName
-        FROM oj.o_testpaper,oj.o_teacher
+        FROM o_testpaper,o_teacher
         WHERE o_testpaper.classes_id = #{classesId} and o_teacher.id = o_testpaper.teacher_id
     </select>
 
