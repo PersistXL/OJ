@@ -49,7 +49,8 @@
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <select name="select_questions" id="select_questions" lay-filter="questionBankToKnowledgePointOfSubject"
+                                <select name="select_questions" id="select_questions"
+                                        lay-filter="questionBankToKnowledgePointOfSubject"
                                         lay-verify="required" lay-search=""
                                 >
                                     <option value="">请选择</option>
@@ -59,14 +60,6 @@
                     </div>
 
                     <div class="layui-input-inline">
-                        <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
-                        <%--<div class="layui-inline">--%>
-                        <%--<div class="layui-input-inline">--%>
-                        <%--<input type="text" name="select_chapter"--%>
-                        <%--autocomplete="off"--%>
-                        <%--placeholder="请输入知识点" class="layui-input">--%>
-                        <%--</div>--%>
-                        <%--</div>--%>
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
@@ -333,12 +326,12 @@
                 });
 
                 <%--$.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", function (data) {--%>
-                    <%--let _chapterHtml = `<option value="">请选择</option>`;--%>
+                <%--let _chapterHtml = `<option value="">请选择</option>`;--%>
 
-                    <%--for (let item of data.data) {--%>
-                        <%--_chapterHtml += `<option value="` + item.chapter + `">` + item.chapter + `</option>`--%>
-                    <%--}--%>
-                    <%--$("#chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);--%>
+                <%--for (let item of data.data) {--%>
+                <%--_chapterHtml += `<option value="` + item.chapter + `">` + item.chapter + `</option>`--%>
+                <%--}--%>
+                <%--$("#chapter").html(`<option value="">请选择</option>`).append(_chapterHtml);--%>
                 <%--});--%>
 
                 $.post("${baseurl}/subject/selectSubject", {
@@ -648,7 +641,12 @@
             $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
                 let _html = `<option value=''>请选择</option>`
 
-                $("#chapter").html(_html).append(loadOptionsHtml(data.data));
+                if (document.getElementById("chapter") != null) {
+                    $("#chapter").html(_html).append(loadOptionsHtml(data.data));
+                }
+
+                console.log($("#chapter").html());
+
                 form.render();
             });
         });

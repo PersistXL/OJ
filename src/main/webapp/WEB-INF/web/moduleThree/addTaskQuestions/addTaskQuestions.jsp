@@ -64,7 +64,7 @@
                         <div class="layui-inline">
                             <div class="layui-input-inline">
                                 <input class="layui-input" id="time" placeholder="选择时间"
-                                       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                       onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
                             </div>
                         </div>
                     </div>
@@ -252,6 +252,15 @@
                 var select_chapter = $("#select_chapter option:selected").val();
                 // var select_chapter = 1;
 
+                $.post("${baseurl}/subject/selectQuestions", function (data) {
+                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                    for (let i = 0; i < data.data.length; i++) {
+                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                    }
+                    $("#select_questions").html(_html);
+                    form.render();
+                });
+
                 $.post("${baseurl}/subject/selectSubject", {
                     questionsId: select_questions,
                     chapter: select_chapter,
@@ -363,7 +372,8 @@
                 layer.confirm('是否移除试题？', function (index) {
                     $.post("${baseurl}/Testpaper/deleteTestpaperCursor", {id: id}, function (data) {
                         layer.msg(data.msg);
-                        location.reload();
+                        _subject.page();
+                        selectTestpaperCursor();
                     });
                     layer.close(index);
                 });
@@ -445,10 +455,22 @@
                     subjectId: id
                 }, function (data) {
                     layer.msg(data.msg);
-                    location.reload();
+                    _subject.page();
+                    selectTestpaperCursor();
                 });
 
             }
+        };
+
+        if (document.getElementById('select_chapter') != null) {
+            form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
+                $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
+                    let _html = `<option value=''>请选择</option>`
+
+                    $("#select_chapter").html(_html).append(loadOptionsHtml(data.data));
+                    form.render();
+                });
+            });
         }
 
         function loadOptionsHtml(data) {
@@ -459,27 +481,6 @@
             return _html;
         }
 
-        function selectQuestions() {
-            $.post("${baseurl}/subject/selectQuestions", function (data) {
-                let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
-                for (let i = 0; i < data.data.length; i++) {
-                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                }
-                $("#select_questions").html(_html);
-                form.render();
-            });
-
-        }
-
-        form.on('select(questionBankToKnowledgePoint)', function (dataOfSelect) {
-            $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
-                let _html = `<option value=''>请选择</option>`
-
-                $("#select_chapter").html(_html).append(loadOptionsHtml(data.data));
-                form.render();
-            });
-        });
-
         function selectClasses() {
             $.post("${baseurl}/Testpaper/selectClasses", function (data) {
                 let _html = "";
@@ -487,6 +488,7 @@
                     _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
                 }
                 $("#classes_id").html(_html);
+                form.render();
             });
         }
 
@@ -519,14 +521,8 @@
         }
 
 
-        // $("document").on('change','select#select_facility',function () {
-        //     alert(12);
-        // });
-
-
         $(function () {
             _subject.page();
-            selectQuestions();
             selectClasses();
             selectTestpaperCursor();
             //图片上传

@@ -105,6 +105,7 @@ public class StudentTestpaperController {
                 wrtt.setSubjectId(wrong_answers.get(i).getId());
                 String s = "" + wrong_answers.get(i).getOption();
                 wrtt.setWrongOptions(s);
+                wrtt.setClassesId(wrong_answers.get(i).getClassesId());
                 wrongTitleDao.wrongTitleId(wrtt);
             }
 

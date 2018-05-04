@@ -28,10 +28,21 @@
     }
 </style>
 <body>
+<section class="larry-grid">
+    <div class="larry-personal">
+        <div class="layui-tab">
+            <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
+                <div class="layui-collapse" lay-filter="test" style="margin-top:20px;" id="notice">
+                    <h3>暂无</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <div id="watchWrongTitle" style="display:none;width: 90%;margin-left: 5%;margin-bottom: 50px">
 
 </div>
-<section class="larry-grid">
+<%--<section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
@@ -39,6 +50,84 @@
                 <div class="layui-form">
                     <table class="layui-table">
                         <colgroup>
+                            <col width="60">
+                            <col width="210">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            <col width="110">
+                            &lt;%&ndash;<col width="100">&ndash;%&gt;
+                            <col width="110">
+                            <col width="110">
+                            <col width="230">
+                        </colgroup>
+
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>题目</th>
+                            <th>选项A</th>
+                            <th>选项B</th>
+                            <th>选项C</th>
+                            <th>选项D</th>
+                            <th>选项E</th>
+                            <th>正确选项</th>
+                            &lt;%&ndash;<th>题库</th>&ndash;%&gt;
+                            <th>知识点</th>
+                            <th>难易度</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="wrongTitle">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div id="demo7"></div>
+            </div>
+            <div id="demo1"></div>
+        </div>
+    </div>
+</section>--%>
+<script src="${baseurl}/public/js/layui/layui.js" charset="utf-8"></script>
+<script>
+    //动态拼接错题信息
+    $(function () {
+
+        layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree', 'layedit'], function () {
+            window.jQuery = window.$ = layui.jquery;
+            window.layer = layui.layer;
+
+            var element = layui.element(),
+                form = layui.form(),
+                layedit = layui.layedit,
+                laytpl = layui.laytpl;
+
+            //全选
+            form.on('checkbox(allChoose)', function (data) {
+                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                child.each(function (index, item) {
+                    item.checked = data.elem.checked;
+                });
+                form.render('checkbox');
+            });
+            $.post("${baseurl}/moduleOne/findTestpaperClasses", function (data1) {
+                _html = ""
+                $.post("${baseurl}/wrongTitle/selectStudentId", function (data2) {
+                    stu = data2.data
+                    $.post("${baseurl}/wrongTitle/selectWrongTitleNo",{stu:stu}, function (data) {
+                        var dataList = data.data.testPaperList;
+                        userName = data.data.user.userName
+                        dataList1 = dataList;
+                for (var j = 0; j < data1.data.length; j++) {
+                    var num = 1
+                    _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
+                        + data1.data[j].ClassesName + `</h3><div class="layui-colla-content">
+                                    <div class="layui-form">
+                                        <table class="layui-table">
+                                            <colgroup>
                             <col width="60">
                             <col width="210">
                             <col width="110">
@@ -68,52 +157,11 @@
                             <th>难易度</th>
                             <th>操作</th>
                         </tr>
-                        </thead>
-                        <tbody id="wrongTitle">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div id="demo7"></div>
-            </div>
-            <div id="demo1"></div>
-        </div>
-    </div>
-</section>
-<script src="${baseurl}/public/js/layui/layui.js" charset="utf-8"></script>
-<script>
-    //动态拼接错题信息
-    $(function () {
-
-        layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree', 'layedit'], function () {
-            window.jQuery = window.$ = layui.jquery;
-            window.layer = layui.layer;
-
-            var element = layui.element(),
-                form = layui.form(),
-                layedit = layui.layedit,
-                laytpl = layui.laytpl;
-
-            //全选
-            form.on('checkbox(allChoose)', function (data) {
-                var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-                child.each(function (index, item) {
-                    item.checked = data.elem.checked;
-                });
-                form.render('checkbox');
-            });
-            $.post("${baseurl}/wrongTitle/selectStudentId", function (data) {
-                stu = data.data
-            $.post("${baseurl}/wrongTitle/selectWrongTitleNo",{stu:stu}, function (data) {
-                var dataList = data.data.testPaperList;
-                userName = data.data.user.userName
-                dataList1 = dataList;
-                let _html = "";
-                var number = 0;
-                for (let i = dataList.length-1; i >= 0 ; i--) {
-                    number = number+1;
-                    _html += `<tr>
-                            <td>` + number + `</td>
+                        </thead><tbody>`)
+                        for (let i = dataList.length-1; i >= 0 ; i--) {
+                            if (dataList[i].classes_id === data1.data[j].classes_id) {
+                                _html += `<tr>
+                            <td>` + (num++) + `</td>
                             <td ><span class = "hide_title">` + dataList[i].subject + `</span></td>
                             <td><span class = "hide_title">` + dataList[i].option_a + `</span></td>
                             <td><span class = "hide_title">` + dataList[i].option_b + `</span></td>
@@ -132,19 +180,26 @@
                                             <i class="layui-icon">&#xe640;</i>
                                             删除
                                         </a>
-                                    <a class="layui-btn layui-btn-mini" onclick="previewWrongTitle(` + dataList[i].id + `)">
+                                    <a class="layui-btn layui-btn-mini" onclick="previewWrongTitle(` + dataList[i].id + `,'`+dataList[i].classes_id+`')">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
                                 </div>
                             </td>
-                        </tr>`;
-                }
-                $("#wrongTitle").html(_html);
-                form.render();
+                        </tr>`
+                            }
+
+                        }
+                        _html+=`</tbody></table></div></div></div>`
+                        }
+                        $("#notice").html(_html);
+                        element.init();
+                    });
+
+                })
             });
 
-        })
+
         })
     });
 
@@ -158,22 +213,24 @@
         });
     }
 
-    function previewWrongTitle(id) {
+    function previewWrongTitle(id,classes_id) {
         var _html = "";
+        var num = 1
         for (var i = 0; i < dataList1.length; i++) {
-            _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
-    <legend>试题` + (i + 1) + `：</legend>
+            if(dataList1[i].classes_id == classes_id) {
+                _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
+    <legend>试题` + (num++) + `：</legend>
     <div class="layui-field-box">
     <b>题目：</b>
     <p>` + dataList1[i].subject + `</p>
     </div>`);
-            if (dataList1[i].subject_img !== undefined) {
-                _html += (`<b style="margin-left: 12px">题目图片</b>
+                if (dataList1[i].subject_img !== undefined) {
+                    _html += (`<b style="margin-left: 12px">题目图片</b>
     <div class="layui-field-box box">
     <img width="300px" height="300px" src="` + dataList1[i].subject_img + `"/><br>
     </div>`)
-            }
-            _html += (`<div class="layui-field-box">
+                }
+                _html += (`<div class="layui-field-box">
     <label><b>选项A：</b></label>` + dataList1[i].option_a + `
     </div>
     <div class="layui-field-box">
@@ -189,9 +246,9 @@
     <label><b>选项D：</b></label>` + dataList1[i].option_d + `
     </div>`)
 
-            if (dataList1[i].subject_e === undefined) {
+                if (dataList1[i].subject_e === undefined) {
 
-                _html += (`<div class="layui-field-box">
+                    _html += (`<div class="layui-field-box">
 
     <label><b>选项E：</b></label>` + dataList1[i].option_e + `
     </div>
@@ -200,8 +257,9 @@
 
     <label><b>正确答案：</b></label>` + dataList1[i].correct + `
     </div>`)
+                }
+                _html += (`</fieldset>`);
             }
-            _html += (`</fieldset>`);
         }
         layer.open({
             type: 1,
