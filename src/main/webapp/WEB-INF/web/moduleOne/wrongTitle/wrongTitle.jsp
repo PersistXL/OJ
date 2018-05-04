@@ -180,7 +180,7 @@
                                             <i class="layui-icon">&#xe640;</i>
                                             删除
                                         </a>
-                                    <a class="layui-btn layui-btn-mini" onclick="previewWrongTitle(` + dataList[i].id + `)">
+                                    <a class="layui-btn layui-btn-mini" onclick="previewWrongTitle(` + dataList[i].id + `,'`+dataList[i].classes_id+`')">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
@@ -213,22 +213,24 @@
         });
     }
 
-    function previewWrongTitle(id) {
+    function previewWrongTitle(id,classes_id) {
         var _html = "";
+        var num = 1
         for (var i = 0; i < dataList1.length; i++) {
-            _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
-    <legend>试题` + (i + 1) + `：</legend>
+            if(dataList1[i].classes_id == classes_id) {
+                _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
+    <legend>试题` + (num++) + `：</legend>
     <div class="layui-field-box">
     <b>题目：</b>
     <p>` + dataList1[i].subject + `</p>
     </div>`);
-            if (dataList1[i].subject_img !== undefined) {
-                _html += (`<b style="margin-left: 12px">题目图片</b>
+                if (dataList1[i].subject_img !== undefined) {
+                    _html += (`<b style="margin-left: 12px">题目图片</b>
     <div class="layui-field-box box">
     <img width="300px" height="300px" src="` + dataList1[i].subject_img + `"/><br>
     </div>`)
-            }
-            _html += (`<div class="layui-field-box">
+                }
+                _html += (`<div class="layui-field-box">
     <label><b>选项A：</b></label>` + dataList1[i].option_a + `
     </div>
     <div class="layui-field-box">
@@ -244,9 +246,9 @@
     <label><b>选项D：</b></label>` + dataList1[i].option_d + `
     </div>`)
 
-            if (dataList1[i].subject_e === undefined) {
+                if (dataList1[i].subject_e === undefined) {
 
-                _html += (`<div class="layui-field-box">
+                    _html += (`<div class="layui-field-box">
 
     <label><b>选项E：</b></label>` + dataList1[i].option_e + `
     </div>
@@ -255,8 +257,9 @@
 
     <label><b>正确答案：</b></label>` + dataList1[i].correct + `
     </div>`)
+                }
+                _html += (`</fieldset>`);
             }
-            _html += (`</fieldset>`);
         }
         layer.open({
             type: 1,
