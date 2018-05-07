@@ -33,4 +33,6 @@ public interface JoinClassDao {
     List<Classes> isClassesExists(String code);
 
     List<Map<String,Object>> selectUserInfoEqual(Student student);
+
+    long checkUserNameOrEmailOrPhone(Student student);
 }

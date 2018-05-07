@@ -57,4 +57,10 @@
     <select id="selectUserInfoEqual" parameterType="com.thoughtWorks.entity.Student" resultType="map">
         select * from o_student where no =#{no}
     </select>
+    <select id="checkUserNameOrEmailOrPhone" resultType="Long" parameterType="com.thoughtWorks.entity.Student">
+        SELECT
+        count(*)
+        FROM t_user as tu
+        where (tu.email=#{email} or tu.username=#{no} or tu.phone=#{phone})
+    </select>
 </mapper>
