@@ -144,6 +144,7 @@
 
                 $("#update-id").val(id);
                 $("#no-update").val(no);
+                $("#no-update2").val(no);
                 $("#name-update").val(name);
                 $("input:radio[value=" + gender + "]").prop('checked', 'true');
                 $("#no-update").val(no);

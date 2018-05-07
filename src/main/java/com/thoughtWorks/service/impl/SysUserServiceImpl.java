@@ -39,7 +39,7 @@ public class SysUserServiceImpl implements SysUserService {
 
             sysUserDao.add(teacher);
 
-            User user = new User(teacher.getNo(), "123456", 2, 1, teacher.getName(), "教师", teacher.getPhone());
+            User user = new User(teacher.getNo(), "123456", 2, 1, teacher.getName(), "教师", teacher.getPhone(),teacher.getEmail());
             sysUserDao.addToUser(user);
 
             return "添加教师成功";
@@ -60,7 +60,7 @@ public class SysUserServiceImpl implements SysUserService {
         try {
             sysUserDao.update(teacher);
 
-            User user = new User(teacher.getPhone(), "123456", 2, 1, teacher.getName(), "教师", teacher.getPhone());
+            User user = new User(teacher.getNo(), teacher.getName(), "教师", teacher.getPhone(),teacher.getEmail());
             sysUserDao.updateToUser(user);
 
             return "更新教师信息成功";
