@@ -36,7 +36,7 @@ public class SysUserServiceImpl implements SysUserService {
         try {
             String x = checkInfo(teacher);
             if (x != null) return x;
-            if(TeacherEmailOrPhone(teacher)>0){
+            if(TeacherEmailOrPhone(teacher)>0 && TeacherUserName(teacher)==0){
                 return "手机号或者邮箱已存在";
             }
 
