@@ -65,8 +65,8 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserDao.TeacherUserName(teacher);
     }
     @Override
-    public void delete(String phone) {
-        sysUserDao.delete(phone);
+    public void delete(String no) {
+        sysUserDao.delete(no);
     }
 
     @Transactional

@@ -21,7 +21,7 @@ public interface SysUserDao {
 
     void addToUser(@Param("user") User user);
 
-    void delete(String phone);
+    void delete(String no);
 
     void update(@Param("teacher") Teacher teacher);
 

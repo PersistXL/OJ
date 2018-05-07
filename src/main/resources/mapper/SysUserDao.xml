@@ -40,7 +40,7 @@
     </insert>
 
     <delete id="delete" parameterType="string">
-        DELETE tu,ot FROM o_teacher ot,t_user tu WHERE ot.phone = #{phone} and tu.phone = #{phone}
+        DELETE tu,ot FROM o_teacher ot,t_user tu WHERE ot.no = #{no} and tu.username = #{no}
     </delete>
 
     <update id="update" parameterType="com.thoughtWorks.entity.Teacher">
