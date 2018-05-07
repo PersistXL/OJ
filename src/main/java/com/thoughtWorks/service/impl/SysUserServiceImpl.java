@@ -36,19 +36,34 @@ public class SysUserServiceImpl implements SysUserService {
         try {
             String x = checkInfo(teacher);
             if (x != null) return x;
+            if(TeacherEmailOrPhone(teacher)>0){
+                return "手机号或者邮箱已存在";
+            }
 
-            sysUserDao.add(teacher);
 
             User user = new User(teacher.getNo(), "123456", 2, 1, teacher.getName(), "教师", teacher.getPhone(),teacher.getEmail());
-            sysUserDao.addToUser(user);
 
-            return "添加教师成功";
+            if(TeacherUserName(teacher)>0){
+                sysUserDao.updateTeacherToUser(user);
+                sysUserDao.add(teacher);
+                return "检测到您已有学生账号，更新为老师信息";
+            }else{
+                sysUserDao.addToUser(user);
+                sysUserDao.add(teacher);
+                return "添加教师成功";
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "添加教师失败";
     }
-
+    public Long TeacherEmailOrPhone(Teacher teacher){
+        return sysUserDao.TeacherEmailOrPhone(teacher);
+    }
+    public Long TeacherUserName(Teacher teacher){
+        return sysUserDao.TeacherUserName(teacher);
+    }
     @Override
     public void delete(String phone) {
         sysUserDao.delete(phone);

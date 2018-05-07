@@ -55,5 +55,21 @@
       SET name = #{user.name}, staff = #{user.staff},phone = #{user.phone},email = #{user.email}
       WHERE username = #{user.username}
     </update>
-
+    <select id="TeacherEmailOrPhone" resultType="Long" parameterType="com.thoughtWorks.entity.Teacher">
+        SELECT
+        count(*)
+        FROM t_user as tu
+        where (tu.email=#{email}  or tu.phone=#{phone})
+    </select>
+    <select id="TeacherUserName" resultType="Long" parameterType="com.thoughtWorks.entity.Teacher">
+        SELECT
+        count(*)
+        FROM t_user as tu
+        where tu.username=#{no}
+    </select>
+    <update id="updateTeacherToUser" parameterType="com.thoughtWorks.entity.User">
+        UPDATE t_user
+        SET roleId = 2,staff = '教师',phone = #{user.phone},email = #{user.email},name = #{user.name}
+        WHERE username = #{user.username}
+    </update>
 </mapper>
