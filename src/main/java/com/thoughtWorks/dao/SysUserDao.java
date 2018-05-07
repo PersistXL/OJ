@@ -32,6 +32,8 @@ public interface SysUserDao {
     Student checkEmailByStudent(String email);
 
     Long TeacherEmailOrPhone(Teacher teacher);
+
     Long TeacherUserName(Teacher teacher);
+
     void updateTeacherToUser(@Param("user")User user);
 }
