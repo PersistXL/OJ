@@ -22,7 +22,7 @@
     <select id="findTestpaper" parameterType="String" resultType="map">
 
         SELECT o_testpaper.*,o_testpaper.id testpaperId,o_student_classes.id ClassId,o_student.id studentId,o_student.no
-        FROM o_testpaper,o_student_classes,oj.o_student
+        FROM o_testpaper,o_student_classes,o_student
         WHERE o_student.no = #{userName}
         AND o_student.id = o_student_classes.student_id
         AND o_student_classes.classes_id = o_testpaper.classes_id
@@ -34,7 +34,7 @@
     </select>
 
     <select id="selectSubjectfromid" resultType="map">
-        SELECT * from oj.o_subject where id in
+        SELECT * from o_subject where id in
         <foreach item="item" index="index" collection="list"
                  open="(" separator="," close=")">
             #{item}
