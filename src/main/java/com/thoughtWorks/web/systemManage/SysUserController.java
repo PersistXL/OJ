@@ -52,9 +52,9 @@ public class SysUserController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Result delete(String phone) {
+    public Result delete(String no) {
         try {
-            sysUserService.delete(phone);
+            sysUserService.delete(no);
             return Result.success("","删除成功");
         } catch (Exception e) {
             e.printStackTrace();

@@ -161,19 +161,7 @@
                                     </div>
                                 </div>
 
-                                <%--<select name="city" lay-verify="" lay-search>--%>
-                                <%--<option value="010">layer</option>--%>
-                                <%--<option value="021">form</option>--%>
-                                <%--<option value="0571" selected>layim</option>--%>
-                                <%--</select>--%>
-                                <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
-                                <%--<div class="layui-inline">--%>
-                                <%--<div class="layui-input-inline">--%>
-                                <%--<input type="text" name="select_chapter"--%>
-                                <%--autocomplete="off"--%>
-                                <%--placeholder="请输入知识点" class="layui-input">--%>
-                                <%--</div>--%>
-                                <%--</div>--%>
+
                             </div>
                             <div class="layui-input-inline">
                                 <div class="layui-inline">

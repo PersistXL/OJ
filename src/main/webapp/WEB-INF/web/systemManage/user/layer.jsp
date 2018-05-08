@@ -22,7 +22,7 @@
                     onclick="sysUser.update('{{item.id}}',`{{item.no}}`,'{{item.name}}','{{item.gender}}','{{item.email}}','{{item.phone}}','{{ item.department}}')">
                 <i class="layui-icon">&#xe642;</i>修改
             </button>
-            <button class="layui-btn layui-btn-mini  layui-btn-danger" onclick="sysUser.delete('{{item.phone}}')">
+            <button class="layui-btn layui-btn-mini  layui-btn-danger" onclick="sysUser.delete('{{item.no}}')">
                 <i class="layui-icon">&#xe60a;</i>删除
             </button>
         </td>
@@ -102,8 +102,10 @@
         <div class="layui-form-item">
             <label class="layui-form-label" style="width:120px;">工号</label>
             <div class="layui-input-inline" style="width:250px;">
-                <input type="text" name="no" lay-verify="required"
+                <input type="text" lay-verify="required"
                        placeholder="请输入工号" id="no-update" autocomplete="off" class="layui-input" disabled>
+                <input type="text" name="no" lay-verify="required"
+                       placeholder="请输入工号" id="no-update2" autocomplete="off" class="layui-input" hidden>
             </div>
         </div>
         <div class="layui-form-item">

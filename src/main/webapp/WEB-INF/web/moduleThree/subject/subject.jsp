@@ -58,6 +58,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <select name="chapter" id="chapter" lay-filter="modules_1"
+                                        lay-verify="required"
+                                        lay-search="">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="layui-input-inline">
                         <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
                         <div class="layui-inline">
@@ -71,18 +84,6 @@
                                     <option value="一般">一般</option>
                                     <option value="较难">较难</option>
                                     <option value="困难">困难</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <select name="chapter" id="chapter" lay-filter="modules_1"
-                                        lay-verify="required"
-                                        lay-search="">
-                                    <option value="">请选择</option>
                                 </select>
                             </div>
                         </div>

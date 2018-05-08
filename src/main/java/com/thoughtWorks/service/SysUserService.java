@@ -8,7 +8,7 @@ public interface SysUserService {
 
     String add(Teacher teacher);
 
-    void delete(String phone);
+    void delete(String no);
 
     String update(Teacher teacher);
 

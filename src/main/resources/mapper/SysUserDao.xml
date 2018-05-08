@@ -35,12 +35,12 @@
     </insert>
 
     <insert id="addToUser" parameterType="com.thoughtWorks.entity.User">
-        insert into t_user (username, password, roleId, available, name, staff, phone)
-        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone});
+        insert into t_user (username, password, roleId, available, name, staff, phone,email)
+        values (#{user.username},#{user.password},#{user.roleId},#{user.available},#{user.name},#{user.staff},#{user.phone},#{user.email});
     </insert>
 
     <delete id="delete" parameterType="string">
-        DELETE tu,ot FROM o_teacher ot,t_user tu WHERE ot.phone = #{phone} and tu.phone = #{phone}
+        DELETE tu,ot FROM o_teacher ot,t_user tu WHERE ot.no = #{no} and tu.username = #{no}
     </delete>
 
     <update id="update" parameterType="com.thoughtWorks.entity.Teacher">
@@ -52,9 +52,27 @@
 
     <update id="updateToUser" parameterType="com.thoughtWorks.entity.User">
       UPDATE t_user
-      SET username = #{user.username}, password = #{user.password}, roleId = #{user.roleId}
-      , available = #{user.available}, name = #{user.name}, staff = #{user.staff},phone = #{user.phone},email = #{user.email}
-      WHERE phone = #{user.phone}
+      SET name = #{user.name}, staff = #{user.staff},phone = #{user.phone},email = #{user.email}
+      WHERE username = #{user.username}
     </update>
 
+    <select id="TeacherEmailOrPhone" resultType="java.lang.Long" parameterType="com.thoughtWorks.entity.Teacher">
+        SELECT
+        count(*)
+        FROM t_user as tu
+        where (tu.email=#{email}  or tu.phone=#{phone})
+    </select>
+
+    <select id="TeacherUserName" resultType="java.lang.Long" parameterType="com.thoughtWorks.entity.Teacher">
+        SELECT
+        count(*)
+        FROM t_user as tu
+        where tu.username=#{no}
+    </select>
+
+    <update id="updateTeacherToUser" parameterType="com.thoughtWorks.entity.User">
+        UPDATE t_user
+        SET roleId = 2,staff = '教师',phone = #{user.phone},email = #{user.email},name = #{user.name}
+        WHERE username = #{user.username}
+    </update>
 </mapper>

@@ -34,6 +34,14 @@ public class User {
         this.email = email;
     }
 
+    public User(String username,String name, String staff, String phone, String email) {
+        this.username = username;
+        this.name = name;
+        this.staff = staff;
+        this.phone = phone;
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }

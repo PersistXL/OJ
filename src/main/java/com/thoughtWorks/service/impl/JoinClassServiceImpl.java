@@ -93,21 +93,28 @@ public class JoinClassServiceImpl implements JoinClassService {
             return result;
         }
         try {
-            List<Map<String,Object>> student1 = joinClassDao.selectUserInfoEqual(student);
+            List<Map<String, Object>> student1 = joinClassDao.selectUserInfoEqual(student);
             if (student1.size() == 0) {
                 joinClassDao.addStudentInfo(student);
                 if (student.getPhone() != null && student.getEmail() != null) {
-                    User user = new User(student.getNo(), "123456", 3, 1, student.getName(), "学生", student.getPhone(), student.getEmail());
-                    joinClassDao.addStudentInfoToUser(user);
-                    result.put("msg", "学生信息注册成功");
-                    result.put("state", "200");
-                    return result;
+                    long count = joinClassDao.checkUserNameOrEmailOrPhone(student);
+                    if (count == 0) {
+                        User user = new User(student.getNo(), "123456", 3, 1, student.getName(), "学生", student.getPhone(), student.getEmail());
+                        joinClassDao.addStudentInfoToUser(user);
+                        result.put("msg", "学生信息注册成功");
+                        result.put("state", "200");
+                        return result;
+                    } else {
+                        result.put("msg", "手机号或邮箱已存在");
+                        result.put("state", "500");
+                        return result;
+                    }
                 } else {
                     result.put("msg", "手机号或邮箱为空");
                     result.put("state", "500");
                     return result;
                 }
-            }else{
+            } else {
                 result.put("msg", "学号已存在");
                 result.put("state", "500");
                 return result;
@@ -116,10 +123,10 @@ public class JoinClassServiceImpl implements JoinClassService {
 
         } catch (Exception e) {
             e.printStackTrace();
+            result.put("msg", "学生信息注册失败");
+            result.put("state", "500");
+            return result;
         }
-        result.put("msg", "学生信息注册失败");
-        result.put("state", "500");
-        return result;
     }
 
     @Override

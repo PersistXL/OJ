@@ -21,7 +21,7 @@ public interface SysUserDao {
 
     void addToUser(@Param("user") User user);
 
-    void delete(String phone);
+    void delete(String no);
 
     void update(@Param("teacher") Teacher teacher);
 
@@ -30,4 +30,10 @@ public interface SysUserDao {
     Student checkPhoneByStudent(String phone);
 
     Student checkEmailByStudent(String email);
+
+    Long TeacherEmailOrPhone(Teacher teacher);
+
+    Long TeacherUserName(Teacher teacher);
+
+    void updateTeacherToUser(@Param("user")User user);
 }

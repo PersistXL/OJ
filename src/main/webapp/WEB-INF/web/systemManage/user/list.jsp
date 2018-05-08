@@ -129,10 +129,10 @@
                     }
                 })
             },
-            delete: function (phone) {
+            delete: function (no) {
                 layer.confirm('确定删除？', {icon: 3, title: '提示'}, function (index) {
                     layer.close(index);
-                    $.post(baseUrl + "/sysUser/delete", {phone: phone}, function (data) {
+                    $.post(baseUrl + "/sysUser/delete", {no: no}, function (data) {
                         if (data.result) {
                             layer.msg(data.msg);
                             setTimeout("location.reload();", 500);
@@ -144,6 +144,7 @@
 
                 $("#update-id").val(id);
                 $("#no-update").val(no);
+                $("#no-update2").val(no);
                 $("#name-update").val(name);
                 $("input:radio[value=" + gender + "]").prop('checked', 'true');
                 $("#no-update").val(no);
