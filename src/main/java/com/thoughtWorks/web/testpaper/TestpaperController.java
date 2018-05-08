@@ -90,11 +90,25 @@ public class TestpaperController {
             testpaper.setStartTime(start_time);
             testpaperDao.addTestpaperCursorToTestpaper(testpaper);
             testpaperDao.deleteTestpaperCursorByName(id);
-            return Result.success(null, Constant.ADD_SUCCESS);
+            return Result.success(null, Constant.ADD_QUESTION_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null, Constant.ADD_FAILURE);
+        return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
+    }
+
+    @RequestMapping("deleteTestpaper")
+    public Result deleteTestpaper() {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int id = testpaperDao.selectIdByName(username);
+
+            testpaperDao.deleteTestpaperCursorByName(id);
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.DELETE_FAILURE);
     }
 
     @RequestMapping("selectClasses")
