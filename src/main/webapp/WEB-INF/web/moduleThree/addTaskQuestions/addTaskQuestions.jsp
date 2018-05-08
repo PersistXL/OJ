@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
     <title>OJ</title>
     <link rel="stylesheet" href="${baseurl}/public/common/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/common/layui/css/layui.css" media="all">
@@ -63,40 +64,40 @@
                         </div>
                         <br>
 
-                        <div class="layui-input-inline" style="margin-bottom: 15px">
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>
-                            <div class="layui-inline">
-                                <div class="layui-input-inline">
-                                    <input style="width: 173px;" class="layui-input" id="time" placeholder="选择时间"
-                                           onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
+                        <%--<div class="layui-input-inline" style="margin-bottom: 15px">--%>
+                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>--%>
+                            <%--<div class="layui-inline">--%>
+                                <%--<div class="layui-input-inline">--%>
+                                    <%--<input style="width: 173px;" class="layui-input" id="time" placeholder="选择时间"--%>
+                                           <%--onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<br>--%>
 
-                        <div class="layui-input-inline" style="margin-bottom: 15px">
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
-                            <div class="layui-inline">
-                                <div class="layui-input-inline">
-                                    <input style="width: 173px;" type="number" id="score" name=""
-                                           autocomplete="off"
-                                           placeholder="请输入分数" class="layui-input">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
+                        <%--<div class="layui-input-inline" style="margin-bottom: 15px">--%>
+                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>--%>
+                            <%--<div class="layui-inline">--%>
+                                <%--<div class="layui-input-inline">--%>
+                                    <%--<input style="width: 173px;" type="number" id="score" name=""--%>
+                                           <%--autocomplete="off"--%>
+                                           <%--placeholder="请输入分数" class="layui-input">--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<br>--%>
 
-                        <div class="layui-input-inline" style="margin-bottom: 15px">
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>
-                            <div class="layui-inline">
-                                <div class="layui-input-inline">
-                                    <select name="classes_id" lay-verify="required" lay-search="" id="classes_id">
-                                        <option value="0">班课</option>
+                        <%--<div class="layui-input-inline" style="margin-bottom: 15px">--%>
+                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>--%>
+                            <%--<div class="layui-inline">--%>
+                                <%--<div class="layui-input-inline">--%>
+                                    <%--<select name="classes_id" lay-verify="required" lay-search="" id="classes_id">--%>
+                                        <%--<option value="0">班课</option>--%>
 
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                                    <%--</select>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
                     </form>
                     <button class="layui-btn" onclick="titleSubject()">下一步</button>
@@ -213,9 +214,6 @@
                     </fieldset>
 
                     <span style="color:grey">试卷名称：<span class="name_1"></span>&nbsp;&nbsp;&nbsp;</span>
-                    <span style="color: grey">结束时间：<span class="time_1"></span>&nbsp;&nbsp;&nbsp;</span>
-                    <span style="color: grey">试卷总分：<span class="sum_1"></span>&nbsp;&nbsp;&nbsp;</span>
-                    <span style="color: grey">班课名称：<span class="class_1"></span></span>
                     <div class="layui-form">
                         <table class="layui-table">
                             <thead>
@@ -344,35 +342,35 @@
 
                 let subjectId = $("#idAll").val();
                 let name = $("#name").val();
-                let closeTime = $("#time").val();
-                let score = $("#score").val();
-                var classes_id = $("select[name='classes_id']").val();
+                // let closeTime = $("#time").val();
+                // let score = $("#score").val();
+                // var classes_id = $("select[name='classes_id']").val();
 
-                if (name == "" || closeTime == "" || score == "" || subjectId == "") {
-                    layer.msg("试卷信息不能为空");
+                if (name == "" ) {
+                    layer.msg("试卷名称不能为空");
                 } else {
-                    $.post("${baseurl}/Testpaper/selectTestpaperNameIs",
-                        {
-                            name: name,
-                            classesId: classes_id
-                        }, function (isHave) {
-                            if (isHave.data) {
+                    <%--$.post("${baseurl}/Testpaper/selectTestpaperNameIs",--%>
+                    //     {
+                    //         name: name,
+                    //         classesId: classes_id
+                    //     }, function (isHave) {
+                    //         if (isHave.data) {
                                 $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
                                     subjectId: subjectId,
-                                    name: name,
-                                    score: score,
-                                    closeTime: closeTime,
-                                    classesId: classes_id
+                                    name: name
+                                    // score: score,
+                                    // closeTime: closeTime,
+                                    // classesId: classes_id
                                 }, function (data) {
                                     layer.confirm(data.msg, function (index) {
                                         location.reload();
                                         layer.close(index);
                                     });
                                 });
-                            } else {
-                                layer.msg(isHave.msg);
-                            }
-                        });
+                            // } else {
+                            //     layer.msg(isHave.msg);
+                            // }
+                        // });
 
                 }
             },
@@ -538,10 +536,16 @@
                 form.render();
             });
         }
+        function deleteTestpaper() {
+            $.post("${baseurl}/Testpaper/deleteTestpaper", function (data) {
+
+            });
+        }
 
         $(function () {
             _subject.page();
             selectClasses();
+            deleteTestpaper();
             selectTestpaperCursor();
             selectQuestions();
             //图片上传
@@ -563,19 +567,19 @@
     function titleSubject() {
         let subjectId = $("#idAll").val();
         let name = $("#name").val();
-        let closeTime = $("#time").val();
-        let score = $("#score").val();
-        var classes_id = $("select[name='classes_id']").val();
-        var classes_Name = $("select[name='classes_id']").find("option:selected").text();
+        // let closeTime = $("#time").val();
+        // let score = $("#score").val();
+        // var classes_id = $("select[name='classes_id']").val();
+        // var classes_Name = $("select[name='classes_id']").find("option:selected").text();
 
-        if (name == "" || closeTime == "" || score == "") {
-            layer.msg("试卷信息不能为空!");
+        if (name == "" ) {
+            layer.msg("试卷名称不能为空");
         } else {
             $(".name_1").html(name)
-            $(".time_1").html(closeTime)
-            $(".sum_1").html(score)
-            $(".class_2").html(classes_id)
-            $(".class_1").html(classes_Name)
+            // $(".time_1").html(closeTime)
+            // $(".sum_1").html(score)
+            // $(".class_2").html(classes_id)
+            // $(".class_1").html(classes_Name)
             $("#title_subject").hide();
             $("#select_subject").show();
         }
