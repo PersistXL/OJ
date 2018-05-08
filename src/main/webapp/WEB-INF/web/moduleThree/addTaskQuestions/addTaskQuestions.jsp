@@ -39,196 +39,224 @@
     }
 </style>
 <body>
-<section class="larry-grid" style="width: 49% ;float: left">
+
+<section id="title_subject" class="larry-grid" style="width: 100%; ">
     <div class="larry-personal">
         <div class="layui-tab">
             <div class="larry-separate"></div>
             <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                    <legend>我选择的试题</legend>
+                    <legend>第一步:请填写试卷信息</legend>
                 </fieldset>
-                <form lay-filter="role-add" class="layui-form layui-form-pane" method="post">
-                    <div class="layui-input-inline">
-                        <input type="text" hidden id="idAll">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷名称</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="text" id="name" name=""
-                                       autocomplete="off"
-                                       placeholder="请输入试卷名称" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input class="layui-input" id="time" placeholder="选择时间"
-                                       onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <input type="number" id="score" name=""
-                                       autocomplete="off"
-                                       placeholder="请输入分数" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-input-inline">
-                        <label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>
-                        <div class="layui-inline">
-                            <div class="layui-input-inline">
-                                <select name="classes_id" lay-verify="required" lay-search="" id="classes_id">
-                                    <option value="0">班课</option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <span style="color: gainsboro">请先选择试题后再填试卷信息</span>
-                <div class="layui-form">
-                    <table class="layui-table">
-                        <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>题目</th>
-                            <th>题库</th>
-                            <th>知识点</th>
-                            <th>难易度</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody id="cursorTaskQuestions">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="layui-input-inline">
-                    <div class="layui-inline">
-                        <a class="layui-btn" onclick="_subject.createTestpaper()"><i
-                                class="layui-icon">&#xe602;</i>完成创建</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-<section class="larry-grid" style="width: 49% ;float: right">
-    <div class="larry-personal">
-        <div class="layui-tab">
-            <div class="larry-separate"></div>
-            <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
-                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                    <legend>题库</legend>
-                </fieldset>
-                <blockquote class="layui-elem-quote mylog-info-tit" style="height: 120px;">
-                    <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
-                        <div class="layui-input-inline">
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
-                            <div class="layui-inline">
-                                <div class="layui-input-inline" id="tiku">
-                                    <select name="select_questions" id="select_questions"
-                                            lay-verify="required" lay-filter="questionBankToKnowledgePoint"
-                                            lay-search="">
-                                        <option value="">请选择</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-input-inline">
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                <div style="margin: 0 auto;width: 400px;">
+                    <form lay-filter="role-add" class="layui-form layui-form-pane" method="post">
+                        <div class="layui-input-inline" style="margin-bottom: 15px">
+                            <input type="text" hidden id="idAll">
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷名称</label>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <select name="select_facility" id="select_facility" lay-filter="modules_1"
-                                            lay-verify="required"
-                                            lay-search="">
-                                        <option value="">请选择</option>
-                                        <option value="">请选择</option>
-                                        <option value="简单">简单</option>
-                                        <option value="较易">较易</option>
-                                        <option value="一般">一般</option>
-                                        <option value="较难">较难</option>
-                                        <option value="困难">困难</option>
-                                        <option value="未指定">未指定</option>
-                                    </select>
+                                    <input style="width: 173px;" type="text" id="name" name=""
+                                           autocomplete="off"
+                                           placeholder="请输入试卷名称" class="layui-input">
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <div class="layui-input-inline">
 
-                            <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                        <div class="layui-input-inline" style="margin-bottom: 15px">
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>
                             <div class="layui-inline">
                                 <div class="layui-input-inline">
-                                    <select name="select_chapter" id="select_chapter" lay-verify="required"
-                                            lay-search="">
-                                        <option value="">请选择</option>
-                                    </select>
-
+                                    <input style="width: 173px;" class="layui-input" id="time" placeholder="选择时间"
+                                           onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
                                 </div>
                             </div>
-
-                            <%--<select name="city" lay-verify="" lay-search>--%>
-                            <%--<option value="010">layer</option>--%>
-                            <%--<option value="021">form</option>--%>
-                            <%--<option value="0571" selected>layim</option>--%>
-                            <%--</select>--%>
-                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
-                            <%--<div class="layui-inline">--%>
-                            <%--<div class="layui-input-inline">--%>
-                            <%--<input type="text" name="select_chapter"--%>
-                            <%--autocomplete="off"--%>
-                            <%--placeholder="请输入知识点" class="layui-input">--%>
-                            <%--</div>--%>
-                            <%--</div>--%>
                         </div>
-                        <div class="layui-input-inline">
+                        <br>
+
+                        <div class="layui-input-inline" style="margin-bottom: 15px">
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
                             <div class="layui-inline">
-                                <a class="layui-btn" onclick="_subject.page()"><i
-                                        class="layui-icon">&#xe615;</i>搜索</a>
+                                <div class="layui-input-inline">
+                                    <input style="width: 173px;" type="number" id="score" name=""
+                                           autocomplete="off"
+                                           placeholder="请输入分数" class="layui-input">
+                                </div>
                             </div>
                         </div>
+                        <br>
+
+                        <div class="layui-input-inline" style="margin-bottom: 15px">
+                            <label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <select name="classes_id" lay-verify="required" lay-search="" id="classes_id">
+                                        <option value="0">班课</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
-                </blockquote>
-                <div class="layui-form">
-                    <table class="layui-table">
-                        <colgroup>
-                            <col width="70">
-                            <col width="150">
-                            <col width="100">
-                            <col width="100">
-                            <col width="100">
-                            <col width="180">
-                        </colgroup>
-
-                        <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>题目</th>
-                            <th>题库</th>
-                            <th>知识点</th>
-                            <th>难易度</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody id="subject_info">
-
-                        </tbody>
-                    </table>
+                    <button class="layui-btn" onclick="titleSubject()">下一步</button>
                 </div>
-                <div id="demo1"></div>
             </div>
-
         </div>
     </div>
 </section>
+<div id="select_subject" hidden>
+    <section class="larry-grid" style="width: 49% ;float: left">
+        <div class="larry-personal">
+            <div class="layui-tab">
+                <div class="larry-separate"></div>
+                <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend>第二步:选择题目</legend>
+                    </fieldset>
+                    <blockquote class="layui-elem-quote mylog-info-tit" style="height: 120px;">
+                        <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label" style="width: 100px;font-size: 14px">题库</label>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline" id="tiku">
+                                        <select name="select_questions" id="select_questions"
+                                                lay-verify="required" lay-filter="questionBankToKnowledgePoint"
+                                                lay-search="">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label" style="width: 100px;font-size: 14px">难易度</label>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <select name="select_facility" id="select_facility" lay-filter="modules_1"
+                                                lay-verify="required"
+                                                lay-search="">
+                                            <option value="">请选择</option>
+                                            <option value="">请选择</option>
+                                            <option value="简单">简单</option>
+                                            <option value="较易">较易</option>
+                                            <option value="一般">一般</option>
+                                            <option value="较难">较难</option>
+                                            <option value="困难">困难</option>
+                                            <option value="未指定">未指定</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="layui-input-inline">
+
+                                <label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <select name="select_chapter" id="select_chapter" lay-verify="required"
+                                                lay-search="">
+                                            <option value="">请选择</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <%--<select name="city" lay-verify="" lay-search>--%>
+                                <%--<option value="010">layer</option>--%>
+                                <%--<option value="021">form</option>--%>
+                                <%--<option value="0571" selected>layim</option>--%>
+                                <%--</select>--%>
+                                <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">知识点</label>--%>
+                                <%--<div class="layui-inline">--%>
+                                <%--<div class="layui-input-inline">--%>
+                                <%--<input type="text" name="select_chapter"--%>
+                                <%--autocomplete="off"--%>
+                                <%--placeholder="请输入知识点" class="layui-input">--%>
+                                <%--</div>--%>
+                                <%--</div>--%>
+                            </div>
+                            <div class="layui-input-inline">
+                                <div class="layui-inline">
+                                    <a class="layui-btn" onclick="_subject.page()"><i
+                                            class="layui-icon">&#xe615;</i>搜索</a>
+                                </div>
+                            </div>
+                        </form>
+                    </blockquote>
+                    <div class="layui-form">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="70">
+                                <col width="150">
+                                <col width="100">
+                                <col width="100">
+                                <col width="100">
+                                <col width="180">
+                            </colgroup>
+
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>题目</th>
+                                <th>题库</th>
+                                <th>知识点</th>
+                                <th>难易度</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="subject_info">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="demo1"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="larry-grid" style="width: 49% ;float: right">
+        <div class="larry-personal">
+            <div class="layui-tab">
+                <div class="larry-separate"></div>
+                <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                        <legend>第三步:创建试题</legend>
+                    </fieldset>
+
+                    <span style="color:grey">试卷名称：<span class="name_1"></span>&nbsp;&nbsp;&nbsp;</span>
+                    <span style="color: grey">结束时间：<span class="time_1"></span>&nbsp;&nbsp;&nbsp;</span>
+                    <span style="color: grey">试卷总分：<span class="sum_1"></span>&nbsp;&nbsp;&nbsp;</span>
+                    <span style="color: grey">班课名称：<span class="class_1"></span></span>
+                    <div class="layui-form">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>题目</th>
+                                <th>题库</th>
+                                <th>知识点</th>
+                                <th>难易度</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="cursorTaskQuestions">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-input-inline">
+                        <div class="layui-inline">
+                            <a class="layui-btn" onclick="_subject.createTestpaper()"><i
+                                    class="layui-icon">&#xe602;</i>完成创建</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
 <div id="previewSubjectInfo" style="display: none;">
 </div>
 </body>
@@ -252,14 +280,6 @@
                 var select_chapter = $("#select_chapter option:selected").val();
                 // var select_chapter = 1;
 
-                $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
-                    for (let i = 0; i < data.data.length; i++) {
-                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                    }
-                    $("#select_questions").html(_html);
-                    form.render();
-                });
 
                 $.post("${baseurl}/subject/selectSubject", {
                     questionsId: select_questions,
@@ -520,11 +540,22 @@
             });
         }
 
+        function selectQuestions() {
+            $.post("${baseurl}/subject/selectQuestions", function (data) {
+                let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                for (let i = 0; i < data.data.length; i++) {
+                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                }
+                $("#select_questions").html(_html);
+                form.render();
+            });
+        }
 
         $(function () {
             _subject.page();
             selectClasses();
             selectTestpaperCursor();
+            selectQuestions();
             //图片上传
             layui.use('upload', function () {
                 layui.upload({
@@ -541,6 +572,26 @@
         });
     });
 
+    function titleSubject() {
+        let subjectId = $("#idAll").val();
+        let name = $("#name").val();
+        let closeTime = $("#time").val();
+        let score = $("#score").val();
+        var classes_id = $("select[name='classes_id']").val();
+        var classes_Name = $("select[name='classes_id']").find("option:selected").text();
+
+        if (name == "" || closeTime == "" || score == "") {
+            layer.msg("试卷信息不能为空!");
+        } else {
+            $(".name_1").html(name)
+            $(".time_1").html(closeTime)
+            $(".sum_1").html(score)
+            $(".class_2").html(classes_id)
+            $(".class_1").html(classes_Name)
+            $("#title_subject").hide();
+            $("#select_subject").show();
+        }
+    }
 
 </script>
 <script>

@@ -311,18 +311,7 @@
                 var select_questions = $("select[name='select_questions']").val();
                 var select_facility = $("select[name='select_facility']").val();
                 var select_chapter = $("#chapter option:selected").val();
-                $.post("${baseurl}/subject/selectQuestions", function (data) {
-                    let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
-                    let _html_excel = "";
-                    for (let i = 0; i < data.data.length; i++) {
-                        _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                        _html_excel += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
-                    }
-                    $("#questions_id").html(_html);
-                    $("#questions_id_excel").html(_html_excel);
-                    $("#select_questions").html(_html);
-                    form.render();
-                });
+
 
                 <%--$.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", function (data) {--%>
                 <%--let _chapterHtml = `<option value="">请选择</option>`;--%>
@@ -634,7 +623,20 @@
             }
             return _html;
         }
-
+        function selectQuestions(){
+            $.post("${baseurl}/subject/selectQuestions", function (data) {
+                let _html = "<option value=''>请选择</option><option value=''>请选择</option>";
+                let _html_excel = "";
+                for (let i = 0; i < data.data.length; i++) {
+                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                    _html_excel += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                }
+                $("#questions_id").html(_html);
+                $("#questions_id_excel").html(_html_excel);
+                $("#select_questions").html(_html);
+                form.render();
+            });
+        }
 
         form.on('select(questionBankToKnowledgePointOfSubject)', function (dataOfSelect) {
             $.post("${baseurl}/Testpaper/selectTestpaperCursorOfChapter", {questionBankId: dataOfSelect.value}, function (data) {
@@ -652,6 +654,7 @@
 
         $(function () {
             _subject.page();
+            selectQuestions();
             //图片上传
             layui.use('upload', function () {
                 layui.upload({
