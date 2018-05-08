@@ -25,4 +25,9 @@ public class PageController {
     {
         return "/moduleThree/qbmanager_page";
     }
+
+    @RequestMapping("/homework")
+    public String homework() {
+        return "moduleThree/homework/homework";
+    }
 }
