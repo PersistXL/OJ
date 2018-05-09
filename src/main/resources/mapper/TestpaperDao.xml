@@ -19,8 +19,8 @@
     VALUES (#{teacherId},#{subjectId})
     </insert>
     <insert id="addTestpaperCursorToTestpaper" parameterType="Testpaper">
-    INSERT INTO o_testpaper_make (subject_id,teacher_id,name)
-    VALUES (#{subjectId},#{teacherId},#{name})
+    INSERT INTO o_testpaper_make (subject_id,teacher_id,name,time)
+    VALUES (#{subjectId},#{teacherId},#{name},NOW())
     </insert>
     <select id="selectIdByName" resultType="int" parameterType="String">
         SELECT id
