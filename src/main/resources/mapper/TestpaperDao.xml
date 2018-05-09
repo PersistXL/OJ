@@ -64,7 +64,10 @@
     <select id="judgeTestperOpened" resultType="int" parameterType="int">
         select COUNT(*) from o_testpaper where id = #{testpaperId} and NOW() &lt;= close_time
     </select>
-    <select id="selectTestpaperCursorOfChapter" parameterType="int" resultType="map">
+    <select id="selectTestpaperCursorOfChapter" parameterType="int" resultType="java.lang.String">
         select DISTINCT chapter FROM o_subject WHERE questions_id = #{i};
+    </select>
+    <select id="selectHomework" resultType="map" parameterType="int">
+        SELECT * FROM o_testpaper_make WHERE teacher_id=#{id}
     </select>
 </mapper>
