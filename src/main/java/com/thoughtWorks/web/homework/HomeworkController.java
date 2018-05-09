@@ -37,4 +37,16 @@ public class HomeworkController {
         }
         return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+
+    @ResponseBody
+    @RequestMapping("/deleteTestPaperInfo")
+    public Result deleteTestPaperInfo(int id){
+        try {
+            testpaperDao.deleteTestPaperInfo(id);
+            return Result.success(null, Constant.DELETE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.DELETE_FAILURE);
+    }
 }

@@ -69,4 +69,6 @@ public interface TestpaperDao {
     List<String> selectTestpaperCursorOfChapter(int i);
 
     List<Map<String, Object>> selectHomework(int id);
+
+    void deleteTestPaperInfo(int id);
 }

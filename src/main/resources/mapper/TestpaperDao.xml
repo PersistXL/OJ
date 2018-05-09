@@ -70,4 +70,7 @@
     <select id="selectHomework" resultType="map" parameterType="int">
         SELECT * FROM o_testpaper_make WHERE teacher_id=#{id}
     </select>
+    <delete id="deleteTestPaperInfo" parameterType="int">
+        DELETE FROM o_testpaper_make WHERE id = #{id}
+    </delete>
 </mapper>
