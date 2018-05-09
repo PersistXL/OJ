@@ -20,6 +20,9 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
+<div id="previewSubject">
+
+</div>
 <div id="view" style="text-align: center;" hidden>
     <form lay-filter="role-add" class="layui-form layui-form-pane" method="post">
         <br>
@@ -117,7 +120,7 @@
                                             <i class="layui-icon">&#xe642;</i>
                                             布置作业
                                         </a>
-                                    <a class="layui-btn layui-btn-mini" onclick="_subject.previewSubjectInfo(` + data.data[i].id + `)">
+                                    <a class="layui-btn layui-btn-mini" onclick="previewSubjectInfo(` + data.data[i].id + `,'` + data.data[i].subject_id + `')">
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
@@ -216,7 +219,18 @@
             }
             });
         }
-
+    }
+    function previewSubjectInfo(id,subjectId) {
+        $.post("${baseurl}/homework/previewTestpaper", {subjectId : subjectId},function (data) {
+            console.log(data)
+        })
+        layer.open({
+            type: 1,
+            title: "预览试题",
+            area: ["100%", "100%"],
+            skin: 'yourclass',
+            content: $('#previewSubject')
+        });
     }
 </script>
 <script>

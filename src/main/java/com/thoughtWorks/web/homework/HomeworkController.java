@@ -4,6 +4,7 @@ import com.thoughtWorks.dao.TestpaperDao;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.entity.Testpaper;
+import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
 import com.thoughtWorks.util.DataUtil;
 import org.apache.shiro.SecurityUtils;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class HomeworkController {
     @Autowired
     TestpaperDao testpaperDao;
+    @Autowired
+    ModuleOneService moduleOneService;
     @ResponseBody
     @RequestMapping("/selectHomework")
     public Result selectHomework(){
@@ -63,5 +66,17 @@ public class HomeworkController {
         }
 
         return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
+    }
+    @ResponseBody
+    @RequestMapping("/previewTestpaper")
+    public Result previewTestpaper(String subjectId){
+        try {
+            String subject[] = subjectId.split("_");
+            List<Map<String,Object>> list = moduleOneService.selectTestpaperById(subject);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
 }
