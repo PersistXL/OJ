@@ -68,7 +68,7 @@
         select DISTINCT chapter FROM o_subject WHERE questions_id = #{i};
     </select>
     <select id="selectHomework" resultType="map" parameterType="int">
-        SELECT * FROM o_testpaper_make WHERE teacher_id=#{id}
+        SELECT * FROM o_testpaper_make WHERE teacher_id=#{id} order by id DESC
     </select>
     <delete id="deleteTestPaperInfo" parameterType="int">
         DELETE FROM o_testpaper_make WHERE id = #{id}

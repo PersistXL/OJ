@@ -64,7 +64,7 @@
                     for (var i = 0;i < data.data.length;i++) {
                         var s = data.data[i].subject_id
                         _html += (`<tr>
-                <th>`+data.data[i].id+`</th>
+                <th>`+(i+1)+`</th>
                 <th>`+data.data[i].name+`</th>
                 <th>`+s.split("_").length+`</th>
                 <th>`+data.data[i].time+`</th>
