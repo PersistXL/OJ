@@ -20,7 +20,7 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
-<div id="previewSubject">
+<div id="previewSubject" hidden>
 
 </div>
 <div id="view" style="text-align: center;" hidden>
@@ -138,6 +138,7 @@
 
             }
         }
+
         function selectClasses() {
             $.post("${baseurl}/Testpaper/selectClasses", function (data) {
                 let _html = "";
@@ -148,6 +149,7 @@
                 form.render();
             });
         }
+
         $(function () {
             _testPaper.page();
             selectClasses();
@@ -186,43 +188,88 @@
         let closeTime = $("#time").val();
         let score = $("#score").val();
         var classes_id = $("select[name='classes_id']").val();
-        if (closeTime == "" ) {
+        if (closeTime == "") {
             layer.msg("试卷结束时间不能为空");
-        }else if (score == "") {
+        } else if (score == "") {
             layer.msg("试卷总分不能为空")
-        }else if (classes_id == "") {
+        } else if (classes_id == "") {
             layer.msg("请正确选择班课")
-        }else {
+        } else {
             $.post("${baseurl}/Testpaper/selectTestpaperNameIs",
                 {
                     name: name,
                     classesId: classes_id,
-                    teacherId:teacherId
+                    teacherId: teacherId
                 }, function (isHave) {
                     if (isHave.data) {
-            $.post("${baseurl}/homework/addTestpaper", {
-                id:id,
-                subjectId: subjectId,
-                name: name,
-                score: score,
-                closeTime: closeTime,
-                classesId: classes_id,
-                teacherId:teacherId
-            }, function (data) {
-                layer.confirm(data.msg, function (index) {
-                    location.reload();
-                    layer.close(index);
+                        $.post("${baseurl}/homework/addTestpaper", {
+                            id: id,
+                            subjectId: subjectId,
+                            name: name,
+                            score: score,
+                            closeTime: closeTime,
+                            classesId: classes_id,
+                            teacherId: teacherId
+                        }, function (data) {
+                            layer.confirm(data.msg, function (index) {
+                                location.reload();
+                                layer.close(index);
+                            });
+                        });
+                    } else {
+                        layer.msg(isHave.msg);
+                    }
                 });
-            });
-            } else {
-                layer.msg(isHave.msg);
-            }
-            });
         }
     }
-    function previewSubjectInfo(id,subjectId) {
-        $.post("${baseurl}/homework/previewTestpaper", {subjectId : subjectId},function (data) {
-            console.log(data)
+
+    function previewSubjectInfo(id, subjectId) {
+        $.post("${baseurl}/homework/previewTestpaper", {subjectId: subjectId}, function (data) {
+            var _html = "";
+            for (var i = 0; i < data.data.length; i++) {
+                _html += (`<fieldset class="layui-elem-field site-demo-button checkboxAll" style="margin-top: 30px;">
+    <legend>试题` + (i + 1) + `：</legend>
+    <div class="layui-field-box">
+    <b>题目：</b>
+    <p>` + data.data[i].subject + `</p>
+    </div>`);
+                if (data.data[i].subject_img !== undefined) {
+                    _html += (`<b style="margin-left: 12px">题目图片</b>
+    <div class="layui-field-box box">
+    <img width="300px" height="300px" src="` + data.data[i].subject_img + `"/><br>
+    </div>`)
+                }
+                _html += (`<div class="layui-field-box">
+    <label><b>选项A：</b></label>` + data.data[i].option_a + `
+    </div>
+    <div class="layui-field-box">
+
+    <label><b>选项B：</b></label>` + data.data[i].option_b + `
+    </div>
+    <div class="layui-field-box">
+
+    <label><b>选项C：</b></label>` + data.data[i].option_c + `
+    </div>
+    <div class="layui-field-box">
+
+    <label><b>选项D：</b></label>` + data.data[i].option_d + `
+    </div>`)
+
+                if (data.data[i].subject_e === undefined) {
+
+                    _html += (`<div class="layui-field-box">
+
+    <label><b>选项E：</b></label>` + data.data[i].option_e + `
+    </div>
+
+    <div class="layui-field-box">
+
+    <label><b>正确答案：</b></label>` + data.data[i].correct + `
+    </div>`)
+                }
+                _html += (`</fieldset>`);
+            }
+            $("#previewSubject").html(_html);
         })
         layer.open({
             type: 1,
