@@ -20,6 +20,46 @@
     <script src="${baseurl}/public/common/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
+<div id="view" style="text-align: center;" hidden>
+    <form lay-filter="role-add" class="layui-form layui-form-pane" method="post">
+        <br>
+        <div class="layui-input-inline" style="margin-bottom: 15px">
+            <label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input style="width: 173px;" class="layui-input" id="time" placeholder="选择时间"
+                           onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="layui-input-inline" style="margin-bottom: 15px">
+            <label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input style="width: 173px;" type="number" id="score" name=""
+                           autocomplete="off"
+                           placeholder="请输入分数" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="layui-input-inline" style="margin-bottom: 15px">
+            <label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <select name="classes_id" lay-verify="required" lay-search="" id="classes_id">
+                        <option value="0">班课</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <button class="layui-btn" onclick="titleSubject()">确认</button>
+</div>
 <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
 
     <div class="layui-form">
@@ -57,20 +97,20 @@
             form = layui.form(),
             laytpl = layui.laytpl;
         _testPaper = {
-            page:function () {
-                $.post("${baseurl}/homework/selectHomework",function (data) {
+            page: function () {
+                $.post("${baseurl}/homework/selectHomework", function (data) {
                     console.log(data)
                     let _html = "";
-                    for (var i = 0;i < data.data.length;i++) {
+                    for (var i = 0; i < data.data.length; i++) {
                         var s = data.data[i].subject_id
                         _html += (`<tr>
-                <th>`+(i+1)+`</th>
-                <th>`+data.data[i].name+`</th>
-                <th>`+s.split("_").length+`</th>
-                <th>`+data.data[i].time+`</th>
+                <th>` + (i + 1) + `</th>
+                <th>` + data.data[i].name + `</th>
+                <th>` + s.split("_").length + `</th>
+                <th>` + data.data[i].time + `</th>
                 <th>
                 <div class="layui-btn-group">
-                                        <a class="layui-btn layui-btn-mini" onclick="_subject.updataInfo(` + data.data[i].id + `)" >
+                                        <a class="layui-btn layui-btn-mini" onclick="addTestPaper(` + data.data[i].id + `,'` + data.data[i].name + `','` + data.data[i].subject_id + `','` + data.data[i].teacher_id + `')" >
                                             <i class="layui-icon">&#xe642;</i>
                                             布置作业
                                         </a>
@@ -92,13 +132,12 @@
 
             }
         }
-        _subject = {
-
-        }
+        _subject = {}
         $(function () {
             _testPaper.page();
         });
     });
+
     function deleteTestPaperInfo(id) {
         layer.confirm('是否删除信息？', function (index) {
             $.post("${baseurl}/homework/deleteTestPaperInfo", {id: id}, function (data) {
@@ -108,5 +147,39 @@
             layer.close(index);
         });
     }
+
+    function addTestPaper(id, name, suject_id, teacher_id) {
+        layer.open({
+            type: 1,
+            title: "布置作业",
+            area: ["50%", "50%"],
+            skin: 'yourclass',
+            content: $('#view')
+        });
+    }
+</script>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        var start = {
+            min: laydate.now()
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: laydate.now()
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+    });
 </script>
 </html>
