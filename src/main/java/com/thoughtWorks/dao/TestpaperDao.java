@@ -71,4 +71,6 @@ public interface TestpaperDao {
     List<Map<String, Object>> selectHomework(int id);
 
     void deleteTestPaperInfo(int id);
+
+    void addTestpaper(Testpaper testpaper);
 }

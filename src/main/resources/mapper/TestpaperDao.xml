@@ -56,7 +56,7 @@
         and o_student_classes.student_id = o_student.id and o_classes.id = #{id}
     </select>
     <select id="selectTestpaperNameIs" resultType="Long" parameterType="Testpaper">
-        select COUNT(*) from o_testpaper where name = #{name} and classes_id = #{classesId}
+        select COUNT(*) from o_testpaper where name = #{name} and classes_id = #{classesId} and teacher_id = #{teacherId}
     </select>
     <delete id="deleteClassesOfStudentInfo" parameterType="int">
         DELETE FROM o_student_classes WHERE id = #{id}
@@ -73,4 +73,8 @@
     <delete id="deleteTestPaperInfo" parameterType="int">
         DELETE FROM o_testpaper_make WHERE id = #{id}
     </delete>
+    <insert id="addTestpaper" parameterType="Testpaper">
+        INSERT INTO o_testpaper (subject_id, classes_id, teacher_id, start_time, name, score, close_time) VALUES
+        (#{subjectId},#{classesId},#{teacherId},#{startTime},#{name},#{score},#{closeTime})
+    </insert>
 </mapper>

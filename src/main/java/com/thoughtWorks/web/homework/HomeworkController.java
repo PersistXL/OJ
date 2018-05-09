@@ -5,6 +5,7 @@ import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.util.Constant;
+import com.thoughtWorks.util.DataUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -48,5 +49,19 @@ public class HomeworkController {
             e.printStackTrace();
         }
         return Result.failure(null, Constant.DELETE_FAILURE);
+    }
+    @ResponseBody
+    @RequestMapping("/addTestpaper")
+    public Result addTestpaper(Testpaper testpaper){
+        try {
+            String start_time = DataUtil.outDate();
+            testpaper.setStartTime(start_time);
+            testpaperDao.addTestpaper(testpaper);
+            return Result.success(null, Constant.INSERT_TESTPAPER_IS_TRUE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
     }
 }

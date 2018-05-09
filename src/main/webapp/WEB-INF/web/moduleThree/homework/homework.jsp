@@ -25,6 +25,10 @@
         <br>
         <div class="layui-input-inline" style="margin-bottom: 15px">
             <label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>
+            <input type="text" hidden id="name">
+            <input type="text" hidden id="subject_id">
+            <input type="text" hidden id="teacher_id">
+            <input type="text" hidden id="id">
             <div class="layui-inline">
                 <div class="layui-input-inline">
                     <input style="width: 173px;" class="layui-input" id="time" placeholder="选择时间"
@@ -58,7 +62,7 @@
             </div>
         </div>
     </form>
-    <button class="layui-btn" onclick="titleSubject()">确认</button>
+    <button class="layui-btn" onclick="addTestPaper()">确认</button>
 </div>
 <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
 
@@ -99,7 +103,6 @@
         _testPaper = {
             page: function () {
                 $.post("${baseurl}/homework/selectHomework", function (data) {
-                    console.log(data)
                     let _html = "";
                     for (var i = 0; i < data.data.length; i++) {
                         var s = data.data[i].subject_id
@@ -110,7 +113,7 @@
                 <th>` + data.data[i].time + `</th>
                 <th>
                 <div class="layui-btn-group">
-                                        <a class="layui-btn layui-btn-mini" onclick="addTestPaper(` + data.data[i].id + `,'` + data.data[i].name + `','` + data.data[i].subject_id + `','` + data.data[i].teacher_id + `')" >
+                                        <a class="layui-btn layui-btn-mini" onclick="smartTestPaper(` + data.data[i].id + `,'` + data.data[i].name + `','` + data.data[i].subject_id + `','` + data.data[i].teacher_id + `')" >
                                             <i class="layui-icon">&#xe642;</i>
                                             布置作业
                                         </a>
@@ -132,9 +135,19 @@
 
             }
         }
-        _subject = {}
+        function selectClasses() {
+            $.post("${baseurl}/Testpaper/selectClasses", function (data) {
+                let _html = "";
+                for (let i = 0; i < data.data.length; i++) {
+                    _html += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>";
+                }
+                $("#classes_id").html(_html);
+                form.render();
+            });
+        }
         $(function () {
             _testPaper.page();
+            selectClasses();
         });
     });
 
@@ -148,7 +161,11 @@
         });
     }
 
-    function addTestPaper(id, name, suject_id, teacher_id) {
+    function smartTestPaper(id, name, suject_id, teacher_id) {
+        $("#id").val(id);
+        $("#name").val(name);
+        $("#subject_id").val(suject_id);
+        $("#teacher_id").val(teacher_id);
         layer.open({
             type: 1,
             title: "布置作业",
@@ -156,6 +173,50 @@
             skin: 'yourclass',
             content: $('#view')
         });
+    }
+
+    function addTestPaper() {
+        let teacherId = $("#teacher_id").val();
+        let subjectId = $("#subject_id").val();
+        let id = $("#id").val();
+        let name = $("#name").val();
+        let closeTime = $("#time").val();
+        let score = $("#score").val();
+        var classes_id = $("select[name='classes_id']").val();
+        if (closeTime == "" ) {
+            layer.msg("试卷结束时间不能为空");
+        }else if (score == "") {
+            layer.msg("试卷总分不能为空")
+        }else if (classes_id == "") {
+            layer.msg("请正确选择班课")
+        }else {
+            $.post("${baseurl}/Testpaper/selectTestpaperNameIs",
+                {
+                    name: name,
+                    classesId: classes_id,
+                    teacherId:teacherId
+                }, function (isHave) {
+                    if (isHave.data) {
+            $.post("${baseurl}/homework/addTestpaper", {
+                id:id,
+                subjectId: subjectId,
+                name: name,
+                score: score,
+                closeTime: closeTime,
+                classesId: classes_id,
+                teacherId:teacherId
+            }, function (data) {
+                layer.confirm(data.msg, function (index) {
+                    location.reload();
+                    layer.close(index);
+                });
+            });
+            } else {
+                layer.msg(isHave.msg);
+            }
+            });
+        }
+
     }
 </script>
 <script>
