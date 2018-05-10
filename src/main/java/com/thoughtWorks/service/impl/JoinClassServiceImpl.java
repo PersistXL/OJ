@@ -95,10 +95,14 @@ public class JoinClassServiceImpl implements JoinClassService {
         try {
             List<Map<String, Object>> student1 = joinClassDao.selectUserInfoEqual(student);
             if (student1.size() == 0) {
-                if (student.getPhone() != null && student.getEmail() != null) {
-                    joinClassDao.addStudentInfo(student);
+                if (student.getPhone() == null && student.getEmail() == null) {
+                    result.put("msg", "手机号和邮箱全为空");
+                    result.put("state", "500");
+                    return result;
+                } else {
                     long count = joinClassDao.checkUserNameOrEmailOrPhone(student);
                     if (count == 0) {
+                        joinClassDao.addStudentInfo(student);
                         User user = new User(student.getNo(), "123456", 3, 1, student.getName(), "学生", student.getPhone(), student.getEmail());
                         joinClassDao.addStudentInfoToUser(user);
                         result.put("msg", "学生信息注册成功");
@@ -109,10 +113,6 @@ public class JoinClassServiceImpl implements JoinClassService {
                         result.put("state", "500");
                         return result;
                     }
-                } else {
-                    result.put("msg", "手机号或邮箱为空");
-                    result.put("state", "500");
-                    return result;
                 }
             } else {
                 result.put("msg", "学号已存在");
