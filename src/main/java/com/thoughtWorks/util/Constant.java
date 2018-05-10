@@ -38,9 +38,11 @@ public class Constant {
 
     public static final String SHORT_TIME_PATTERN = "yyyy-MM-dd";
     public static final String ACCOUNT_IS_EXIST = "帐号已存在";
-    public static final String TESTPAPER_IS_FALSE = "试卷名称已存在";
+    public static final String TESTPAPER_IS_FALSE = "该作业已发布";
     public static final String TESTPAPER_IS_TRUE = "试卷名称不存在";
+    public static final String INSERT_TESTPAPER_IS_TRUE = "发布作业成功";
     public static final String TESTPAPER_IS_CLOSED = "试卷提交期限已过";
+
     public static int ADMIN_ROLE_ID = 1;
 
 }
