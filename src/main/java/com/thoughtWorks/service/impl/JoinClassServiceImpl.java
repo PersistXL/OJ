@@ -95,8 +95,8 @@ public class JoinClassServiceImpl implements JoinClassService {
         try {
             List<Map<String, Object>> student1 = joinClassDao.selectUserInfoEqual(student);
             if (student1.size() == 0) {
-                joinClassDao.addStudentInfo(student);
                 if (student.getPhone() != null && student.getEmail() != null) {
+                    joinClassDao.addStudentInfo(student);
                     long count = joinClassDao.checkUserNameOrEmailOrPhone(student);
                     if (count == 0) {
                         User user = new User(student.getNo(), "123456", 3, 1, student.getName(), "学生", student.getPhone(), student.getEmail());
