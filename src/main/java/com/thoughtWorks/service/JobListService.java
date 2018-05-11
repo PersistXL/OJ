@@ -41,5 +41,5 @@ public interface JobListService {
      * @param testPaperId
      * @return
      */
-    List<Map<String,Object>> analysisPreview(int classesId, int testPaperId);
+    int analysisPreview(int classesId, int testPaperId);
 }

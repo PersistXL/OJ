@@ -81,8 +81,8 @@ public class JobListController {
     @RequestMapping("/analysisPreview")
     public Result analysisPreview(int classesId,int testPaperId){
         try {
-            List<Map<String, Object>> lsit = jobListService.analysisPreview(classesId, testPaperId);
-            return Result.success(lsit, Constant.SEARCH_SUCCESS);
+            int list = jobListService.analysisPreview(classesId, testPaperId);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
