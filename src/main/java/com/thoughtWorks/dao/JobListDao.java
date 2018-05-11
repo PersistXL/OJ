@@ -1,6 +1,7 @@
 package com.thoughtWorks.dao;
 
 import com.thoughtWorks.entity.Testpaper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +34,12 @@ public interface JobListDao {
      * @return
      */
     List<Map<String, Object>> selectSubjectClassesName(String userName);
+
+    /**
+     * 根据班课Id和试卷的Id查询学生错题信息
+     * @param classesId
+     * @param testPaperId
+     * @return
+     */
+    List<Map<String,Object>> analysisPreview(@Param("classesId") int classesId,@Param("testPaperId") int testPaperId);
 }

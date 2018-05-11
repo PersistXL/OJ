@@ -21,15 +21,29 @@ public class StudentTestpaper {
     private String wrongQuestionIds;
     private String wrongAnswers;
 
+    private int classesId;
 
+    public int getClassesId() {
+        return classesId;
+    }
+
+    public void setClassesId(int classesId) {
+        this.classesId = classesId;
+    }
 
     @Override
     public String toString() {
         return "StudentTestpaper{" +
-                " studentId=" + studentId +
+                "id=" + id +
+                ", uuid='" + uuid + '\'' +
+                ", studentId=" + studentId +
                 ", testpaperId=" + testpaperId +
                 ", testpaperStudentScore=" + testpaperStudentScore +
                 ", submissionTime='" + submissionTime + '\'' +
+                ", data=" + data +
+                ", wrongQuestionIds='" + wrongQuestionIds + '\'' +
+                ", wrongAnswers='" + wrongAnswers + '\'' +
+                ", classesId=" + classesId +
                 '}';
     }
 

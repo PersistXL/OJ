@@ -77,4 +77,15 @@ public class JobListController {
         }
         return Result.failure(null,Constant.SEARCH_FAILURE);
     }
+    @ResponseBody
+    @RequestMapping("/analysisPreview")
+    public Result analysisPreview(int classesId,int testPaperId){
+        try {
+            List<Map<String, Object>> lsit = jobListService.analysisPreview(classesId, testPaperId);
+            return Result.success(lsit, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
 }

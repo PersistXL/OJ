@@ -34,4 +34,12 @@ public interface JobListService {
      * @return
      */
     List<Map<String,Object>> selectSubjectClassesName(String userName);
+
+    /**
+     * 根据班课Id和试卷的Id查询学生错题信息
+     * @param classesId
+     * @param testPaperId
+     * @return
+     */
+    List<Map<String,Object>> analysisPreview(int classesId, int testPaperId);
 }

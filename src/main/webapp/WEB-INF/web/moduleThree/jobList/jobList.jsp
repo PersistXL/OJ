@@ -23,6 +23,9 @@
 <div id="previewAdd" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
 
 </div>
+<div id="analysisPreview" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
+    
+</div>
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -96,6 +99,8 @@
                                       <td style="text-align: center">
                                       <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + classesId + `,'` + testPaperId + `')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="analysis(` + classesId + `,'` + testPaperId + `')">
+                                      <i class="layui-icon">&#xe623;</i>分析</a>
                                       </td>
                                     </tr>
                                 `)
@@ -157,6 +162,18 @@
             , area: ["100%", "100%"]
             , skin: 'yourclass'
             , content: $("#previewAdd")
+        });
+    }
+    function analysis(classesId,testPaperId) {
+        $.post("${baseurl}/jobList/analysisPreview",{classesId,testPaperId},function (data) {
+            console.log(data)
+        })
+        layer.open({
+            type: 1
+            , title: "错题情况预览"
+            , area: ["100%", "100%"]
+            , skin: 'yourclass'
+            , content: $("#analysisPreview")
         });
     }
 </script>
