@@ -4,6 +4,7 @@ import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.service.JobListService;
+import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author persistXL
@@ -23,27 +23,31 @@ import java.util.Map;
 public class JobListController {
     @Autowired
     JobListService jobListService;
+
+    @Autowired
+    ModuleOneService moduleOneService;
     @RequestMapping()
-    public String index(){
+    public String index() {
         return "moduleThree/jobList/jobList";
     }
 
     /**
      * 查询教师对应的班课
+     *
      * @return
      */
     @RequestMapping("/selectSubjectClassesName")
     @ResponseBody
-    public Result selectSubjectClassesName(){
+    public Result selectSubjectClassesName() {
         try {
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
             String userName = user.getUserName();
-            List<Map<String,Object>> list = jobListService.selectSubjectClassesName(userName);
+            List<Map<String, Object>> list = jobListService.selectSubjectClassesName(userName);
             return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.SEARCH_FAILURE);
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
 
     @RequestMapping("/selectSubject")
@@ -51,16 +55,16 @@ public class JobListController {
     /**
      * 查询试卷
      */
-    public Result selectSubject(){
+    public Result selectSubject() {
         try {
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
             String userName = user.getUserName();
-            List<Map<String,Object>> list = jobListService.selectSubject(userName);
+            List<Map<String, Object>> list = jobListService.selectSubject(userName);
             return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.SEARCH_FAILURE);
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
 
     @RequestMapping("/selectStudentTestpaper")
@@ -71,10 +75,44 @@ public class JobListController {
     public Result selectStudentTestpaper(Testpaper testpaper) {
         try {
             List<Map<String, Object>> list = jobListService.selectStudentTestpaper(testpaper);
-            return Result.success(list,Constant.SEARCH_SUCCESS);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null,Constant.SEARCH_FAILURE);
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
+    @ResponseBody
+    @RequestMapping("/analysisPreview")
+    public Result analysisPreview(int classesId, int testPaperId) {
+        try {
+            int list = jobListService.analysisPreview(classesId, testPaperId);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
+    @ResponseBody
+    @RequestMapping("/selectSubjectName")
+    public Result selectSubjectName(String subjectId){
+        try {
+            List<Map<String, Object>> data = new ArrayList<>();
+            String subject[] = subjectId.split("_");
+            List<Map<String, Object>> list = moduleOneService.selectTestpaperById(subject);
+            Iterator<Map<String, Object>> item = list.iterator();
+            while (item.hasNext()){
+                Map<String,Object> map = new HashMap<>();
+                Map<String,Object> value = item.next();
+                map.put("subject", value.get("subject"));
+                data.add(map);
+            }
+
+            return Result.success(data, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
 }

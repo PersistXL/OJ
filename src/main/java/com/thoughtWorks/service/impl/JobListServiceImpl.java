@@ -33,4 +33,10 @@ public class JobListServiceImpl implements com.thoughtWorks.service.JobListServi
         List<Map<String, Object>> list = jobListDao.selectSubjectClassesName(userName);
         return list;
     }
+
+    @Override
+    public int analysisPreview(int classesId, int testPaperId) {
+        int list = jobListDao.analysisPreview(classesId, testPaperId);
+        return list;
+    }
 }

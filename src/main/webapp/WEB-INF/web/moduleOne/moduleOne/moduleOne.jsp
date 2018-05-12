@@ -213,7 +213,7 @@
             }
         }
         //存储成绩
-        $.post("${baseurl}/moduleOne/inseretScore", {testpaperId: ID, testpaperStudentScore: score,studentId : StudentId}, function (data) {
+        $.post("${baseurl}/moduleOne/inseretScore", {testpaperId: ID, testpaperStudentScore: score,studentId : StudentId,classesId:classes_id}, function (data) {
             if (data.result) {
                 layer.msg(data.msg);
                 setTimeout("location.reload()", 500);

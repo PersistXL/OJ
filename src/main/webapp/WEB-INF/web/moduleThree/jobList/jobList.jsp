@@ -23,6 +23,9 @@
 <div id="previewAdd" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
 
 </div>
+<div id="analysisPreview" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
+    
+</div>
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -88,6 +91,7 @@
                             var s = data1.data[j].subject_id
                             var classesId = data1.data[j].classes_id
                             testPaperId = data1.data[j].testPaperId
+                            subjectId = data1.data[j].subject_id
                             if (classId === data1.data[j].classes_id) {
                                 _html += (`<tr>
                                       <td style="text-align: center">` + data1.data[j].name + `</td>
@@ -96,6 +100,8 @@
                                       <td style="text-align: center">
                                       <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + classesId + `,'` + testPaperId + `')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="analysis(` + classesId + `,'` + testPaperId + `','`+subjectId+`')">
+                                      <i class="layui-icon">&#xe623;</i>分析</a>
                                       </td>
                                     </tr>
                                 `)
@@ -157,6 +163,54 @@
             , area: ["100%", "100%"]
             , skin: 'yourclass'
             , content: $("#previewAdd")
+        });
+    }
+    function analysis(classesId,testPaperId,subjectId) {
+        $.post("${baseurl}/jobList/analysisPreview",{classesId,testPaperId},function (data1) {
+            console.log(data1)
+            $.post("${baseurl}/jobList/selectSubjectName",{subjectId},function (data){
+            var _html = "";
+            _html += (`<table class="layui-table">
+                      <colgroup>
+                        <col width="60">
+                        <col width="200">
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th style="text-align: center">编号</th>
+                          <th style="text-align: center">试题名称</th>
+                          <th style="text-align: center">作答人数</th>
+                          <th style="text-align: center">答错人数</th>
+                          <th style="text-align: center">最多错误选项</th>
+                          <th style="text-align: center">错题率</th>
+                        </tr>
+                      </thead>`)
+            for (var i = 0; i < data.data.length; i++) {
+                _html += (`<tbody>
+                <tr>
+                  <td style="text-align: center">` + (i+1) + `</td>
+                  <td style="text-align: center">` + data.data[i].subject + `</td>
+                  <td style="text-align: center">` + data1.data + `</td>
+                  <td style="text-align: center">` + 10 + `</td>
+                  <td style="text-align: center">` + "D" + `</td>
+                  <td style="text-align: center">` + "20%" + `</td>
+                </tr>
+            </tbody>`)
+            }
+            _html += (`</table>`)
+            $("#analysisPreview").html(_html);
+            })
+        })
+        layer.open({
+            type: 1
+            , title: "错题情况预览"
+            , area: ["100%", "100%"]
+            , skin: 'yourclass'
+            , content: $("#analysisPreview")
         });
     }
 </script>
