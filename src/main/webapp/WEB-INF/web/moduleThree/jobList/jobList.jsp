@@ -191,10 +191,64 @@
                       </thead>`)
                     for (var i = 0; i < data.data.length; i++) {
                         var num = 0;
+                        var count = new Array(5);
+                        count[0] = 0;
+                        count[1] = 0;
+                        count[2] = 0;
+                        count[3] = 0;
+                        count[4] = 0;
+
                         for (var m = 0; m <data2.data.length; m++) {
                             if (data.data[i].subjectId == data2.data[m].subject_id) {
                                 num += 1;
+                                if (data2.data[m].wrong_options == "A") {
+                                    count[0] +=1;
+                                }else if (data2.data[m].wrong_options == "B") {
+                                    count[1] +=1;
+                                }else if (data2.data[m].wrong_options == "C") {
+                                    count[2] +=1;
+                                }else if (data2.data[m].wrong_options == "D") {
+                                    count[3] +=1;
+                                }else if (data2.data[m].wrong_options == "E") {
+                                    count[4] +=1;
+                                }
                             }
+                        }
+                        let max = 0;
+                        let index = -1;
+                        for (let i = 0; i < count.length ; i++) {
+                            if(count[i] >= max){
+                                max = count[i]
+                                index = i;
+                            }
+                        }
+                        var chose = ""
+                        switch(index)
+                        {
+                            case 0:
+                                chose = "A"
+                                break;
+                            case 1:
+                                chose = "B"
+                                break;
+                             case 2:
+                                chose = "C"
+                                break;
+                             case 3:
+                                chose = "D"
+                                break;
+                             case 4:
+                                chose = "E"
+                                break;
+
+                            default:
+                                chose = "无"
+                        }
+                        var errorRate = ""
+                        if (num == 0){
+                            errorRate = "0"
+                        }else{
+                            errorRate = (num / (data1.data)).toFixed(2);
                         }
                         _html += (`<tbody>
                 <tr>
@@ -202,8 +256,8 @@
                   <td style="text-align: center">` + data.data[i].subject + `</td>
                   <td style="text-align: center">` + data1.data + `</td>
                   <td style="text-align: center">` + num + `</td>
-                  <td style="text-align: center">` + "D" + `</td>
-                  <td style="text-align: center">` + "20%" + `</td>
+                  <td style="text-align: center">` + chose + `</td>
+                  <td style="text-align: center">` + errorRate + `</td>
                 </tr>
             </tbody>`)
                     }
