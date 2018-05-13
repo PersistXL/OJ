@@ -167,10 +167,10 @@
     }
     function analysis(classesId,testPaperId,subjectId) {
         $.post("${baseurl}/jobList/analysisPreview",{classesId,testPaperId},function (data1) {
-            console.log(data1)
             $.post("${baseurl}/jobList/selectSubjectName",{subjectId},function (data){
-            var _html = "";
-            _html += (`<table class="layui-table">
+                $.post("${baseurl}/jobList/wrongMessage",{classesId,subjectId},function (data2) {
+                    var _html = "";
+                    _html += (`<table class="layui-table">
                       <colgroup>
                         <col width="60">
                         <col width="200">
@@ -186,23 +186,30 @@
                           <th style="text-align: center">作答人数</th>
                           <th style="text-align: center">答错人数</th>
                           <th style="text-align: center">最多错误选项</th>
-                          <th style="text-align: center">错题率</th>
+                          <th style="text-align: center">错误率</th>
                         </tr>
                       </thead>`)
-            for (var i = 0; i < data.data.length; i++) {
-                _html += (`<tbody>
+                    for (var i = 0; i < data.data.length; i++) {
+                        var num = 0;
+                        for (var m = 0; m <data2.data.length; m++) {
+                            if (data.data[i].subjectId == data2.data[m].subject_id) {
+                                num += 1;
+                            }
+                        }
+                        _html += (`<tbody>
                 <tr>
-                  <td style="text-align: center">` + (i+1) + `</td>
+                  <td style="text-align: center">` + (i + 1) + `</td>
                   <td style="text-align: center">` + data.data[i].subject + `</td>
                   <td style="text-align: center">` + data1.data + `</td>
-                  <td style="text-align: center">` + 10 + `</td>
+                  <td style="text-align: center">` + num + `</td>
                   <td style="text-align: center">` + "D" + `</td>
                   <td style="text-align: center">` + "20%" + `</td>
                 </tr>
             </tbody>`)
-            }
-            _html += (`</table>`)
-            $("#analysisPreview").html(_html);
+                    }
+                    _html += (`</table>`)
+                    $("#analysisPreview").html(_html);
+                })
             })
         })
         layer.open({

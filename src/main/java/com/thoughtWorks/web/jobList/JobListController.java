@@ -26,6 +26,7 @@ public class JobListController {
 
     @Autowired
     ModuleOneService moduleOneService;
+
     @RequestMapping()
     public String index() {
         return "moduleThree/jobList/jobList";
@@ -96,20 +97,33 @@ public class JobListController {
 
     @ResponseBody
     @RequestMapping("/selectSubjectName")
-    public Result selectSubjectName(String subjectId){
+    public Result selectSubjectName(String subjectId) {
         try {
             List<Map<String, Object>> data = new ArrayList<>();
             String subject[] = subjectId.split("_");
             List<Map<String, Object>> list = moduleOneService.selectTestpaperById(subject);
             Iterator<Map<String, Object>> item = list.iterator();
-            while (item.hasNext()){
-                Map<String,Object> map = new HashMap<>();
-                Map<String,Object> value = item.next();
+            while (item.hasNext()) {
+                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> value = item.next();
                 map.put("subject", value.get("subject"));
+                map.put("subjectId", value.get("id"));
                 data.add(map);
             }
-
             return Result.success(data, Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
+    @ResponseBody
+    @RequestMapping("/wrongMessage")
+    public Result wrongMessage(int classesId, String subjectId) {
+        try {
+            String subject[] = subjectId.split("_");
+            List<Map<String, Object>> list = jobListService.wrongMessage(classesId, subject);
+            return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }

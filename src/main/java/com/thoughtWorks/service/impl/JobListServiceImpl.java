@@ -5,6 +5,7 @@ import com.thoughtWorks.entity.Testpaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,5 +39,17 @@ public class JobListServiceImpl implements com.thoughtWorks.service.JobListServi
     public int analysisPreview(int classesId, int testPaperId) {
         int list = jobListDao.analysisPreview(classesId, testPaperId);
         return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> wrongMessage(int classesId, String[] subject) {
+        List list = new ArrayList();
+
+        for(String item:subject){
+            list.add(item);
+        }
+        List<Map<String,Object>> list1 = jobListDao.wrongMessage(list) ;
+
+        return list1;
     }
 }

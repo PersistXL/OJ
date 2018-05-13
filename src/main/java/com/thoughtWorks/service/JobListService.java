@@ -42,4 +42,6 @@ public interface JobListService {
      * @return
      */
     int analysisPreview(int classesId, int testPaperId);
+
+    List<Map<String,Object>> wrongMessage(int classesId, String[] subject);
 }

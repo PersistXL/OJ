@@ -37,4 +37,12 @@
     <select id="analysisPreview" parameterType="int" resultType="int">
         SELECT COUNT(1) FROM o_student_testpaper WHERE testpaper_id = #{testPaperId} AND classes_id = #{classesId}
     </select>
+
+    <select id="wrongMessage" parameterType="list" resultType="map">
+        SELECT * from o_wrong_title where o_wrong_title.subject_id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
