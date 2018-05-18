@@ -191,12 +191,13 @@
                       </thead>`)
                     for (var i = 0; i < data.data.length; i++) {
                         var num = 0;
-                        var count = new Array(5);
+                        var count = new Array(6);
                         count[0] = 0;
                         count[1] = 0;
                         count[2] = 0;
                         count[3] = 0;
                         count[4] = 0;
+                        count[5] = 0;
 
                         for (var m = 0; m <data2.data.length; m++) {
                             if (data.data[i].subjectId == data2.data[m].subject_id) {
@@ -211,12 +212,14 @@
                                     count[3] +=1;
                                 }else if (data2.data[m].wrong_options == "E") {
                                     count[4] +=1;
+                                }else {
+                                    count[5] += 1;
                                 }
                             }
                         }
                         let max = 0;
                         let index = -1;
-                        for (let i = 0; i < count.length ; i++) {
+                        for (let i = 0; i < count.length; i++) {
                             if(count[i] >= max){
                                 max = count[i]
                                 index = i;
@@ -239,10 +242,9 @@
                                 break;
                              case 4:
                                 chose = "E"
-                                break;
-
+                                 break;
                             default:
-                                chose = "无"
+                                chose = "无";
                         }
                         var errorRate = ""
                         if (num == 0){
