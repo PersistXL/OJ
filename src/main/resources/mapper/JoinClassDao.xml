@@ -61,6 +61,16 @@
         SELECT
         count(*)
         FROM t_user as tu
-        where (tu.email=#{email} or tu.username=#{no} or tu.phone=#{phone})
+        <where>
+            <if test="email != ''">
+                tu.email = #{email}
+            </if>
+            <if test="no != ''">
+                or tu.username = #{no}
+            </if>
+            <if test="phone != ''">
+                or tu.phone = #{phone}
+            </if>
+        </where>
     </select>
 </mapper>
