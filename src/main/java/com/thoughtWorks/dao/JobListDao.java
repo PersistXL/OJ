@@ -43,5 +43,5 @@ public interface JobListDao {
      */
     int analysisPreview(@Param("classesId") int classesId,@Param("testPaperId") int testPaperId);
 
-    List<Map<String,Object>> wrongMessage(List list);
+    List<Map<String,Object>> wrongMessage(@Param("list") List list,@Param("classesId") int classesId);
 }

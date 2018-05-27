@@ -48,7 +48,7 @@ public class JobListServiceImpl implements com.thoughtWorks.service.JobListServi
         for(String item:subject){
             list.add(item);
         }
-        List<Map<String,Object>> list1 = jobListDao.wrongMessage(list) ;
+        List<Map<String,Object>> list1 = jobListDao.wrongMessage(list,classesId) ;
 
         return list1;
     }

@@ -44,5 +44,6 @@
                  open="(" separator="," close=")">
             #{item}
         </foreach>
+        AND o_wrong_title.classes_id = #{classesId}
     </select>
 </mapper>
