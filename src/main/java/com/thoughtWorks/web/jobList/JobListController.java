@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -58,10 +59,28 @@ public class JobListController {
      */
     public Result selectSubject() {
         try {
+            List<Map<String, Object>> data = new ArrayList<>();
             ActiveUser user = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
             String userName = user.getUserName();
             List<Map<String, Object>> list = jobListService.selectSubject(userName);
-            return Result.success(list, Constant.SEARCH_SUCCESS);
+            Iterator<Map<String, Object>> item = list.iterator();
+            SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            while (item.hasNext()) {
+                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> value = item.next();
+                map.put("ClassesName", value.get("ClassesName"));
+                map.put("classes_id", value.get("classes_id"));
+                map.put("close_time", sm.format(value.get("close_time")));
+                map.put("id", value.get("id"));
+                map.put("name", value.get("name"));
+                map.put("score", value.get("score"));
+                map.put("start_time", sm.format(value.get("start_time")));
+                map.put("subject_id", value.get("subject_id"));
+                map.put("teacher_id", value.get("teacher_id"));
+                map.put("testPaperId", value.get("testPaperId"));
+                data.add(map);
+            }
+            return Result.success(data, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }

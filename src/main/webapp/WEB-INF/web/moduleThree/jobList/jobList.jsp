@@ -65,6 +65,7 @@
             $.post("${baseurl}/jobList/selectSubjectClassesName", function (data) {
                 var _html = ""
                 $.post("${baseurl}/jobList/selectSubject", function (data1) {
+                    console.log(data1)
                     for (var i = 0; i < data.data.length; i++) {
                         teacherId = data1.data[0].teacher_id
                         classId = data.data[i].clID
@@ -77,12 +78,14 @@
                                     <col width="200">
                                     <col width="200">
                                     <col width="200">
+                                    <col width="200">
                                   </colgroup>
                                   <thead>
                                     <tr>
                                       <th style="text-align: center">测试名称</th>
                                       <th style="text-align: center">题目数量</th>
                                       <th style="text-align: center">试卷成绩</th>
+                                      <th style="text-align: center">截至时间</th>
                                       <th style="text-align: center">相关操作</th>
                                     </tr>
                                   </thead>
@@ -97,6 +100,7 @@
                                       <td style="text-align: center">` + data1.data[j].name + `</td>
                                       <td style="text-align: center">` + s.split("_").length + `</td>
                                       <td style="text-align: center">` + data1.data[j].score + `</td>
+                                      <td style="text-align: center">` + (data1.data[j].close_time) + `</td>
                                       <td style="text-align: center">
                                       <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + classesId + `,'` + testPaperId + `')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
