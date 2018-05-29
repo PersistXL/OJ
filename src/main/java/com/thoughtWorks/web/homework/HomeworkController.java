@@ -27,14 +27,15 @@ public class HomeworkController {
     TestpaperDao testpaperDao;
     @Autowired
     ModuleOneService moduleOneService;
+
     @ResponseBody
     @RequestMapping("/selectHomework")
-    public Result selectHomework(){
+    public Result selectHomework() {
         try {
             String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
             int id = testpaperDao.selectIdByName(username);
 
-           List<Map<String,Object>> list = testpaperDao.selectHomework(id);
+            List<Map<String, Object>> list = testpaperDao.selectHomework(id);
             return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,7 +45,7 @@ public class HomeworkController {
 
     @ResponseBody
     @RequestMapping("/deleteTestPaperInfo")
-    public Result deleteTestPaperInfo(int id){
+    public Result deleteTestPaperInfo(int id) {
         try {
             testpaperDao.deleteTestPaperInfo(id);
             return Result.success(null, Constant.DELETE_SUCCESS);
@@ -53,9 +54,10 @@ public class HomeworkController {
         }
         return Result.failure(null, Constant.DELETE_FAILURE);
     }
+
     @ResponseBody
     @RequestMapping("/addTestpaper")
-    public Result addTestpaper(Testpaper testpaper){
+    public Result addTestpaper(Testpaper testpaper) {
         try {
             String start_time = DataUtil.outDate();
             testpaper.setStartTime(start_time);
@@ -67,16 +69,29 @@ public class HomeworkController {
 
         return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
     }
+
     @ResponseBody
     @RequestMapping("/previewTestpaper")
-    public Result previewTestpaper(String subjectId){
+    public Result previewTestpaper(String subjectId) {
         try {
             String subject[] = subjectId.split("_");
-            List<Map<String,Object>> list = moduleOneService.selectTestpaperById(subject);
+            List<Map<String, Object>> list = moduleOneService.selectTestpaperById(subject);
             return Result.success(list, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
+    @ResponseBody
+    @RequestMapping("/updateTestpaper")
+    public Result updateTestpaper(Testpaper testpaper){
+        try {
+            testpaperDao.updateTestpaper(testpaper);
+            return Result.success(null, Constant.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.UPDATE_FAILURE);
     }
 }

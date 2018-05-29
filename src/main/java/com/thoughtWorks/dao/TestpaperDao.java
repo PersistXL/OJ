@@ -73,4 +73,6 @@ public interface TestpaperDao {
     void deleteTestPaperInfo(int id);
 
     void addTestpaper(Testpaper testpaper);
+
+    void updateTestpaper(Testpaper testpaper);
 }
