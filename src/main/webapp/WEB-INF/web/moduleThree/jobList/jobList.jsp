@@ -27,12 +27,12 @@
 
 </div>
 <div id="editFrame" style="display: none">
-    <div class="layui-inline" style="margin-left: 32%;margin-top: 20px">
+    <div class="layui-inline" style="margin-left: 22%;margin-top: 20px">
         <label class="layui-form-label" style="width: 120px">当前截止时间</label>
         <input type="text" disabled style="width: 173px;" class="layui-input" id="closeTime">
     </div>
     <br>
-    <div class="layui-inline" style="margin-left: 32%;margin-top: 20px">
+    <div class="layui-inline" style="margin-left: 22%;margin-top: 20px">
         <label class="layui-form-label" style="width: 120px">修改截止时间</label>
         <div class="layui-input-inline">
             <input type="text" hidden id="classesId">
@@ -198,8 +198,8 @@
         $("#closeTime").val(closeTime);
         layer.open({
             type: 1
-            , title: "修改试卷"
-            , area: ["50%", "50%"]
+            , title: "修改试卷截止时间"
+            , area: ["30%", "30%"]
             , skin: 'yourclass'
             , content: $("#editFrame")
         });
