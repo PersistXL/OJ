@@ -24,7 +24,26 @@
 
 </div>
 <div id="analysisPreview" style="display: none;width: 90%;margin-left: 5%;margin-bottom: 50px">
-    
+
+</div>
+<div id="editFrame" style="display: none">
+    <div class="layui-inline" style="margin-left: 32%;margin-top: 20px">
+        <label class="layui-form-label" style="width: 120px">当前截止时间</label>
+        <input type="text" disabled style="width: 173px;" class="layui-input" id="closeTime">
+    </div>
+    <br>
+    <div class="layui-inline" style="margin-left: 32%;margin-top: 20px">
+        <label class="layui-form-label" style="width: 120px">修改截止时间</label>
+        <div class="layui-input-inline">
+            <input type="text" hidden id="classesId">
+            <input type="text" hidden id="testPaperId">
+            <input type="text" hidden id="subjectId">
+            <input style="width: 173px;" class="layui-input" id="time" placeholder="重新选择时间"
+                   onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">
+        </div>
+    </div>
+   <br>
+    <button style="margin-left: 42%;margin-top: 20px" class="layui-btn" onclick="updateTestPaper()">确认修改</button>
 </div>
 <section class="larry-grid">
     <div class="larry-personal">
@@ -48,7 +67,6 @@
                 form = layui.form(),
                 layedit = layui.layedit,
                 laytpl = layui.laytpl;
-
 
             //全选
             form.on('checkbox(allChoose)', function (data) {
@@ -85,16 +103,17 @@
                                       <th style="text-align: center">测试名称</th>
                                       <th style="text-align: center">题目数量</th>
                                       <th style="text-align: center">试卷成绩</th>
-                                      <th style="text-align: center">截至时间</th>
+                                      <th style="text-align: center">截止时间</th>
                                       <th style="text-align: center">相关操作</th>
                                     </tr>
                                   </thead>
                                   <tbody id="studentMessage">`
-                        for (var j = data1.data.length-1; j >=0 ; j--) {
+                        for (var j = data1.data.length - 1; j >= 0; j--) {
                             var s = data1.data[j].subject_id
                             var classesId = data1.data[j].classes_id
                             testPaperId = data1.data[j].testPaperId
                             subjectId = data1.data[j].subject_id
+                            closeTime = data1.data[j].close_time
                             if (classId === data1.data[j].classes_id) {
                                 _html += (`<tr>
                                       <td style="text-align: center">` + data1.data[j].name + `</td>
@@ -104,8 +123,10 @@
                                       <td style="text-align: center">
                                       <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + classesId + `,'` + testPaperId + `')">
                                       <i class="layui-icon">&#xe623;</i>预览</a>
-                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="analysis(` + classesId + `,'` + testPaperId + `','`+subjectId+`')">
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="analysis(` + classesId + `,'` + testPaperId + `','` + subjectId + `')">
                                       <i class="layui-icon">&#xe623;</i>分析</a>
+                                      <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="edit(` + classesId + `,'` + testPaperId + `','` + subjectId + `','` + closeTime + `')">
+                                      <i class="layui-icon">&#xe623;</i>修改</a>
                                       </td>
                                     </tr>
                                 `)
@@ -127,9 +148,9 @@
     function preview(classesId, testPaperId) {
         $.post("${baseurl}/jobList/selectStudentTestpaper",
             {
-                classesId : classesId,
-                testPaperId : testPaperId,
-                teacherId : teacherId
+                classesId: classesId,
+                testPaperId: testPaperId,
+                teacherId: teacherId
             },
             function (data) {
                 var _html = "";
@@ -169,10 +190,44 @@
             , content: $("#previewAdd")
         });
     }
-    function analysis(classesId,testPaperId,subjectId) {
-        $.post("${baseurl}/jobList/analysisPreview",{classesId,testPaperId},function (data1) {
-            $.post("${baseurl}/jobList/selectSubjectName",{subjectId},function (data){
-                $.post("${baseurl}/jobList/wrongMessage",{classesId,subjectId},function (data2) {
+
+    function edit(classesId, testPaperId, subjectId, closeTime) {
+        $("#classesId").val(classesId);
+        $("#testPaperId").val(testPaperId);
+        $("#subjectId").val(subjectId);
+        $("#closeTime").val(closeTime);
+        layer.open({
+            type: 1
+            , title: "修改试卷"
+            , area: ["50%", "50%"]
+            , skin: 'yourclass'
+            , content: $("#editFrame")
+        });
+    }
+    function updateTestPaper() {
+        let classesId = $("#classesId").val();
+        let testPaperId = $("#testPaperId").val();
+        let subjectId = $("#subjectId").val();
+        let closeTime = $("#time").val();
+        if (closeTime == "") {
+            layer.msg("试卷结止时间不能为空");
+        }else {
+            alert(closeTime)
+            $.post("${baseurl}/homework/updateTestpaper",{
+                classesId,
+                testPaperId,
+                subjectId,
+                closeTime
+            },function (data) {
+
+            })
+        }
+
+    }
+    function analysis(classesId, testPaperId, subjectId) {
+        $.post("${baseurl}/jobList/analysisPreview", {classesId, testPaperId}, function (data1) {
+            $.post("${baseurl}/jobList/selectSubjectName", {subjectId}, function (data) {
+                $.post("${baseurl}/jobList/wrongMessage", {classesId, subjectId}, function (data2) {
                     var _html = "";
                     _html += (`<table class="layui-table">
                       <colgroup>
@@ -203,20 +258,20 @@
                         count[4] = 0;
                         count[5] = 0;
 
-                        for (var m = 0; m <data2.data.length; m++) {
+                        for (var m = 0; m < data2.data.length; m++) {
                             if (data.data[i].subjectId == data2.data[m].subject_id) {
                                 num += 1;
                                 if (data2.data[m].wrong_options == "A") {
-                                    count[0] +=1;
-                                }else if (data2.data[m].wrong_options == "B") {
-                                    count[1] +=1;
-                                }else if (data2.data[m].wrong_options == "C") {
-                                    count[2] +=1;
-                                }else if (data2.data[m].wrong_options == "D") {
-                                    count[3] +=1;
-                                }else if (data2.data[m].wrong_options == "E") {
-                                    count[4] +=1;
-                                }else {
+                                    count[0] += 1;
+                                } else if (data2.data[m].wrong_options == "B") {
+                                    count[1] += 1;
+                                } else if (data2.data[m].wrong_options == "C") {
+                                    count[2] += 1;
+                                } else if (data2.data[m].wrong_options == "D") {
+                                    count[3] += 1;
+                                } else if (data2.data[m].wrong_options == "E") {
+                                    count[4] += 1;
+                                } else {
                                     count[5] += 1;
                                 }
                             }
@@ -224,36 +279,35 @@
                         let max = 0;
                         let index = -1;
                         for (let i = 0; i < count.length; i++) {
-                            if(count[i] >= max){
+                            if (count[i] >= max) {
                                 max = count[i]
                                 index = i;
                             }
                         }
                         var chose = ""
-                        switch(index)
-                        {
+                        switch (index) {
                             case 0:
                                 chose = "A"
                                 break;
                             case 1:
                                 chose = "B"
                                 break;
-                             case 2:
+                            case 2:
                                 chose = "C"
                                 break;
-                             case 3:
+                            case 3:
                                 chose = "D"
                                 break;
-                             case 4:
+                            case 4:
                                 chose = "E"
-                                 break;
+                                break;
                             default:
                                 chose = "无";
                         }
                         var errorRate = ""
-                        if (num == 0){
+                        if (num == 0) {
                             errorRate = "0"
-                        }else{
+                        } else {
                             errorRate = (num / (data1.data)).toFixed(2);
                         }
                         _html += (`<tbody>
@@ -281,6 +335,29 @@
         });
     }
 </script>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
 
+        var start = {
+            min: laydate.now()
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: laydate.now()
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+    });
+</script>
 </body>
 </html>
