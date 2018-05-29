@@ -314,7 +314,7 @@
                     $("#previewClasses").html(_html);
                     layer.open({
                         type: 1,
-                        title: '试题预览',
+                        title: '预览学生信息',
                         area: ['100%', '100%'],
                         skin: 'yourclass',
                         content: $('#previewClassesInfo')
