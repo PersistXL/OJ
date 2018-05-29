@@ -212,14 +212,16 @@
         if (closeTime == "") {
             layer.msg("试卷结止时间不能为空");
         }else {
-            alert(closeTime)
             $.post("${baseurl}/homework/updateTestpaper",{
                 classesId,
                 testPaperId,
                 subjectId,
                 closeTime
             },function (data) {
-
+                layer.confirm(data.msg, function (index) {
+                    location.reload();
+                    layer.close(index);
+                });
             })
         }
 
