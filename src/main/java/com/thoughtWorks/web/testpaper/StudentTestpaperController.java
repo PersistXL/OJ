@@ -90,7 +90,7 @@ public class StudentTestpaperController {
         }
 
         int stuId = sts.getStudentId();
-        int testpaperStudentScore = (int) Math.ceil(sts.getTestpaperStudentScore());
+        int testpaperStudentScore = (int) Math.round(sts.getTestpaperStudentScore());
         sts.setTestpaperStudentScore(testpaperStudentScore);
         count = moduleOneDao.duplicateChecking(sts);
         System.out.println(count);
