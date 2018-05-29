@@ -42,7 +42,6 @@ public class StudentTestpaperController {
     public Result studentTestpaperTitle(int classesId){
         try {
             List<Map<String,Object>> data = new ArrayList<>();
-
             List<Map<String, Object>> list= studentTestpaperDao.studentTestpaperTitle(classesId);
             Iterator<Map<String, Object>> item = list.iterator();
             while(item.hasNext()){
@@ -107,7 +106,7 @@ public class StudentTestpaperController {
                 wrtt.setSubjectId(wrong_answers.get(i).getId());
                 String s = "" + wrong_answers.get(i).getOption();
                 wrtt.setWrongOptions(s);
-                wrtt.setClassesId(wrong_answers.get(i).getClassesId());
+                wrtt.setClassesId(sts.getClassesId());
                 wrongTitleDao.wrongTitleId(wrtt);
             }
 
