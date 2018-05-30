@@ -170,10 +170,16 @@
                                             class="layui-icon">&#xe615;</i>搜索</a>
                                 </div>
                             </div>
+                            <div class="layui-input-inline">
+                                <div class="layui-inline">
+                                    <a class="layui-btn" id="choseAll" onclick="_subject.chose()"><i
+                                            class="layui-icon">&#xe642;</i>选择所有选中项</a>
+                                </div>
+                            </div>
                         </form>
                     </blockquote>
                     <div class="layui-form">
-                        <table class="layui-table">
+                        <table class="layui-table" id="tab_1">
                             <colgroup>
                                 <col width="50">
                                 <col width="70">
@@ -186,7 +192,7 @@
 
                             <thead>
                             <tr>
-                                <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
+                                <th><input type="checkbox" name="selectAll" lay-skin="primary" lay-filter="allChoose" value=""></th>
                                 <th>编号</th>
                                 <th>题目</th>
                                 <th>题库</th>
@@ -268,8 +274,50 @@
                 item.checked = data.elem.checked;
             });
             form.render('checkbox');
-
         });
+        //通过判断是否全部选中来确定全选按钮是否选中
+        form.on('checkbox(itemChoose)',function(data) {
+            var sib = $(data.elem).parents('table').find('tbody input[type="checkbox"]:checked').length;
+            var total = $(data.elem).parents('table').find('tbody input[type="checkbox"]').length;
+            if (sib == total) {
+                $(data.elem).parents('table').find('thead input[type="checkbox"]').prop("checked", true);
+                form.render();
+            } else {
+                $(data.elem).parents('table').find('thead input[type="checkbox"]').prop("checked", false);
+                form.render();
+            }
+        })
+        //批量选择试题
+        $("#choseAll").click(function(){
+
+            var child = $("#tab_1").find('tbody input[type="checkbox"]:checked');
+            var $checkbox="";
+            child.each(function(){
+                $checkbox += $(this).attr("tbl")+",";
+            })
+            console.log($checkbox)
+            if($checkbox.length !== 0){
+                layer.confirm('确定选择选中的试题？',{icon:3, title:'提示信息'},function(index){
+                    var index = layer.msg('正在选择中，请稍候',{icon: 16,time:false,shade:0.8});
+                    setTimeout(function(){
+                        //批量选择数据
+                        $.post("${baseurl}/Testpaper/addTestpaperCursorAll", {
+                            subjectId: $checkbox
+                        }, function (data) {
+                            layer.msg(data.msg);
+                            _subject.page();
+                            selectTestpaperCursor();
+                        });
+                       /* $('#testpaper li input[type="checkbox"],#selectAll').prop("checked",false);
+                        form.render();
+                        layer.close(index);
+                        layer.msg("批量选择成功");*/
+                    }/*,2000*/);
+                })
+            }else{
+                layer.msg("请选择需要批量选择的试题");
+            }
+        })
         _subject = {
             page: function () {
                 var select_questions = $("select[name='select_questions']").val();
@@ -301,7 +349,7 @@
                             });
 
                             _html += `<tr>
-                            <td><input type="checkbox" name="" lay-skin="primary"></td>
+                            <td><input type="checkbox" name="selectAll" lay-skin="primary" id="testpaper" lay-filter="itemChoose" tbl="` + data.data[i].id + `"></td>
                             <td>` + (i + 1) + `</td>
                             <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
                             <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
@@ -332,6 +380,9 @@
                         form.render('checkbox');
                     });
                 })
+            },
+            chose: function () {
+
             },
             paging: function () {
                 layui.laypage({

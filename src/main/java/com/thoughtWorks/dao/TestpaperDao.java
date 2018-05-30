@@ -75,4 +75,6 @@ public interface TestpaperDao {
     void addTestpaper(Testpaper testpaper);
 
     void updateTestpaper(Testpaper testpaper);
+
+    void addTestpaperCursorAll(@Param("s") String s, @Param("teacherId") int teacherId);
 }

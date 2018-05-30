@@ -199,4 +199,19 @@ public class TestpaperController {
         return Result.failure(null, Constant.TESTPAPER_IS_TRUE);
     }
 
+    @RequestMapping("/addTestpaperCursorAll")
+    public Result addTestpaperCursorAll(String subjectId){
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int teacherId = testpaperDao.selectIdByName(username);
+            String[] subject = subjectId.split(",");
+            for (int i = 0;i < subject.length;i++) {
+                testpaperDao.addTestpaperCursorAll(subject[i],teacherId);
+            }
+            return Result.success(null, Constant.ADD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.ADD_FAILURE);
+    }
 }

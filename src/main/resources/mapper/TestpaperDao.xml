@@ -77,6 +77,9 @@
         INSERT INTO o_testpaper (subject_id, classes_id, teacher_id, start_time, name, score, close_time) VALUES
         (#{subjectId},#{classesId},#{teacherId},#{startTime},#{name},#{score},#{closeTime})
     </insert>
+    <insert id="addTestpaperCursorAll">
+        INSERT INTO o_testpaper_cursor (teacher_id, subject_id) VALUES (#{teacherId},#{s})
+    </insert>
     <update id="updateTestpaper" parameterType="Testpaper">
         UPDATE o_testpaper SET close_time=#{closeTime}
         where id = #{testPaperId}
