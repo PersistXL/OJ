@@ -175,6 +175,7 @@
                     <div class="layui-form">
                         <table class="layui-table">
                             <colgroup>
+                                <col width="50">
                                 <col width="70">
                                 <col width="150">
                                 <col width="100">
@@ -185,6 +186,7 @@
 
                             <thead>
                             <tr>
+                                <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
                                 <th>编号</th>
                                 <th>题目</th>
                                 <th>题库</th>
@@ -259,6 +261,15 @@
             form = layui.form(),
             laytpl = layui.laytpl;
 
+        //全选
+        form.on('checkbox(allChoose)', function(data){
+            var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+
+        });
         _subject = {
             page: function () {
                 var select_questions = $("select[name='select_questions']").val();
@@ -290,6 +301,7 @@
                             });
 
                             _html += `<tr>
+                            <td><input type="checkbox" name="" lay-skin="primary"></td>
                             <td>` + (i + 1) + `</td>
                             <td ><span class = "hide_title">` + data.data[i].subject + `</span></td>
                             <td><span class = "hide_title1">` + data.data[i].questionsName + `</span></td>
@@ -317,10 +329,9 @@
                         </tr>`;
                         }
                         $("#subject_info").html(_html);
+                        form.render('checkbox');
                     });
                 })
-
-
             },
             paging: function () {
                 layui.laypage({
