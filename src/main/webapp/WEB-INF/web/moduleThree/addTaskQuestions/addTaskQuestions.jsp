@@ -65,38 +65,38 @@
                         <br>
 
                         <%--<div class="layui-input-inline" style="margin-bottom: 15px">--%>
-                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>--%>
-                            <%--<div class="layui-inline">--%>
-                                <%--<div class="layui-input-inline">--%>
-                                    <%--<input style="width: 173px;" class="layui-input" id="time" placeholder="选择时间"--%>
-                                           <%--onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
+                        <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">结束时间</label>--%>
+                        <%--<div class="layui-inline">--%>
+                        <%--<div class="layui-input-inline">--%>
+                        <%--<input style="width: 173px;" class="layui-input" id="time" placeholder="选择时间"--%>
+                        <%--onclick="layui.laydate({elem: this, istime: true,min: laydate.now(), format: 'YYYY-MM-DD hh:mm:ss'})">--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
                         <%--</div>--%>
                         <%--<br>--%>
 
                         <%--<div class="layui-input-inline" style="margin-bottom: 15px">--%>
-                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>--%>
-                            <%--<div class="layui-inline">--%>
-                                <%--<div class="layui-input-inline">--%>
-                                    <%--<input style="width: 173px;" type="number" id="score" name=""--%>
-                                           <%--autocomplete="off"--%>
-                                           <%--placeholder="请输入分数" class="layui-input">--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
+                        <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">试卷总分</label>--%>
+                        <%--<div class="layui-inline">--%>
+                        <%--<div class="layui-input-inline">--%>
+                        <%--<input style="width: 173px;" type="number" id="score" name=""--%>
+                        <%--autocomplete="off"--%>
+                        <%--placeholder="请输入分数" class="layui-input">--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
                         <%--</div>--%>
                         <%--<br>--%>
 
                         <%--<div class="layui-input-inline" style="margin-bottom: 15px">--%>
-                            <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>--%>
-                            <%--<div class="layui-inline">--%>
-                                <%--<div class="layui-input-inline">--%>
-                                    <%--<select name="classes_id" lay-verify="required" lay-search="" id="classes_id">--%>
-                                        <%--<option value="0">班课</option>--%>
+                        <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>--%>
+                        <%--<div class="layui-inline">--%>
+                        <%--<div class="layui-input-inline">--%>
+                        <%--<select name="classes_id" lay-verify="required" lay-search="" id="classes_id">--%>
+                        <%--<option value="0">班课</option>--%>
 
-                                    <%--</select>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
+                        <%--</select>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
                         <%--</div>--%>
 
                     </form>
@@ -172,7 +172,7 @@
                             </div>
                             <div class="layui-input-inline">
                                 <div class="layui-inline">
-                                    <a class="layui-btn" id="choseAll" onclick="_subject.chose()"><i
+                                    <a class="layui-btn" id="choseAll"><i
                                             class="layui-icon">&#xe642;</i>选择所有选中项</a>
                                 </div>
                             </div>
@@ -192,7 +192,9 @@
 
                             <thead>
                             <tr>
-                                <th><input type="checkbox" name="selectAll" lay-skin="primary" lay-filter="allChoose" value=""></th>
+                                <th><input type="checkbox" id="checkboxAll_id" name="selectAll" lay-skin="primary"
+                                           lay-filter="allChoose"
+                                           value=""></th>
                                 <th>编号</th>
                                 <th>题目</th>
                                 <th>题库</th>
@@ -259,6 +261,7 @@
     let totalSize = 5;
     let currentIndex = 1;
     let pageSize = 10;
+    let childAllSelect;
     let chapterLists = [];
     layui.use(['jquery', 'layer', 'element', 'laypage', 'form', 'laytpl', 'tree'], function () {
         window.jQuery = window.$ = layui.jquery;
@@ -268,17 +271,18 @@
             laytpl = layui.laytpl;
 
         //全选
-        form.on('checkbox(allChoose)', function(data){
+        form.on('checkbox(allChoose)', function (data) {
             var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
-            child.each(function(index, item){
+            child.each(function (index, item) {
                 item.checked = data.elem.checked;
             });
             form.render('checkbox');
         });
         //通过判断是否全部选中来确定全选按钮是否选中
-        form.on('checkbox(itemChoose)',function(data) {
+        form.on('checkbox(itemChoose)', function (data) {
             var sib = $(data.elem).parents('table').find('tbody input[type="checkbox"]:checked').length;
             var total = $(data.elem).parents('table').find('tbody input[type="checkbox"]').length;
+            childAllSelect = $(data.elem).parents('table').find('thead input[type="checkbox"]');
             if (sib == total) {
                 $(data.elem).parents('table').find('thead input[type="checkbox"]').prop("checked", true);
                 form.render();
@@ -288,33 +292,31 @@
             }
         })
         //批量选择试题
-        $("#choseAll").click(function(){
-
+        $("#choseAll").click(function () {
             var child = $("#tab_1").find('tbody input[type="checkbox"]:checked');
-            var $checkbox="";
-            child.each(function(){
-                $checkbox += $(this).attr("tbl")+",";
+            var $checkbox = "";
+            child.each(function () {
+                $checkbox += $(this).attr("tbl") + ",";
             })
             console.log($checkbox)
-            if($checkbox.length !== 0){
-                layer.confirm('确定选择选中的试题？',{icon:3, title:'提示信息'},function(index){
-                    var index = layer.msg('正在选择中，请稍候',{icon: 16,time:false,shade:0.8});
-                    setTimeout(function(){
+            if ($checkbox.length !== 0) {
+                layer.confirm('确定选择选中的试题？', {icon: 3, title: '提示信息'}, function (index) {
+                    var index = layer.msg('正在选择中，请稍候', {icon: 16, time: false, shade: 0.8});
+                    setTimeout(function () {
                         //批量选择数据
                         $.post("${baseurl}/Testpaper/addTestpaperCursorAll", {
                             subjectId: $checkbox
                         }, function (data) {
                             layer.msg(data.msg);
                             _subject.page();
+                            $(".layui-table").find('thead input[type="checkbox"]').prop("checked", false);
                             selectTestpaperCursor();
                         });
-                       /* $('#testpaper li input[type="checkbox"],#selectAll').prop("checked",false);
                         form.render();
                         layer.close(index);
-                        layer.msg("批量选择成功");*/
-                    }/*,2000*/);
+                    }, 2000);
                 })
-            }else{
+            } else {
                 layer.msg("请选择需要批量选择的试题");
             }
         })
@@ -381,9 +383,6 @@
                     });
                 })
             },
-            chose: function () {
-
-            },
             paging: function () {
                 layui.laypage({
                     cont: 'demo1',
@@ -408,7 +407,7 @@
                 // let score = $("#score").val();
                 // var classes_id = $("select[name='classes_id']").val();
 
-                if (name == "" ) {
+                if (name == "") {
                     layer.msg("试卷名称不能为空");
                 } else {
                     <%--$.post("${baseurl}/Testpaper/selectTestpaperNameIs",--%>
@@ -417,22 +416,22 @@
                     //         classesId: classes_id
                     //     }, function (isHave) {
                     //         if (isHave.data) {
-                                $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
-                                    subjectId: subjectId,
-                                    name: name
-                                    // score: score,
-                                    // closeTime: closeTime,
-                                    // classesId: classes_id
-                                }, function (data) {
-                                    layer.confirm(data.msg, function (index) {
-                                        location.reload();
-                                        layer.close(index);
-                                    });
-                                });
-                            // } else {
-                            //     layer.msg(isHave.msg);
-                            // }
-                        // });
+                    $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
+                        subjectId: subjectId,
+                        name: name
+                        // score: score,
+                        // closeTime: closeTime,
+                        // classesId: classes_id
+                    }, function (data) {
+                        layer.confirm(data.msg, function (index) {
+                            location.reload();
+                            layer.close(index);
+                        });
+                    });
+                    // } else {
+                    //     layer.msg(isHave.msg);
+                    // }
+                    // });
 
                 }
             },
@@ -598,6 +597,7 @@
                 form.render();
             });
         }
+
         function deleteTestpaper() {
             $.post("${baseurl}/Testpaper/deleteTestpaper", function (data) {
 
@@ -634,7 +634,7 @@
         // var classes_id = $("select[name='classes_id']").val();
         // var classes_Name = $("select[name='classes_id']").find("option:selected").text();
 
-        if (name == "" ) {
+        if (name == "") {
             layer.msg("试卷名称不能为空");
         } else {
             $(".name_1").html(name)
