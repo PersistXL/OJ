@@ -212,6 +212,6 @@ public class TestpaperController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null, Constant.ADD_FAILURE);
+        return Result.failure(null, Constant.ADDALL_FAILURE);
     }
 }

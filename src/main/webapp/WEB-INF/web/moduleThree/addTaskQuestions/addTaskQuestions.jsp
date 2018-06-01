@@ -84,9 +84,7 @@
                         <%--placeholder="请输入分数" class="layui-input">--%>
                         <%--</div>--%>
                         <%--</div>--%>
-                        <%--</div>--%>
-                        <%--<br>--%>
-
+                        <%--</div>--%><%--<br>--%>
                         <%--<div class="layui-input-inline" style="margin-bottom: 15px">--%>
                         <%--<label class="layui-form-label" style="width: 100px;font-size: 14px">班课</label>--%>
                         <%--<div class="layui-inline">--%>
@@ -192,9 +190,7 @@
 
                             <thead>
                             <tr>
-                                <th><input type="checkbox" id="checkboxAll_id" name="selectAll" lay-skin="primary"
-                                           lay-filter="allChoose"
-                                           value=""></th>
+                                <th><input type="checkbox" id="checkboxAll_id" name="selectAll" lay-skin="primary" lay-filter="allChoose" value=""></th>
                                 <th>编号</th>
                                 <th>题目</th>
                                 <th>题库</th>

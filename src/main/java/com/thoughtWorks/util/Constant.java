@@ -16,6 +16,8 @@ public class Constant {
     public static final String ADD_SUCCESS = "添加成功";
     public static final String ADD_FAILURE = "添加失败";
 
+    public static final String ADDALL_FAILURE = "请勿重复添加";
+
     public static final String ADD_QUESTION_SUCCESS = "试卷创建成功，即将跳转页面";
     public static final String ADD_QUESTION_FAILURE = "创建失败";
 
