@@ -77,4 +77,6 @@ public interface TestpaperDao {
     void updateTestpaper(Testpaper testpaper);
 
     void addTestpaperCursorAll(@Param("s") String s, @Param("teacherId") int teacherId);
+
+    void updateTestpaperCursorToTestpaper(Testpaper testpaper);
 }

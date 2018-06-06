@@ -403,7 +403,7 @@
                     //         classesId: classes_id
                     //     }, function (isHave) {
                     //         if (isHave.data) {
-                    $.post("${baseurl}/Testpaper/addTestpaperCursorToTestpaper", {
+                    $.post("${baseurl}/Testpaper/updateTestpaperCursorToTestpaper", {
                         subjectId: subjectId,
                         name: name
                         // score: score,
@@ -431,7 +431,10 @@
                     });
                     layer.close(index);
                 });
-            },editSubjectInfo:function (id,subject_id) {
+            },editSubjectInfo:function (id,subject_id,name) {
+                    $(".name_1").html(name)
+                    $("#title_subject").hide();
+                    $("#select_subject").show();
                 deleteTestpaper();
                 $.post("${baseurl}/Testpaper/updateTestpaperCursor", {
                     subjectId: subject_id
@@ -659,7 +662,7 @@
                                         <i class="layui-icon">&#xe602;</i>
                                         预览
                                     </a>
-                                    <a class="layui-btn layui-btn-mini" onclick="_subject.editSubjectInfo(` + data.data[i].id + `,'` + data.data[i].subject_id + `')">
+                                    <a class="layui-btn layui-btn-mini" onclick="_subject.editSubjectInfo(` + data.data[i].id + `,'` + data.data[i].subject_id + `','` + data.data[i].name + `')">
                                         <i class="layui-icon">&#xe602;</i>
                                         编辑
                                     </a>
