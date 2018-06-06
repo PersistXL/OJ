@@ -102,16 +102,16 @@ public class TestpaperController {
             String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
             int id = testpaperDao.selectIdByName(username);
             testpaper.setTeacherId(id);
-
+            System.out.println(testpaper.getName());
             String start_time = DataUtil.outDate();
             testpaper.setStartTime(start_time);
             testpaperDao.updateTestpaperCursorToTestpaper(testpaper);
             testpaperDao.deleteTestpaperCursorByName(id);
-            return Result.success(null, Constant.ADD_QUESTION_SUCCESS);
+            return Result.success(null, Constant.UPDATE_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
+        return Result.failure(null, Constant.UPDATE_FAILURE);
     }
 
     @RequestMapping("deleteTestpaper")
