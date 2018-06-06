@@ -214,4 +214,19 @@ public class TestpaperController {
         }
         return Result.failure(null, Constant.ADDALL_FAILURE);
     }
+    @RequestMapping("/updateTestpaperCursor")
+    public Result updateTestpaperCursor(String subjectId){
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int teacherId = testpaperDao.selectIdByName(username);
+            String[] subject = subjectId.split("_");
+            for (int i = 0;i < subject.length;i++) {
+                testpaperDao.addTestpaperCursorAll(subject[i],teacherId);
+            }
+            return Result.success(null, Constant.READQUESTIONS_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.READQUESTIONS_FAILURE);
+    }
 }
