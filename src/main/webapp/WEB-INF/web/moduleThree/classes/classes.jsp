@@ -163,8 +163,8 @@
             <thead>
             <tr>
                 <th>编号</th>
+                <th>学号</th>
                 <th>学生姓名</th>
-                <th>学生账号</th>
                 <th>性别</th>
                 <th>手机号</th>
                 <th>操作</th>
@@ -304,8 +304,8 @@
                     for (let i = 0; i < data.data.length; i++) {
                         _html += `<tr>
                             <td>` + (i + 1) + `</td>
-                            <td ><span class = "hide_title">` + data.data[i].name + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].no + `</span></td>
+                            <td ><span class = "hide_title">` + data.data[i].name + `</span></td>
                             <td><span class = "hide_title">` + data.data[i].gender + `</span></td>
                             <td><span class = "hide_title">` + (data.data[i].phone === undefined ? "暂无" : data.data[i].phone) + `</span></td>
                             <td><span class = "hide_title"><a class="layui-btn layui-btn-mini" onclick="_subject.deleteClassesOfStudentInfo(` + data.data[i].stuclazzId + `)">
