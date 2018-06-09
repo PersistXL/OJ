@@ -417,6 +417,7 @@
                     layer.close(index);
                 });
             }, editSubjectInfo: function (id, subject_id, name) {
+                console.log(subject_id)
                 $(".name_1").html(name)
                 $("#title_subject").hide();
                 $("#select_subject").show();
@@ -556,7 +557,7 @@
                 let _html = ""
                 let idAll = [];
                 for (let i = 0; i < data.data.length; i++) {
-                    idAll.push(data.data[i].id);
+                    idAll.push(data.data[i].subject_id);
                     let count = i + 1;
                     _html += `<tr>
                         <th>` + count + `</th>
