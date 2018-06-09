@@ -32,6 +32,7 @@
                     <input type="text" hidden id="idAll">
                     <input type="text" hidden id="Testpapername">
                     <input type="text" hidden id="Testpaperid">
+                    <input type="text" hidden class="TestpaperId" id="TId">
                     <blockquote class="layui-elem-quote mylog-info-tit" style="height: 120px;">
                         <form id="update-form" lay-filter="role-add" class="layui-form layui-form-pane" method="post">
                             <div class="layui-input-inline">
@@ -289,7 +290,6 @@
             child.each(function () {
                 $checkbox += $(this).attr("tbl") + ",";
             })
-            console.log($checkbox)
             if ($checkbox.length !== 0) {
                 layer.confirm('确定选择选中的试题？', {icon: 3, title: '提示信息'}, function (index) {
                     var index = layer.msg('正在选择中，请稍候', {icon: 16, time: false, shade: 0.8});
@@ -394,8 +394,7 @@
 
                 let subjectId = $("#idAll").val();
                 let name = $("#Testpapername").val();
-                let testpaperid = $("#Testpaperid").val();
-                alert(testpaperid)
+                let testpaperid = $("#TId").val()
                 $.post("${baseurl}/Testpaper/updateTestpaperCursorToTestpaper", {
                     subjectId: subjectId,
                     name: name,
@@ -417,18 +416,18 @@
                     layer.close(index);
                 });
             }, editSubjectInfo: function (id, subject_id, name) {
-                console.log(subject_id)
                 $(".name_1").html(name)
                 $("#title_subject").hide();
                 $("#select_subject").show();
+                $(".TestpaperId").val(id)
                 deleteTestpaper();
                 $.post("${baseurl}/Testpaper/updateTestpaperCursor", {
-                    subjectId: subject_id,
+                    subjectId: subject_id
                 }, function (data) {
                     layer.msg(data.msg);
                     _subject.page();
                     $(".layui-table").find('thead input[type="checkbox"]').prop("checked", false);
-                    selectTestpaperCursor(id, name);
+                    selectTestpaperCursor();
                 });
                 layer.open({
                     type: 1,
@@ -552,7 +551,7 @@
             });
         }
 
-        function selectTestpaperCursor(id, name) {
+        function selectTestpaperCursor() {
             $.post("${baseurl}/Testpaper/selectTestpaperCursor", function (data) {
                 let _html = ""
                 let idAll = [];
@@ -574,10 +573,6 @@
                 }
                 $("#cursorTaskQuestions").html(_html);
                 $("#idAll").val(idAll.join("_"));
-                $("#Testpapername").val(name)
-                $("#Testpaperid").val(id)
-
-
             });
         }
 

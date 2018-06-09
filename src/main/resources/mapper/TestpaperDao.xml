@@ -85,4 +85,9 @@
         UPDATE o_testpaper SET close_time=#{closeTime}
         where id = #{testPaperId}
     </update>
+    <update id="updateTestpaperCursorToTestpaper" parameterType="Testpaper">
+        UPDATE o_testpaper_make
+        SET subject_id = #{subjectId},time = #{startTime}
+        where id = #{id}
+    </update>
 </mapper>

@@ -46,7 +46,6 @@ public class TestpaperController {
         try {
 
             List<String> data = testpaperDao.selectTestpaperCursorOfChapter(questionBankId);
-            System.out.println(data);
 
             return Result.success(data, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
@@ -102,7 +101,6 @@ public class TestpaperController {
             String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
             int id = testpaperDao.selectIdByName(username);
             testpaper.setTeacherId(id);
-            System.out.println(testpaper.getName());
             String start_time = DataUtil.outDate();
             testpaper.setStartTime(start_time);
             testpaperDao.updateTestpaperCursorToTestpaper(testpaper);
