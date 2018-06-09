@@ -294,7 +294,6 @@
             child.each(function () {
                 $checkbox += $(this).attr("tbl") + ",";
             })
-            console.log($checkbox)
             if ($checkbox.length !== 0) {
                 layer.confirm('确定选择选中的试题？', {icon: 3, title: '提示信息'}, function (index) {
                     var index = layer.msg('正在选择中，请稍候', {icon: 16, time: false, shade: 0.8});
@@ -402,7 +401,6 @@
                 // let closeTime = $("#time").val();
                 // let score = $("#score").val();
                 // var classes_id = $("select[name='classes_id']").val();
-
                 if (name == "") {
                     layer.msg("试卷名称不能为空");
                 } else {
@@ -560,7 +558,7 @@
                 let _html = ""
                 let idAll = [];
                 for (let i = 0; i < data.data.length; i++) {
-                    idAll.push(data.data[i].id);
+                    idAll.push(data.data[i].subject_id);
                     let count = i + 1;
                     _html += `<tr>
                         <th>` + count + `</th>
