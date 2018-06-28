@@ -13,7 +13,68 @@
     <link rel="stylesheet" type="text/css" href="${baseurl}/public/css/personal.css" media="all">
 </head>
 <body>
+<section class="larry-grid">
+    <div class="larry-personal">
+        <div class="layui-tab">
+            <blockquote class="layui-elem-quote mylog-info-tit">
+                <ul class="layui-tab-title">
+                    <li class="layui-btn " onclick="addStudent()"><i class="layui-icon">&#xe61f;</i>添加学生
+                    </li>
+                </ul>
+            </blockquote>
+        </div>
+    </div>
+</section>
+<div id="addStudentInfo" style="margin: 10px;display: none">
+    <form id="student-add" lay-filter="menu-add" class="layui-form layui-form-pane" method="post">
+        <div class="layui-form-item" style="margin-left: 26%;margin-top: 4%">
+            <label class="layui-form-label">学号(用户名)</label>
+            <div class="layui-input-inline">
+                <input type="text" name="no" required
+                       placeholder="" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
 
+        <div class="layui-form-item" style="margin-left: 26%">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" required
+                       placeholder="" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 26%">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input type="text" name="gender" required
+                       placeholder="" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 26%">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" required
+                       placeholder="" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 26%">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" name="email" required
+                       placeholder="" autocomplete="off" class="layui-input ">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 24%">
+            <div class="layui-input-block">
+                <a class="layui-btn" onclick="addStudentAjax()">添加</a>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
 <section class="larry-grid">
     <div class="larry-personal">
         <div class="layui-tab">
@@ -341,6 +402,25 @@
             sysUser.list();
         })
     });
+    function addStudent() {
+        layer.open({
+            type: 1,
+            title: '添加学生',
+            area: ['35%', '50%'],
+            skin: 'yourclass',
+            content: $('#addStudentInfo')
+        });
+    }
+    function addStudentAjax() {
+        let data = $("#student-add").serialize();
+        $.post('${baseurl}/studentClass/studentRegister', data, (data) => {
+                layer.msg(data.msg);
+                if (data.result) {
+                    setTimeout('location.reload()', 500);
+                }
+            }
+        )
+    }
 </script>
 
 </body>

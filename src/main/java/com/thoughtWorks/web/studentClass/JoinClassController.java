@@ -123,6 +123,7 @@ public class JoinClassController {
     public ResponseEntity studentRegister(Student student) {
         Map<String, Object> classes = new HashMap<>();
         try {
+            System.out.println(student);
             Map<String, String> result = joinClassService.studentRegister(student);
             classes.put("result", result.get("msg"));
             classes.put("stateCode", result.get("state"));
