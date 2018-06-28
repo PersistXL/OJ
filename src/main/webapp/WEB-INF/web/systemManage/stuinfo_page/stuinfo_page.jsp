@@ -414,7 +414,7 @@
     function addStudentAjax() {
         let data = $("#student-add").serialize();
         $.post('${baseurl}/studentClass/studentRegister', data, (data) => {
-                layer.msg(data.msg);
+                layer.msg(data.result);
                 if (data.result) {
                     setTimeout('location.reload()', 500);
                 }
