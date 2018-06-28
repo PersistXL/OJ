@@ -43,11 +43,11 @@
             </div>
         </div>
 
-        <div class="layui-form-item" style="margin-left: 26%">
-            <label class="layui-form-label">性别</label>
-            <div class="layui-input-inline">
-                <input type="text" name="gender" required
-                       placeholder="" autocomplete="off" class="layui-input ">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:120px;margin-left: 26%">性别</label>
+            <div class="layui-input-inline" style="width:250px;">
+                <input type="radio" name="gender" value="男" title="男">
+                <input type="radio" name="gender" value="女" title="女">
             </div>
         </div>
 
@@ -416,7 +416,7 @@
         $.post('${baseurl}/studentClass/studentRegister', data, (data) => {
                 layer.msg(data.result);
                 if (data.result) {
-                    setTimeout('location.reload()', 500);
+                    setTimeout('location.reload()', 1000);
                 }
             }
         )
