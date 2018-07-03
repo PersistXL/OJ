@@ -95,6 +95,7 @@ public class TestpaperController {
         }
         return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
     }
+
     @RequestMapping("addTestpaperCursorToTestpaperOpen")
     public Result addTestpaperCursorToTestpaperOpen(Testpaper testpaper) {
         try {
@@ -113,6 +114,7 @@ public class TestpaperController {
         }
         return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
     }
+
     @RequestMapping("updateTestpaperCursorToTestpaper")
     public Result updateTestpaperCursorToTestpaper(Testpaper testpaper) {
         try {
