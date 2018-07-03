@@ -16,6 +16,8 @@ public class Constant {
     public static final String ADD_SUCCESS = "添加成功";
     public static final String ADD_FAILURE = "添加失败";
 
+    public static final String ADDALL_FAILURE = "请勿重复添加";
+
     public static final String ADD_QUESTION_SUCCESS = "试卷创建成功，即将跳转页面";
     public static final String ADD_QUESTION_FAILURE = "创建失败";
 
@@ -24,6 +26,9 @@ public class Constant {
 
     public static final String UPDATE_SUCCESS = "修改成功";
     public static final String UPDATE_FAILURE = "修改失败";
+    public static final String READQUESTIONS_SUCCESS = "读取试题成功";
+    public static final String READQUESTIONS_FAILURE = "读取试题失败";
+
     public static final String ACCOUNT_IS_LOCK = "当前帐号或角色被禁止";
     public static final String DELETE_SUCCESS = "删除成功";
     public static final String DELETE_FAILURE= "删除失败";

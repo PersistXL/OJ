@@ -11,10 +11,12 @@ public class PageController {
     public String text(){
         return "/moduleThree/addTaskQuestions/addTaskQuestions";
     }
+
     @RequestMapping("/questionsInput")
     public String subjectThree(){
         return "/moduleThree/subjectThree/subjectThree";
     }
+
     @RequestMapping("/createClass")
     public String createClass(){
         return "/moduleThree/classes/classes";
@@ -29,5 +31,15 @@ public class PageController {
     @RequestMapping("/homework")
     public String homework() {
         return "moduleThree/homework/homework";
+    }
+
+    @RequestMapping("/openTestStudent")
+    public String openTestStudent() {
+        return "moduleOne/openTestStudent/openTestStudent";
+    }
+
+    @RequestMapping("/openTestTeacher")
+    public String openTestTeacher() {
+        return "moduleThree/openTestTeacher/openTestTeacher";
     }
 }

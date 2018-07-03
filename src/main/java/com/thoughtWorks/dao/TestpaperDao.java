@@ -42,6 +42,8 @@ public interface TestpaperDao {
      */
     void addTestpaperCursorToTestpaper(Testpaper testpaper);
 
+    void addTestpaperCursorToTestpaperOpen(Testpaper testpaper);
+
     int selectIdByName(String username);
 
     List<Map<String, Object>> selectClasses(int id);
@@ -75,4 +77,8 @@ public interface TestpaperDao {
     void addTestpaper(Testpaper testpaper);
 
     void updateTestpaper(Testpaper testpaper);
+
+    void addTestpaperCursorAll(@Param("s") String s, @Param("teacherId") int teacherId);
+
+    void updateTestpaperCursorToTestpaper(Testpaper testpaper);
 }

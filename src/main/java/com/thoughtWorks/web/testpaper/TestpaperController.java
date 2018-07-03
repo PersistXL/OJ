@@ -46,7 +46,6 @@ public class TestpaperController {
         try {
 
             List<String> data = testpaperDao.selectTestpaperCursorOfChapter(questionBankId);
-            System.out.println(data);
 
             return Result.success(data, Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
@@ -95,6 +94,40 @@ public class TestpaperController {
             e.printStackTrace();
         }
         return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
+    }
+    @RequestMapping("addTestpaperCursorToTestpaperOpen")
+    public Result addTestpaperCursorToTestpaperOpen(Testpaper testpaper) {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int id = testpaperDao.selectIdByName(username);
+            testpaper.setTeacherId(id);
+
+            String start_time = DataUtil.outDate();
+            testpaper.setStartTime(start_time);
+            System.out.println(testpaper.getSubjectId());
+            testpaperDao.addTestpaperCursorToTestpaperOpen(testpaper);
+            testpaperDao.deleteTestpaperCursorByName(id);
+            return Result.success(null, Constant.ADD_QUESTION_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.ADD_QUESTION_FAILURE);
+    }
+    @RequestMapping("updateTestpaperCursorToTestpaper")
+    public Result updateTestpaperCursorToTestpaper(Testpaper testpaper) {
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int id = testpaperDao.selectIdByName(username);
+            testpaper.setTeacherId(id);
+            String start_time = DataUtil.outDate();
+            testpaper.setStartTime(start_time);
+            testpaperDao.updateTestpaperCursorToTestpaper(testpaper);
+            testpaperDao.deleteTestpaperCursorByName(id);
+            return Result.success(null, Constant.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.UPDATE_FAILURE);
     }
 
     @RequestMapping("deleteTestpaper")
@@ -199,4 +232,34 @@ public class TestpaperController {
         return Result.failure(null, Constant.TESTPAPER_IS_TRUE);
     }
 
+    @RequestMapping("/addTestpaperCursorAll")
+    public Result addTestpaperCursorAll(String subjectId){
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int teacherId = testpaperDao.selectIdByName(username);
+            String[] subject = subjectId.split(",");
+            for (int i = 0;i < subject.length;i++) {
+                testpaperDao.addTestpaperCursorAll(subject[i],teacherId);
+            }
+            return Result.success(null, Constant.ADD_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.ADDALL_FAILURE);
+    }
+    @RequestMapping("/updateTestpaperCursor")
+    public Result updateTestpaperCursor(String subjectId){
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int teacherId = testpaperDao.selectIdByName(username);
+            String[] subject = subjectId.split("_");
+            for (int i = 0;i < subject.length;i++) {
+                testpaperDao.addTestpaperCursorAll(subject[i],teacherId);
+            }
+            return Result.success(null, Constant.READQUESTIONS_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.READQUESTIONS_FAILURE);
+    }
 }

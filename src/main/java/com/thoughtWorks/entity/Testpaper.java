@@ -1,6 +1,7 @@
 package com.thoughtWorks.entity;
 
 public class Testpaper {
+    private int id;
     private String subjectId;
     private int testPaperId;
     private int classesId;
@@ -10,6 +11,14 @@ public class Testpaper {
     private double score;
     private String closeTime;
     private int day;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getTestPaperId() {
         return testPaperId;
