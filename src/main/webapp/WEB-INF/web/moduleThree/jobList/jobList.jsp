@@ -94,9 +94,9 @@
                                   <colgroup>
                                     <col width="200">
                                     <col width="200">
+                                    <col width="150">
                                     <col width="200">
-                                    <col width="200">
-                                    <col width="200">
+                                    <col width="250">
                                   </colgroup>
                                   <thead>
                                     <tr>
@@ -122,11 +122,11 @@
                                       <td style="text-align: center">` + (data1.data[j].close_time) + `</td>
                                       <td style="text-align: center">
                                       <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="preview(` + classesId + `,'` + testPaperId + `')">
-                                      <i class="layui-icon">&#xe623;</i>预览</a>
+                                      <i class="layui-icon">&#xe623;</i>成绩</a>
                                       <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="analysis(` + classesId + `,'` + testPaperId + `','` + subjectId + `')">
-                                      <i class="layui-icon">&#xe623;</i>分析</a>
+                                      <i class="layui-icon">&#xe623;</i>统计分析</a>
                                       <a class="layui-btn  layui-btn-small layui-btn-normal " onclick="edit(` + classesId + `,'` + testPaperId + `','` + subjectId + `','` + closeTime + `')">
-                                      <i class="layui-icon">&#xe623;</i>修改</a>
+                                      <i class="layui-icon">&#xe623;</i>修改时间</a>
                                       </td>
                                     </tr>
                                 `)
