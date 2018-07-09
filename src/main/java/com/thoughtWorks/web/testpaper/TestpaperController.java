@@ -7,6 +7,7 @@ import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.entity.Classes;
 import com.thoughtWorks.entity.Testpaper;
 import com.thoughtWorks.entity.TestpaperCursor;
+import com.thoughtWorks.service.ModuleOneService;
 import com.thoughtWorks.util.Constant;
 import com.thoughtWorks.util.DataUtil;
 import org.apache.shiro.SecurityUtils;
@@ -27,6 +28,8 @@ public class TestpaperController {
     TestpaperDao testpaperDao;
     @Autowired
     SysUserDao sysUserDao;
+    @Autowired
+    ModuleOneService moduleOneService;
     @RequestMapping("selectTestpaperCursor")
     public Result selectTestpaperCursor() {
         try {
@@ -285,6 +288,18 @@ public class TestpaperController {
                 data.add(map);
             }
             return Result.success(data,Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
+    }
+
+    @RequestMapping("/findOpenTestById")
+    public Result findOpenTestById(String subject_id){
+        try {
+            String[] subject = subject_id.split("_");
+            List<Map<String,Object>> list = moduleOneService.selectTestpaperById(subject);
+            return Result.success(list,Constant.SEARCH_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
         }
