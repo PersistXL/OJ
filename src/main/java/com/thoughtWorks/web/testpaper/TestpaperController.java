@@ -1,5 +1,6 @@
 package com.thoughtWorks.web.testpaper;
 
+import com.thoughtWorks.dao.SysUserDao;
 import com.thoughtWorks.dao.TestpaperDao;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
@@ -9,15 +10,10 @@ import com.thoughtWorks.entity.TestpaperCursor;
 import com.thoughtWorks.util.Constant;
 import com.thoughtWorks.util.DataUtil;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -29,7 +25,8 @@ public class TestpaperController {
 
     @Autowired
     TestpaperDao testpaperDao;
-
+    @Autowired
+    SysUserDao sysUserDao;
     @RequestMapping("selectTestpaperCursor")
     public Result selectTestpaperCursor() {
         try {
@@ -263,5 +260,34 @@ public class TestpaperController {
             e.printStackTrace();
         }
         return Result.failure(null, Constant.READQUESTIONS_FAILURE);
+    }
+    @RequestMapping("/findOpenTest")
+    public Result findOpenTest(){
+        try {
+            String username = ((ActiveUser) SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int studentId = sysUserDao.selectIdByName(username);
+            List<Map<String, Object>> data = new ArrayList<>();
+            List<Map<String,Object>> list = testpaperDao.findOpenTest();
+            Iterator<Map<String,Object>> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> value = iterator.next();
+                String num = (String) value.get("subject_id");
+                String[] no = num.split("_");
+                String teacherName = sysUserDao.selectTeacherName(value.get("teacher_id"));
+                String number = testpaperDao.findOpenTestNum(value.get("id"),studentId);
+                map.put("name", value.get("name"));
+                map.put("num", no.length);
+                map.put("teacherName", teacherName);
+                map.put("subject_id", value.get("subject_id"));
+                map.put("id", value.get("id"));
+                map.put("trueNum", number);
+                data.add(map);
+            }
+            return Result.success(data,Constant.SEARCH_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.SEARCH_FAILURE);
     }
 }

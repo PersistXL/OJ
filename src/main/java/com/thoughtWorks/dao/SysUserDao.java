@@ -36,4 +36,8 @@ public interface SysUserDao {
     Long TeacherUserName(Teacher teacher);
 
     void updateTeacherToUser(@Param("user")User user);
+
+    String selectTeacherName(Object teacher_id);
+
+    int selectIdByName(String username);
 }

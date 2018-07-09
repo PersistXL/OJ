@@ -75,4 +75,12 @@
         SET roleId = 2,staff = '教师',phone = #{user.phone},email = #{user.email},name = #{user.name}
         WHERE username = #{user.username}
     </update>
+
+    <select id="selectTeacherName" resultType="String">
+        select name from o_teacher where id = #{teacher_id}
+    </select>
+
+    <select id="selectIdByName" resultType="int">
+        select id from o_student where no = #{userName}
+    </select>
 </mapper>

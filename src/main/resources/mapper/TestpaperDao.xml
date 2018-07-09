@@ -94,4 +94,10 @@
         SET subject_id = #{subjectId},time = #{startTime}
         where id = #{id}
     </update>
+    <select id="findOpenTest" resultType="map">
+        select * from o_open_test
+    </select>
+    <select id="findOpenTestNum" resultType="String">
+        select num from o_open_test_grade where student_id = #{studentId} and open_test_id = #{id}
+    </select>
 </mapper>

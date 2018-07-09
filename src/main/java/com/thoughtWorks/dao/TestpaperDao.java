@@ -81,4 +81,8 @@ public interface TestpaperDao {
     void addTestpaperCursorAll(@Param("s") String s, @Param("teacherId") int teacherId);
 
     void updateTestpaperCursorToTestpaper(Testpaper testpaper);
+
+    List<Map<String,Object>> findOpenTest();
+
+    String findOpenTestNum(@Param("id") Object id, @Param("studentId") int studentId);
 }
