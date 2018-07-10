@@ -85,4 +85,8 @@ public interface TestpaperDao {
     List<Map<String,Object>> findOpenTest();
 
     String findOpenTestNum(@Param("id") Object id, @Param("studentId") int studentId);
+
+    void insertOpenTestGrade(@Param("testId") int testId,@Param("trueNum") int trueNum,@Param("studentId") int studentId);
+
+    void updateOpenTestGrade(@Param("testId") int testId,@Param("trueNum") int trueNum,@Param("studentId") int studentId);
 }

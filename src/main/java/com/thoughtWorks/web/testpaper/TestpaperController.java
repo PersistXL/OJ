@@ -2,6 +2,7 @@ package com.thoughtWorks.web.testpaper;
 
 import com.thoughtWorks.dao.SysUserDao;
 import com.thoughtWorks.dao.TestpaperDao;
+import com.thoughtWorks.dao.WrongTitleDao;
 import com.thoughtWorks.dto.Result;
 import com.thoughtWorks.entity.ActiveUser;
 import com.thoughtWorks.entity.Classes;
@@ -30,6 +31,8 @@ public class TestpaperController {
     SysUserDao sysUserDao;
     @Autowired
     ModuleOneService moduleOneService;
+    @Autowired
+    WrongTitleDao wrongTitleDao;
     @RequestMapping("selectTestpaperCursor")
     public Result selectTestpaperCursor() {
         try {
@@ -305,4 +308,23 @@ public class TestpaperController {
         }
         return Result.failure(null, Constant.SEARCH_FAILURE);
     }
+    @RequestMapping("/insertOpenTestGrade")
+    public Result insertOpenTestGrade(int ID,int trueNum){
+        try {
+            String userName = ((ActiveUser)SecurityUtils.getSubject().getPrincipal()).getUserName();
+            int studentId = wrongTitleDao.selectStudentId(userName);
+            String number = testpaperDao.findOpenTestNum(ID,studentId);
+            System.out.println(number);
+            if (number == null) {
+                testpaperDao.insertOpenTestGrade(ID,trueNum,studentId);
+            }else {
+                testpaperDao.updateOpenTestGrade(ID,trueNum,studentId);
+            }
+            return Result.success(null,Constant.ADD_TESTPAPER_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Result.failure(null, Constant.ADD_TESTPAPER_FAILURE);
+    }
+
 }

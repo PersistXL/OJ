@@ -100,4 +100,14 @@
     <select id="findOpenTestNum" resultType="String">
         select num from o_open_test_grade where student_id = #{studentId} and open_test_id = #{id}
     </select>
+    <insert id="insertOpenTestGrade" parameterType="int">
+        insert into o_open_test_grade (student_id, num, open_test_id) values (#{studentId},#{trueNum},#{testId})
+    </insert>
+    
+    <update id="updateOpenTestGrade" parameterType="int">
+        update o_open_test_grade
+        set num = #{trueNum}
+        where open_test_id = #{testId}
+        and student_id = #{studentId}
+    </update>
 </mapper>

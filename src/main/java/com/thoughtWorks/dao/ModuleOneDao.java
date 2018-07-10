@@ -62,7 +62,6 @@ public interface ModuleOneDao {
     String selectStudentTestpapte(@Param("userName")String userName, @Param("testpaperId") int testpaperId);
 
 
-    //gj
     int selectStuIdbyStUuid(String uuid);
 
     int duplicateChecking(StudentTestpaper sts);
