@@ -38,6 +38,7 @@
                 /styles/** = anon
                 /public/** = anon
                 /toLogin = anon   <!--登录页面的地址-->
+                /register = anon   <!--注册页面的地址-->
                 /noPermission/** = anon <!--跳转没有权限的页面-->
                 <!--表示所有请求url必须通过认证-->
                 /**=  authc

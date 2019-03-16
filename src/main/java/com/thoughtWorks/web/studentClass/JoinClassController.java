@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.thoughtWorks.util.Constant.*;
 
@@ -123,6 +124,8 @@ public class JoinClassController {
     public ResponseEntity studentRegister(Student student) {
         Map<String, Object> classes = new HashMap<>();
         try {
+            student.setUuid(UUID.randomUUID().toString().replaceAll("-",""));
+            System.out.println(student.getUuid());
             System.out.println(student);
             Map<String, String> result = joinClassService.studentRegister(student);
             classes.put("result", result.get("msg"));

@@ -108,6 +108,11 @@ public class LoginController {
         return "index";
     }
 
+    @RequestMapping("register")
+    public String register() {
+        return "register";
+    }
+
     @RequestMapping("toLogin")
     public String toLogin() {
         return "login";
