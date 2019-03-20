@@ -60,9 +60,14 @@
                     var _html = ""
                     $.post("${baseurl}/moduleOne/findTestpaper", function (data) {
                         for (var i = 0; i < data1.data.length; i++) {
+                            if(data1.data[i].ClassesName==null){
+                                classNames = "未加入班课";
+                            }else {
+                                classNames = data1.data[i].ClassesName;
+                            }
                             studentId = data1.data[0].StudentId
                             _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
-                                + data1.data[i].ClassesName + `</h3>
+                                + classNames + `</h3>
                                 <div class="layui-colla-content">
                                     <div class="layui-form">
                                         <table class="layui-table">

@@ -122,9 +122,14 @@
                         userName = data.data.user.userName
                         dataList1 = dataList;
                 for (var j = 0; j < data1.data.length; j++) {
-                    var num = 1
+                    if (data1.data[j].ClassesName==null) {
+                        ClassesName = "未加入班课";
+                    }else {
+                        ClassesName = data1.data[j].ClassesName
+                    }
+                    var num = 1;
                     _html += (`<div class="layui-colla-item" style="margin-bottom: 10px;"><h3 class="layui-colla-title">班课：`
-                        + data1.data[j].ClassesName + `</h3><div class="layui-colla-content">
+                        + ClassesName + `</h3><div class="layui-colla-content">
                                     <div class="layui-form">
                                         <table class="layui-table">
                                             <colgroup>
